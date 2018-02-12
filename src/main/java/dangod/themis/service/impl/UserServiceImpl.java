@@ -13,7 +13,18 @@ public class UserServiceImpl implements UserService {
     private UserRepo userRepo;
     @Override
     public User check(String username, String password) {
-        User user = userRepo.findByUsernameAndPassword(username, MD5Util.MD5(password));
+        User user = userRepo.findByUsername(username);
+        if(user == null)return null;
+        if(!user.getPassword().equals(MD5Util.MD5(password+user.getSalt())))
+            return null;
+        return user;
+    }
+
+    @Override
+    public User add(String username, String password) {
+        if(userRepo.countByUsername(username)!=0)
+            return null;
+        User user = userRepo.save(new User(username, password));
         return user;
     }
 

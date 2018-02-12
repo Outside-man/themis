@@ -22,7 +22,7 @@ public class RedisTokenServiceIpml implements TokenService {
         Token token = new Token(userId, uuid);
 
         ValueOperations<String, String> operations=redisTemplate.opsForValue();
-        operations.set(String.valueOf(userId), uuid, 30L, TimeUnit.SECONDS);
+        operations.set(String.valueOf(userId), uuid, 30L, TimeUnit.MINUTES);
         return token.toString();
     }
 
@@ -30,11 +30,13 @@ public class RedisTokenServiceIpml implements TokenService {
     public boolean checkToken(String authentication) {
         try {
             Token token = new Token(authentication);
-            ValueOperations<String, String> operations = redisTemplate.opsForValue();
-            String uuid = operations.get(String.valueOf(token.getUserId()));
+            String uuid = (String)redisTemplate.boundValueOps(String.valueOf(token.getUserId())).get();
             if (uuid == null || !token.getToken().equals(uuid))
                 return false;
+            else
+                redisTemplate.boundValueOps(String.valueOf(token.getUserId())).expire(30L, TimeUnit.MINUTES);
         }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
         return true;

@@ -1,6 +1,5 @@
 package dangod.themis.service;
 
-import dangod.themis.model.vo.Token;
 
 public interface TokenService {
     /**
@@ -12,10 +11,10 @@ public interface TokenService {
 
     /**
      * 检查token是否合法
-     * @param token
+     * @param authentication
      * @return
      */
-    boolean checkToken(String token);
+    boolean checkToken(String authentication);
 
     /**
      * 删除token
@@ -23,5 +22,9 @@ public interface TokenService {
      */
     void deleteToken(long userId);
 
+    /**
+     * 删除token
+     * @param authentication
+     */
     void deleteToken(String authentication);
 }

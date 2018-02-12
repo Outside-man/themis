@@ -4,6 +4,7 @@ import dangod.themis.core.result.Result;
 import dangod.themis.model.po.User;
 import dangod.themis.service.TokenService;
 import dangod.themis.service.UserService;
+import dangod.themis.util.ReplayDefender;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static dangod.themis.controller.constant.Message.*;
+import static dangod.themis.controller.constant.Status.*;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @CrossOrigin
@@ -23,25 +27,40 @@ public class TokenController {
     private TokenService tokenService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ReplayDefender replayDefender;
 
-    @RequestMapping(value = "", method = POST)
+    @RequestMapping(method = POST)
     @ApiOperation(value = "登录")
     public String login(HttpServletRequest request, HttpServletResponse response,
                         @RequestParam("username")String username,
-                        @RequestParam("password")String password){
+                        @RequestParam("password")String password,
+                        @RequestParam("timestamp")long timestamp,
+                        @RequestParam("nonce")String nonce){
+        if(replayDefender.checkReplay(timestamp, nonce))
+            return Result.send(REPLAY_ATTACK, null, REPLAY_ATTACK_MESSAGE);
         User user = userService.check(username, password);
         if(user == null){
-            return Result.send(401, null, "账号密码错误");
+            return Result.send(FAIL, null, LOGIN_FAIL_MESSAGE);
         }
         String token = tokenService.createToken(user.getId());
-        return Result.ok(token, "返回token");
+        return Result.send(SUCCESS, token, LOGIN_SUCCESS_MESSAGE);
     }
 
-    @RequestMapping(value = "", method = DELETE)
+    @RequestMapping(method = DELETE)
     @ApiOperation(value = "登出")
-    public String login(HttpServletRequest request, HttpServletResponse response){
-        String authorization = request.getHeader("Authorization");
+    public String logout(HttpServletRequest request, HttpServletResponse response,
+                        @RequestHeader("Authorization")String authorization){
         tokenService.deleteToken(authorization);
-        return Result.ok(null, "登出成功");
+        return Result.send(SUCCESS, null, LOGOUT_SUCCESS_MESSAGE);
+    }
+    @RequestMapping(method = GET)
+    @ApiOperation(value = "登出")
+    public String test(HttpServletRequest request, HttpServletResponse response,
+                       @RequestHeader("Authorization")String authorization){
+        if(tokenService.checkToken(authorization)){
+            return "exist";
+        }
+        return "not exist";
     }
 }
