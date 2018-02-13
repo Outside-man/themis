@@ -2,12 +2,10 @@ package dangod.themis.model.po;
 
 import dangod.themis.util.MD5Util;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "common_user")
 public class User {
     @Id
     @GeneratedValue
@@ -15,7 +13,6 @@ public class User {
     private String username;
     private String password;
     private String salt;
-    private String role;
 
     public long getId() {
         return id;
@@ -39,14 +36,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public String getSalt() {

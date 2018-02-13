@@ -33,14 +33,11 @@ public class ReplayDefender {
         jedisConnectionFactory.setDatabase(1);
         String value = (String)redisTemplate.boundValueOps(nonce).get();
         if(value != null){
-            jedisConnectionFactory.setDatabase(0);
             logger.warn("疑似重放攻击: 随机数相同");
             return true;
         }
         else
             redisTemplate.boundValueOps(nonce).set(nonce, 60L, TimeUnit.SECONDS);
-
-        jedisConnectionFactory.setDatabase(0);
         return false;
     }
 

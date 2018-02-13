@@ -6,16 +6,16 @@ import sun.misc.BASE64Encoder;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
-public class Token {
+public class TokenVo {
     private long userId;
     private String token;
 
-    public Token(long userId, String token) {
+    public TokenVo(long userId, String token) {
         this.userId = userId;
         this.token = token;
     }
 
-    public Token(String token) {
+    public TokenVo(String token) {
         byte[] bytes = Base64.getDecoder().decode(token);
         String[] arr = new String[0];
         try {

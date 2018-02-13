@@ -1,8 +1,9 @@
 package dangod.themis.service.impl;
 
-import dangod.themis.model.vo.Token;
+import dangod.themis.model.vo.TokenVo;
 import dangod.themis.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -19,22 +20,26 @@ public class RedisTokenServiceIpml implements TokenService {
     @Override
     public String createToken(long userId) {
         String uuid = UUID.randomUUID().toString().replace("-","");
-        Token token = new Token(userId, uuid);
+        TokenVo tokenVo = new TokenVo(userId, uuid);
 
+        JedisConnectionFactory jedisConnectionFactory = (JedisConnectionFactory)redisTemplate.getConnectionFactory();
+        jedisConnectionFactory.setDatabase(0);
         ValueOperations<String, String> operations=redisTemplate.opsForValue();
         operations.set(String.valueOf(userId), uuid, 30L, TimeUnit.MINUTES);
-        return token.toString();
+        return tokenVo.toString();
     }
 
     @Override
     public boolean checkToken(String authentication) {
+        JedisConnectionFactory jedisConnectionFactory = (JedisConnectionFactory)redisTemplate.getConnectionFactory();
+        jedisConnectionFactory.setDatabase(0);
         try {
-            Token token = new Token(authentication);
-            String uuid = (String)redisTemplate.boundValueOps(String.valueOf(token.getUserId())).get();
-            if (uuid == null || !token.getToken().equals(uuid))
+            TokenVo tokenVo = new TokenVo(authentication);
+            String uuid = (String)redisTemplate.boundValueOps(String.valueOf(tokenVo.getUserId())).get();
+            if (uuid == null || !tokenVo.getToken().equals(uuid))
                 return false;
             else
-                redisTemplate.boundValueOps(String.valueOf(token.getUserId())).expire(30L, TimeUnit.MINUTES);
+                redisTemplate.boundValueOps(String.valueOf(tokenVo.getUserId())).expire(30L, TimeUnit.MINUTES);
         }catch (Exception e){
             e.printStackTrace();
             return false;
@@ -44,14 +49,16 @@ public class RedisTokenServiceIpml implements TokenService {
 
     @Override
     public void deleteToken(long userId) {
+        JedisConnectionFactory jedisConnectionFactory = (JedisConnectionFactory)redisTemplate.getConnectionFactory();
+        jedisConnectionFactory.setDatabase(0);
         redisTemplate.delete(String.valueOf(userId));
     }
 
     @Override
     public void deleteToken(String authentication) {
         try {
-            Token token = new Token(authentication);
-            deleteToken(token.getUserId());
+            TokenVo tokenVo = new TokenVo(authentication);
+            deleteToken(tokenVo.getUserId());
         }catch (Exception e){
             return ;
         }

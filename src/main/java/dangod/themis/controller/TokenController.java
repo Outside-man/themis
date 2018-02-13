@@ -50,17 +50,17 @@ public class TokenController {
     @RequestMapping(method = DELETE)
     @ApiOperation(value = "登出")
     public String logout(HttpServletRequest request, HttpServletResponse response,
-                        @RequestHeader("Authorization")String authorization){
-        tokenService.deleteToken(authorization);
+                        @RequestHeader("Token")String token){
+        tokenService.deleteToken(token);
         return Result.send(SUCCESS, null, LOGOUT_SUCCESS_MESSAGE);
     }
+
     @RequestMapping(method = GET)
-    @ApiOperation(value = "登出")
-    public String test(HttpServletRequest request, HttpServletResponse response,
-                       @RequestHeader("Authorization")String authorization){
-        if(tokenService.checkToken(authorization)){
-            return "exist";
-        }
-        return "not exist";
+    @ApiOperation(value = "验证token")
+    public String tokenVaild(HttpServletRequest request, HttpServletResponse response,
+                         @RequestHeader("Token")String token){
+        if(tokenService.checkToken(token))
+            return Result.send(SUCCESS, null, TOKEN_VAILD_MESSAGE);
+        return Result.send(UNAUTHORIZED, null, TOKEN_INVAILD_MESSAGE);
     }
 }

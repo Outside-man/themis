@@ -1,0 +1,57 @@
+package dangod.themis.model.po;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "common_user_info")
+public class UserBaseInfo {
+    @Id
+    @GeneratedValue
+    private long id;
+    private String realname;
+    private String email;
+    private String sex;
+    @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
+    @JoinColumn(name="user_id",nullable=true)
+    private User user;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return realname;
+    }
+
+    public void setName(String name) {
+        this.realname = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+}

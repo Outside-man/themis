@@ -11,10 +11,10 @@ public interface TokenService {
 
     /**
      * 检查token是否合法
-     * @param authentication
+     * @param token
      * @return
      */
-    boolean checkToken(String authentication);
+    boolean checkToken(String token);
 
     /**
      * 删除token
@@ -24,7 +24,7 @@ public interface TokenService {
 
     /**
      * 删除token
-     * @param authentication
+     * @param token
      */
-    void deleteToken(String authentication);
+    void deleteToken(String token);
 }

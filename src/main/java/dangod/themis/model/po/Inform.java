@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "common_inform")
 public class Inform {
     @Id
     @GeneratedValue
