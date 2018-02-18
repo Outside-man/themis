@@ -1,5 +1,6 @@
 package dangod.themis.controller;
 
+import dangod.themis.controller.base.annotation.Authorization;
 import dangod.themis.core.result.Result;
 import dangod.themis.model.po.User;
 import dangod.themis.service.TokenService;
@@ -12,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static dangod.themis.controller.constant.Message.*;
-import static dangod.themis.controller.constant.Status.*;
+import static dangod.themis.controller.base.constant.Message.*;
+import static dangod.themis.controller.base.constant.Status.*;
+import static dangod.themis.core.config.constant.Constant.AUTHORIZATION;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -30,7 +32,7 @@ public class TokenController {
     @Autowired
     private ReplayDefender replayDefender;
 
-    @RequestMapping(method = POST)
+    @RequestMapping(method = POST, produces="application/json;charset=UTF-8")
     @ApiOperation(value = "登录")
     public String login(HttpServletRequest request, HttpServletResponse response,
                         @RequestParam("username")String username,
@@ -49,16 +51,16 @@ public class TokenController {
 
     @RequestMapping(method = DELETE)
     @ApiOperation(value = "登出")
+    @Authorization
     public String logout(HttpServletRequest request, HttpServletResponse response,
-                        @RequestHeader("Token")String token){
-        tokenService.deleteToken(token);
+                        @RequestHeader(AUTHORIZATION)String token){
         return Result.send(SUCCESS, null, LOGOUT_SUCCESS_MESSAGE);
     }
 
     @RequestMapping(method = GET)
     @ApiOperation(value = "验证token")
     public String tokenVaild(HttpServletRequest request, HttpServletResponse response,
-                         @RequestHeader("Token")String token){
+                         @RequestHeader(AUTHORIZATION)String token){
         if(tokenService.checkToken(token))
             return Result.send(SUCCESS, null, TOKEN_VAILD_MESSAGE);
         return Result.send(UNAUTHORIZED, null, TOKEN_INVAILD_MESSAGE);

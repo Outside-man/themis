@@ -8,13 +8,25 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InformServiceImpl implements InformService {
-    @Autowired
-    private InformRepo informRepo;
+
 
     @Override
-    public Inform getById(long id){
-        return informRepo.getOne(id);
+    public Inform getById(long id) {
+        return null;
     }
 
+    @Override
+    public Inform addInform(Inform inform) {
+        return null;
+    }
 
+    @Override
+    public Integer deleteInformById(long id) {
+        return null;
+    }
+
+    @Override
+    public Inform updateInform(Inform inform) {
+        return null;
+    }
 }

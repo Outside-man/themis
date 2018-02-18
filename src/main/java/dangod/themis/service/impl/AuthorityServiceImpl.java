@@ -31,21 +31,10 @@ public class AuthorityServiceImpl implements AuthorityService {
     private AuthorityMenuRepo menuRepo;
 
     @Override
-    public List<MenuVo> getMenuByToken(String token) {
-        if(!tokenService.checkToken(token))
-            return null;
-        TokenVo tokenVo;
-        try {
-            tokenVo = new TokenVo(token);
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println("Token格式错误");
-            return null;
-        }
+    public List<MenuVo> getMenuByUserId(long userId) {
 
         //获取用户-权限
-        AuthorityUser user  = userRepo.findByUserId(tokenVo.getUserId());
-        List<Long> list = user.getList();
+        List<Long> list = getAuthoritiesByUserId(userId);
 
         //获取权限列表
         List<AuthorityType> authorityList = typeRepo.findAllByIdIn(list);
@@ -70,6 +59,13 @@ public class AuthorityServiceImpl implements AuthorityService {
         menuVoList.addAll(menuVoMap.values());
 
         return menuVoList;
+    }
+
+    @Override
+    public List<Long> getAuthoritiesByUserId(long userId) {
+        AuthorityUser user  = userRepo.findByUserId(userId);
+        List<Long> list = user.getList();
+        return list;
     }
 
 

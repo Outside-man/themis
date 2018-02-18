@@ -1,5 +1,7 @@
 package dangod.themis.controller;
 
+import dangod.themis.controller.base.BaseController;
+import dangod.themis.controller.base.annotation.Authorization;
 import dangod.themis.core.result.Result;
 import dangod.themis.model.vo.MenuVo;
 import dangod.themis.service.AuthorityService;
@@ -15,24 +17,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
-import static dangod.themis.controller.constant.Message.MENU_SUCCESS_MESSAGE;
-import static dangod.themis.controller.constant.Message.TOKEN_INVAILD_MESSAGE;
-import static dangod.themis.controller.constant.Status.SUCCESS;
-import static dangod.themis.controller.constant.Status.UNAUTHORIZED;
+import static dangod.themis.controller.base.constant.Message.MENU_SUCCESS_MESSAGE;
+import static dangod.themis.controller.base.constant.Message.TOKEN_INVAILD_MESSAGE;
+import static dangod.themis.controller.base.constant.Status.SUCCESS;
+import static dangod.themis.controller.base.constant.Status.UNAUTHORIZED;
+import static dangod.themis.core.config.constant.Constant.AUTHORIZATION;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/menu")
-public class MenuController {
+public class MenuController extends BaseController {
     @Autowired
     private AuthorityService authorityService;
 
     @RequestMapping(method = POST)
     @ApiOperation(value = "获取菜单")
+    @Authorization
     public String listMenu(HttpServletRequest request, HttpServletResponse response,
-                           @RequestHeader("Token")String token){
-        List<MenuVo> list =  authorityService.getMenuByToken(token);
+                           @RequestHeader(AUTHORIZATION)String token){
+        List<MenuVo> list =  authorityService.getMenuByUserId(getUserId(request));
 
         if(list != null)
             return Result.send(SUCCESS, list, MENU_SUCCESS_MESSAGE);

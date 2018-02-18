@@ -41,7 +41,7 @@ public class RedisTokenServiceIpml implements TokenService {
             else
                 redisTemplate.boundValueOps(String.valueOf(tokenVo.getUserId())).expire(30L, TimeUnit.MINUTES);
         }catch (Exception e){
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return false;
         }
         return true;

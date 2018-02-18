@@ -1,4 +1,4 @@
-package dangod.themis.controller.constant;
+package dangod.themis.controller.base.constant;
 
 public class Status {
     //基础返回码

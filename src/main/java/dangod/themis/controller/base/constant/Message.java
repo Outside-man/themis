@@ -1,4 +1,4 @@
-package dangod.themis.controller.constant;
+package dangod.themis.controller.base.constant;
 
 public class Message {
     public final static String LOGIN_FAIL_MESSAGE = "账号或密码错误";
@@ -19,6 +19,14 @@ public class Message {
 
     public final static String TOKEN_INVAILD_MESSAGE = "TOKEN错误或已失效";
     public final static String TOKEN_VAILD_MESSAGE = "TOKEN有效";
+
+    public final static String PERMISSIN_DENIED = "没有权限";
+
+
+
+
+//    public final static Map<Integer, String> RESPONSE = new HashMap<>();
+
 
 
 

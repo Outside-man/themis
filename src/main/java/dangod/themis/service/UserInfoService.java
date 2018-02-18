@@ -4,7 +4,9 @@ import dangod.themis.model.po.UserBaseInfo;
 
 public interface UserInfoService {
 
-    UserBaseInfo getBaseInfoByToken(String token);
+    UserBaseInfo getBaseInfoByUserId(long userid);
 
-    UserBaseInfo addBaseInfo(String realname, String email, String sex);
+    UserBaseInfo addUserBaseInfo(String realname, String email, String sex);
+
+    UserBaseInfo updateUserBaseInfo(UserBaseInfo baseInfo);
 }

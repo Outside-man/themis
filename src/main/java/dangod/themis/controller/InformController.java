@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static dangod.themis.controller.constant.Message.INFORM_NOT_EXISTS_MESSAGE;
-import static dangod.themis.controller.constant.Message.INFORM_SUCCESS_MESSAGE;
-import static dangod.themis.controller.constant.Status.NOT_FIND;
-import static dangod.themis.controller.constant.Status.SUCCESS;
+import static dangod.themis.controller.base.constant.Message.INFORM_NOT_EXISTS_MESSAGE;
+import static dangod.themis.controller.base.constant.Message.INFORM_SUCCESS_MESSAGE;
+import static dangod.themis.controller.base.constant.Status.NOT_FIND;
+import static dangod.themis.controller.base.constant.Status.SUCCESS;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @CrossOrigin
