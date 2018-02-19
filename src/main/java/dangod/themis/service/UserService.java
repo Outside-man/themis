@@ -9,15 +9,23 @@ public interface UserService {
      * @param password
      * @return
      */
-    User check(String username, String password);
+    Long check(String username, String password);
 
     /**
      * 增加账户
      * @param username
      * @param password
-     * @return
+     * @return 0:success
      */
-    User add(String username, String password);
+    Integer add(String username, String password);
 
-    User update(User user);
+    /**
+     * 用户修改密码
+     * @param userId
+     * @param password
+     * @return 0:success
+     */
+    Integer updatePassword(Long userId, String password);
+
+    User getUserById(Long userId);
 }

@@ -41,11 +41,11 @@ public class TokenController {
                         @RequestParam("nonce")String nonce){
         if(replayDefender.checkReplay(timestamp, nonce))
             return Result.send(REPLAY_ATTACK, null, REPLAY_ATTACK_MESSAGE);
-        User user = userService.check(username, password);
-        if(user == null){
+        long userId = userService.check(username, password);
+        if(userId == -1){
             return Result.send(FAIL, null, LOGIN_FAIL_MESSAGE);
         }
-        String token = tokenService.createToken(user.getId());
+        String token = tokenService.createToken(userId);
         return Result.send(SUCCESS, token, LOGIN_SUCCESS_MESSAGE);
     }
 

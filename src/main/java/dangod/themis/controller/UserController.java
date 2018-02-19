@@ -1,5 +1,6 @@
 package dangod.themis.controller;
 
+import dangod.themis.controller.base.BaseController;
 import dangod.themis.controller.base.annotation.Authorization;
 import dangod.themis.controller.base.annotation.ContainAuthority;
 import dangod.themis.core.result.Result;
@@ -12,18 +13,18 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static dangod.themis.controller.base.constant.Message.REGISTER_FAIL_MESSAGE;
-import static dangod.themis.controller.base.constant.Message.REGISTER_SUCCESS_MESSAGE;
+import static dangod.themis.controller.base.constant.Message.*;
 import static dangod.themis.controller.base.constant.Status.FAIL;
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
 import static dangod.themis.core.config.constant.Constant.AUTHORIZATION;
+import static dangod.themis.model.po.authority.constant.TypeContant.ACCOUNT_MANAGE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/user")
-public class UserController {
+public class UserController extends BaseController{
 
     @Autowired
     private UserService userService;
@@ -33,25 +34,35 @@ public class UserController {
     public String register(HttpServletRequest request, HttpServletResponse response,
                            @RequestParam("username")String username,
                            @RequestParam("password")String password){
-        User user = userService.add(username, password);
-        if(user == null)
+        Integer status = userService.add(username, password);
+        if(status != 0)
             return Result.send(FAIL, null, REGISTER_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, REGISTER_SUCCESS_MESSAGE);
     }
 
     @RequestMapping(method = PUT)
-    @ApiOperation(value = "修改密码")
-    @ContainAuthority(1)
+    @ApiOperation(value = "用户修改密码")
     @Authorization
-    public String register(HttpServletRequest request, HttpServletResponse response){
+    public String modifyPassword(HttpServletRequest request, HttpServletResponse response,
+                                 @RequestHeader(AUTHORIZATION)String token,
+                                 @RequestParam("password")String password){
+        long userId = getUserId(request);
+        Integer status = userService.updatePassword(userId, password);
+        if(status != 0)
+            return Result.send(FAIL, null, ACCOUNT_UPDATE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, ACCOUNT_UPDATE_SUCCESS_MESSAGE);
+    }
 
-
-//
-//
-//        User user = userService.add(username, password);
-//        if(user == null)
-//            return Result.send(FAIL, null, REGISTER_FAIL_MESSAGE);
-//        return Result.send(SUCCESS, null, REGISTER_SUCCESS_MESSAGE);
-        return null;
+    @RequestMapping(value = "/admin", method = PUT)
+    @ApiOperation(value = "管理员修改账户")
+    @ContainAuthority(ACCOUNT_MANAGE)
+    @Authorization
+    public String modifyAccount(HttpServletRequest request, HttpServletResponse response,
+                           @RequestParam("userId")Long userId,
+                           @RequestParam("password")String password){
+        Integer status = userService.updatePassword(userId, password);
+        if(status != 0)
+            return Result.send(FAIL, null, ACCOUNT_UPDATE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, ACCOUNT_UPDATE_SUCCESS_MESSAGE);
     }
 }

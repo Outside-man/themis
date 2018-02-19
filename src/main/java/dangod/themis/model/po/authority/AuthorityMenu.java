@@ -1,5 +1,7 @@
 package dangod.themis.model.po.authority;
 
+import dangod.themis.model.po.authority.constant.TypeContant;
+
 import javax.persistence.*;
 
 @Entity
@@ -61,6 +63,18 @@ public class AuthorityMenu {
     }
 
     public void setParent(AuthorityMenu parent) {
+        this.parent = parent;
+    }
+
+    public AuthorityMenu() {
+    }
+
+    public AuthorityMenu(long id, String component, String icon, String name, String path, AuthorityMenu parent) {
+        this.id = id;
+        this.name = name;
+        this.path = path;
+        this.component = component;
+        this.icon = icon;
         this.parent = parent;
     }
 }

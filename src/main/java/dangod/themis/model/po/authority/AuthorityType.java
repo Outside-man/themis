@@ -49,4 +49,15 @@ public class AuthorityType {
     public void setMenu(AuthorityMenu menu) {
         this.menu = menu;
     }
+
+    public AuthorityType(){
+
+    }
+
+    public AuthorityType(long id, String name, AuthorityGourp gourp, AuthorityMenu menu) {
+        this.id = id;
+        this.name = name;
+        this.gourp = gourp;
+        this.menu = menu;
+    }
 }

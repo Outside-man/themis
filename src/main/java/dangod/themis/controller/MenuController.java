@@ -22,6 +22,7 @@ import static dangod.themis.controller.base.constant.Message.TOKEN_INVAILD_MESSA
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
 import static dangod.themis.controller.base.constant.Status.UNAUTHORIZED;
 import static dangod.themis.core.config.constant.Constant.AUTHORIZATION;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @CrossOrigin
@@ -31,7 +32,7 @@ public class MenuController extends BaseController {
     @Autowired
     private AuthorityService authorityService;
 
-    @RequestMapping(method = POST)
+    @RequestMapping(method = GET)
     @ApiOperation(value = "获取菜单")
     @Authorization
     public String listMenu(HttpServletRequest request, HttpServletResponse response,

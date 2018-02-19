@@ -2,6 +2,7 @@ package dangod.themis.model.po;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "common_inform")
@@ -54,5 +55,15 @@ public class Inform {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Inform(String title, String content, User user) {
+        this.title = title;
+        this.content = content;
+        this.date = new Timestamp(Calendar.getInstance().getTime().getTime());
+        this.user = user;
+    }
+
+    public Inform() {
     }
 }

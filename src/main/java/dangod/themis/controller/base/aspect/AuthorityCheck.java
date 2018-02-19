@@ -52,9 +52,7 @@ public class AuthorityCheck {
             }
         }
         List<Long> authorityList = authorityService.getAuthoritiesByUserId(Long.parseLong((String)request.getAttribute("userId")));
-        System.out.println(authorityList);
-        System.out.println(authority.value());
-        if(!authorityList.contains(authority.value())){
+        if(authorityList == null||!authorityList.contains(authority.value())){
             return Result.send(UNAUTHORIZED, null, PERMISSIN_DENIED);
         }
         return proceedingJoinPoint.proceed();

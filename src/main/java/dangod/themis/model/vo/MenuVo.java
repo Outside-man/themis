@@ -52,7 +52,7 @@ public class MenuVo {
         this.children = children;
     }
 
-    public void setChildren(MenuVo menuVo) {
+    public void setChildrenByMenuVo(MenuVo menuVo) {
         if(children == null){
             children = new ArrayList<>();
         }

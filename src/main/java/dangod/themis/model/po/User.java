@@ -46,6 +46,11 @@ public class User {
         this.salt = String.valueOf((int)(Math.random()*901+100));
     }
 
+    public void updatePassword(String password) {
+        this.password = MD5Util.MD5(password+this.salt);
+    }
+
+
     public User(String username, String password) {
         this.salt = String.valueOf((int)(Math.random()*901+100));
         this.username = username;
@@ -54,4 +59,12 @@ public class User {
 
     public User() {
     }
+
+    public User(long id, String username, String password) {
+        this.id = id;
+        this.salt = String.valueOf((int)(Math.random()*901+100));
+        this.username = username;
+        this.password = MD5Util.MD5(password+this.salt);
+    }
+
 }

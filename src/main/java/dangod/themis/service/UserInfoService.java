@@ -1,12 +1,13 @@
 package dangod.themis.service;
 
 import dangod.themis.model.po.UserBaseInfo;
+import dangod.themis.model.vo.UserBaseInfoVo;
 
 public interface UserInfoService {
 
-    UserBaseInfo getBaseInfoByUserId(long userid);
+    UserBaseInfoVo getBaseInfoByUserId(long userid);
 
-    UserBaseInfo addUserBaseInfo(String realname, String email, String sex);
+    Integer addUserBaseInfo(String realname, String email, String sex);
 
-    UserBaseInfo updateUserBaseInfo(UserBaseInfo baseInfo);
+    UserBaseInfoVo updateUserBaseInfo(UserBaseInfo baseInfo);
 }

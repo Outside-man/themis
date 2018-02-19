@@ -1,13 +1,28 @@
 package dangod.themis.service;
 
 import dangod.themis.model.po.Inform;
+import dangod.themis.model.vo.InformVo;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface InformService {
-    Inform getById(long id);
+    /**
+     * 获取通知
+     * @param id
+     * @return
+     */
+    InformVo getById(long id);
 
-    Inform addInform(Inform inform);
+    InformVo addInform(String title, String content, long userId);
 
     Integer deleteInformById(long id);
 
-    Inform updateInform(Inform inform);
+    InformVo updateInform(Inform inform);
+
+    List<InformVo> getListByUserId(long userId);
+
+    List<InformVo> getPage(Integer page, Integer size);
+
+    List<InformVo> getPage(Integer page);
 }

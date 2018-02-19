@@ -4,6 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 public class BaseController {
     protected static long getUserId(HttpServletRequest request){
-        return (long) request.getAttribute("userId");
+        return Long.parseLong((String)request.getAttribute("userId"));
     }
 }

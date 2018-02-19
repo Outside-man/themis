@@ -6,16 +6,21 @@ import dangod.themis.dao.authority.AuthorityUserRepo;
 import dangod.themis.model.po.authority.AuthorityMenu;
 import dangod.themis.model.po.authority.AuthorityType;
 import dangod.themis.model.po.authority.AuthorityUser;
+import dangod.themis.model.po.authority.constant.MenuTable;
 import dangod.themis.model.vo.MenuVo;
 import dangod.themis.model.vo.TokenVo;
 import dangod.themis.service.AuthorityService;
 import dangod.themis.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+
+import static dangod.themis.model.po.authority.constant.MenuTable.MENU_TABLE;
+import static dangod.themis.model.po.authority.constant.TypeTable.TYPE_TABLE;
 
 @Service
 public class AuthorityServiceImpl implements AuthorityService {
@@ -30,6 +35,19 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Autowired
     private AuthorityMenuRepo menuRepo;
 
+    @Override
+    public Integer initAuthorityTable(){
+        try {
+            menuRepo.save(MENU_TABLE.values());
+            typeRepo.save(TYPE_TABLE.values());
+        }catch (Exception e){
+            throw new RuntimeException("权限表初始化错误");
+        }
+        return 0;
+    }
+
+
+    @Cacheable(value = "30m")
     @Override
     public List<MenuVo> getMenuByUserId(long userId) {
 
@@ -52,7 +70,7 @@ public class AuthorityServiceImpl implements AuthorityService {
         }
         for(AuthorityMenu menu : menuMap.values()){
             if(menu.getParent() != null ){
-                menuVoMap.get(menu.getParent().getId()).setChildren(new MenuVo(menu));
+                menuVoMap.get(menu.getParent().getId()).setChildrenByMenuVo(new MenuVo(menu));
             }
         }
         List<MenuVo> menuVoList = new ArrayList<>();
@@ -61,6 +79,7 @@ public class AuthorityServiceImpl implements AuthorityService {
         return menuVoList;
     }
 
+    @Cacheable(value = "30m")
     @Override
     public List<Long> getAuthoritiesByUserId(long userId) {
         AuthorityUser user  = userRepo.findByUserId(userId);
