@@ -1,7 +1,7 @@
 package dangod.themis.model.po.authority;
 
 import com.alibaba.fastjson.JSON;
-import dangod.themis.model.po.User;
+import dangod.themis.model.po.common.User;
 
 import javax.persistence.*;
 import java.util.List;

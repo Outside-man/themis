@@ -4,7 +4,6 @@ import dangod.themis.controller.base.BaseController;
 import dangod.themis.controller.base.annotation.Authorization;
 import dangod.themis.controller.base.annotation.ContainAuthority;
 import dangod.themis.core.result.Result;
-import dangod.themis.model.po.User;
 import dangod.themis.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import static dangod.themis.controller.base.constant.Message.*;
 import static dangod.themis.controller.base.constant.Status.FAIL;
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
-import static dangod.themis.core.config.constant.Constant.AUTHORIZATION;
+import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
 import static dangod.themis.model.po.authority.constant.TypeContant.ACCOUNT_MANAGE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
@@ -33,8 +32,11 @@ public class UserController extends BaseController{
     @ApiOperation(value = "注册")
     public String register(HttpServletRequest request, HttpServletResponse response,
                            @RequestParam("username")String username,
-                           @RequestParam("password")String password){
-        Integer status = userService.add(username, password);
+                           @RequestParam("password")String password,
+                           @RequestParam("realName")String realName,
+                           @RequestParam("email")String email,
+                           @RequestParam("sex")String sex){
+        Integer status = userService.addUser(username, password, realName, email, sex);
         if(status != 0)
             return Result.send(FAIL, null, REGISTER_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, REGISTER_SUCCESS_MESSAGE);
@@ -57,9 +59,10 @@ public class UserController extends BaseController{
     @ApiOperation(value = "管理员修改账户")
     @ContainAuthority(ACCOUNT_MANAGE)
     @Authorization
-    public String modifyAccount(HttpServletRequest request, HttpServletResponse response,
-                           @RequestParam("userId")Long userId,
-                           @RequestParam("password")String password){
+    public String modifyPassword(HttpServletRequest request, HttpServletResponse response,
+                                @RequestHeader(AUTHORIZATION)String token,
+                                @RequestParam("userId")Long userId,
+                                @RequestParam("password")String password){
         Integer status = userService.updatePassword(userId, password);
         if(status != 0)
             return Result.send(FAIL, null, ACCOUNT_UPDATE_FAIL_MESSAGE);

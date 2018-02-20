@@ -1,7 +1,9 @@
 package dangod.themis.service.impl;
 
-import dangod.themis.dao.UserRepo;
-import dangod.themis.model.po.User;
+import dangod.themis.dao.common.UserBaseInfoRepo;
+import dangod.themis.dao.common.UserRepo;
+import dangod.themis.model.po.common.User;
+import dangod.themis.model.po.common.UserBaseInfo;
 import dangod.themis.service.UserService;
 import dangod.themis.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,11 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private UserBaseInfoRepo baseInfoRepo;
 
     @Override
-    public Long check(String username, String password) {
+    public Long checkUser(String username, String password) {
         User user = userRepo.findByUsername(username);
         if (user == null) return -1L;
         if (!user.getPassword().equals(MD5Util.MD5(password + user.getSalt())))
@@ -23,10 +27,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer add(String username, String password) {
+    public Integer addUser(String username, String password, String realname, String email, String sex) {
         if (userRepo.countByUsername(username) != 0)
             return -1;
-        User user = userRepo.save(new User(username, password));
+        User user = new User(username, password);
+        return addUserBaseInfo(realname, email, sex, user);
+    }
+
+    private Integer addUserBaseInfo(String realname, String email, String sex, User user) {
+        UserBaseInfo baseInfo = baseInfoRepo.save(new UserBaseInfo(realname, email, sex, user));
+        if(baseInfo == null)return -1;
         return 0;
     }
 

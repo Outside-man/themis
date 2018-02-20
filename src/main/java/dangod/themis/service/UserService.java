@@ -1,6 +1,6 @@
 package dangod.themis.service;
 
-import dangod.themis.model.po.User;
+import dangod.themis.model.po.common.User;
 
 public interface UserService {
     /**
@@ -9,15 +9,18 @@ public interface UserService {
      * @param password
      * @return
      */
-    Long check(String username, String password);
+    Long checkUser(String username, String password);
 
     /**
      * 增加账户
      * @param username
      * @param password
+     * @param realName
+     * @param email
+     * @param sex
      * @return 0:success
      */
-    Integer add(String username, String password);
+    Integer addUser(String username, String password, String realName, String email, String sex);
 
     /**
      * 用户修改密码

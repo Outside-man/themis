@@ -1,7 +1,7 @@
 package dangod.themis.service.impl;
 
-import dangod.themis.dao.UserBaseInfoRepo;
-import dangod.themis.model.po.UserBaseInfo;
+import dangod.themis.dao.common.UserBaseInfoRepo;
+import dangod.themis.model.po.common.UserBaseInfo;
 import dangod.themis.model.vo.UserBaseInfoVo;
 import dangod.themis.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +17,29 @@ public class UserInfoServiceImpl implements UserInfoService{
 
     @Cacheable(value = "30m")
     @Override
-    public UserBaseInfoVo getBaseInfoByUserId(long userid) {
-        UserBaseInfo userBaseInfo = baseInfoRepo.findByUser_Id(userid);
+    public UserBaseInfoVo getBaseInfoByUserId(long userId) {
+        UserBaseInfo userBaseInfo = baseInfoRepo.findByUser_Id(userId);
         if(userBaseInfo == null) return null;
         return new UserBaseInfoVo(userBaseInfo);
     }
 
-    @Override
-    public Integer addUserBaseInfo(String realname, String email, String sex) {
-        return null;
-    }
+
 
     @CachePut(value = "30m")
     @Override
-    public UserBaseInfoVo updateUserBaseInfo(UserBaseInfo baseInfo) {
-        return null;
+    public UserBaseInfoVo updateUserBaseInfo(long userId, String realName, String email, String sex) {
+        UserBaseInfo baseInfo = getBaseInfoPoByUserId(userId);
+        if(realName != null)
+            baseInfo.setRealName(realName);
+        if(sex != null)
+            baseInfo.setSex(sex);
+        baseInfo.setEmail(email);
+        baseInfoRepo.save(baseInfo);
+        if(baseInfo == null) return null;
+        return new UserBaseInfoVo(baseInfo);
+    }
+
+    private UserBaseInfo getBaseInfoPoByUserId(long userId){
+        return baseInfoRepo.findByUser_Id(userId);
     }
 }

@@ -16,7 +16,7 @@ import java.util.Base64;
 
 import static dangod.themis.controller.base.constant.Message.TOKEN_INVAILD_MESSAGE;
 import static dangod.themis.controller.base.constant.Status.UNAUTHORIZED;
-import static dangod.themis.core.config.constant.Constant.AUTHORIZATION;
+import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
 
 @Component
 @Aspect

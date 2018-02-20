@@ -1,4 +1,4 @@
-package dangod.themis.model.po;
+package dangod.themis.model.po.common;
 
 import dangod.themis.util.MD5Util;
 

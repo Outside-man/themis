@@ -1,4 +1,4 @@
-package dangod.themis.model.po;
+package dangod.themis.model.po.common;
 
 import javax.persistence.*;
 
@@ -8,10 +8,10 @@ public class UserBaseInfo {
     @Id
     @GeneratedValue
     private long id;
-    private String realname;
+    private String realName;
     private String email;
     private String sex;
-    @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
+    @OneToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
     @JoinColumn(name="user_id",nullable=true)
     private User user;
 
@@ -23,12 +23,12 @@ public class UserBaseInfo {
         this.id = id;
     }
 
-    public String getName() {
-        return realname;
+    public String getRealName() {
+        return realName;
     }
 
-    public void setName(String name) {
-        this.realname = name;
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getEmail() {
@@ -52,6 +52,16 @@ public class UserBaseInfo {
     }
 
     public void setUser(User user) {
+        this.user = user;
+    }
+
+    public UserBaseInfo() {
+    }
+
+    public UserBaseInfo(String realName, String email, String sex, User user) {
+        this.realName = realName;
+        this.email = email;
+        this.sex = sex;
         this.user = user;
     }
 }

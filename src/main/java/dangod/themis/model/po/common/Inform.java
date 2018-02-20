@@ -1,4 +1,4 @@
-package dangod.themis.model.po;
+package dangod.themis.model.po.common;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -47,6 +47,10 @@ public class Inform {
 
     public void setDate(Timestamp date) {
         this.date = date;
+    }
+
+    public void updateDate() {
+        this.date = new Timestamp(Calendar.getInstance().getTime().getTime());
     }
 
     public User getUser() {

@@ -1,8 +1,6 @@
 package dangod.themis.service;
 
-import dangod.themis.model.po.Inform;
 import dangod.themis.model.vo.InformVo;
-import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -12,17 +10,60 @@ public interface InformService {
      * @param id
      * @return
      */
-    InformVo getById(long id);
+    InformVo getInformById(long id);
 
+    /**
+     * 添加通知
+     * @param title
+     * @param content
+     * @param userId
+     * @return
+     */
     InformVo addInform(String title, String content, long userId);
 
+    /**
+     * 删除通知
+     * @param id
+     * @return 0:success
+     */
     Integer deleteInformById(long id);
 
-    InformVo updateInform(Inform inform);
+    /**
+     * 验证 inform 修改合法性
+     * @param informId
+     * @param userId
+     * @return
+     */
+    Boolean updateInformValid(long informId, long userId);
 
+    /**
+     * 修改通知
+     * @param informId
+     * @param title
+     * @param content
+     * @param userId
+     * @return
+     */
+    InformVo updateInform(long informId, String title, String content, long userId);
+
+    /**
+     * 获取用户的通知
+     * @param userId
+     * @return
+     */
     List<InformVo> getListByUserId(long userId);
 
-    List<InformVo> getPage(Integer page, Integer size);
+    /**
+     * 获取分页通知
+     * @param page
+     * @param size
+     * @return
+     */
+    List<InformVo> getPageInrom(Integer page, Integer size);
 
-    List<InformVo> getPage(Integer page);
+    /**
+     * 获取分页通知(默认一页5个)
+     * @param page
+     * @return
+     */
 }

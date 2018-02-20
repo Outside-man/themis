@@ -2,7 +2,6 @@ package dangod.themis.controller;
 
 import dangod.themis.controller.base.annotation.Authorization;
 import dangod.themis.core.result.Result;
-import dangod.themis.model.po.User;
 import dangod.themis.service.TokenService;
 import dangod.themis.service.UserService;
 import dangod.themis.util.ReplayDefender;
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import static dangod.themis.controller.base.constant.Message.*;
 import static dangod.themis.controller.base.constant.Status.*;
-import static dangod.themis.core.config.constant.Constant.AUTHORIZATION;
+import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -32,7 +31,7 @@ public class TokenController {
     @Autowired
     private ReplayDefender replayDefender;
 
-    @RequestMapping(method = POST, produces="application/json;charset=UTF-8")
+    @RequestMapping(method = POST)
     @ApiOperation(value = "登录")
     public String login(HttpServletRequest request, HttpServletResponse response,
                         @RequestParam("username")String username,
@@ -41,7 +40,7 @@ public class TokenController {
                         @RequestParam("nonce")String nonce){
         if(replayDefender.checkReplay(timestamp, nonce))
             return Result.send(REPLAY_ATTACK, null, REPLAY_ATTACK_MESSAGE);
-        long userId = userService.check(username, password);
+        long userId = userService.checkUser(username, password);
         if(userId == -1){
             return Result.send(FAIL, null, LOGIN_FAIL_MESSAGE);
         }

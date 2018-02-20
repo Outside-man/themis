@@ -1,18 +1,12 @@
 package dangod.themis.model.vo;
 
-import com.alibaba.fastjson.JSON;
-import dangod.themis.model.po.Inform;
-import dangod.themis.service.UserInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
+
+import dangod.themis.model.po.common.Inform;
 
 import java.text.SimpleDateFormat;
 public class InformVo {
-
-    private long id;
+    private long informId;
+    private long userId;
     private String title;
     private String content;
     private String date;
@@ -22,7 +16,8 @@ public class InformVo {
     }
 
     public InformVo(Inform inform, String author) {
-        this.id = inform.getId();
+        this.informId = inform.getId();
+        this.userId = inform.getId();
         this.title = inform.getTitle();
         this.content = inform.getContent();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 E ");
@@ -31,20 +26,21 @@ public class InformVo {
         else this.author = author;
     }
 
-    public InformVo(long id, String title, String content, String date, String author) {
-        this.id = id;
+    public InformVo(long informId, long userId, String title, String content, String date, String author) {
+        this.informId = informId;
+        this.userId = userId;
         this.title = title;
         this.content = content;
         this.date = date;
         this.author = author;
     }
 
-    public long getId() {
-        return id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
@@ -77,5 +73,13 @@ public class InformVo {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public long getInformId() {
+        return informId;
+    }
+
+    public void setInformId(long informId) {
+        this.informId = informId;
     }
 }
