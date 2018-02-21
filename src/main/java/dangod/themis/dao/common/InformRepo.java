@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface InformRepo extends JpaRepository<Inform, Long> {
     @Query(value = "select * from common_inform where user_id = :userId ORDER BY date", nativeQuery = true)
-    List<Inform> getInformByUserId(@Param("userId") Long userId);
+    List<Inform>findAllByUser_IdOrderByDate(@Param("userId") Long userId);
 }

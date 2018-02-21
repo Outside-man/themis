@@ -1,4 +1,4 @@
-package dangod.themis.service.impl;
+package dangod.themis.service.impl.core;
 
 import dangod.themis.dao.authority.AuthorityMenuRepo;
 import dangod.themis.dao.authority.AuthorityTypeRepo;
@@ -6,15 +6,11 @@ import dangod.themis.dao.authority.AuthorityUserRepo;
 import dangod.themis.model.po.authority.AuthorityMenu;
 import dangod.themis.model.po.authority.AuthorityType;
 import dangod.themis.model.po.authority.AuthorityUser;
-import dangod.themis.model.po.authority.constant.MenuTable;
 import dangod.themis.model.vo.MenuVo;
-import dangod.themis.model.vo.TokenVo;
 import dangod.themis.service.AuthorityService;
 import dangod.themis.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -47,7 +43,7 @@ public class AuthorityServiceImpl implements AuthorityService {
     }
 
 
-    @Cacheable(value = "30m")
+    @Cacheable(value = "30m", key = "'user_menu_'+#userId")
     @Override
     public List<MenuVo> getMenuByUserId(long userId) {
 
@@ -79,10 +75,10 @@ public class AuthorityServiceImpl implements AuthorityService {
         return menuVoList;
     }
 
-    @Cacheable(value = "30m")
+    @Cacheable(value = "30m", key = "'user_authory_'+#userId")
     @Override
     public List<Long> getAuthoritiesByUserId(long userId) {
-        AuthorityUser user  = userRepo.findByUserId(userId);
+        AuthorityUser user  = userRepo.findByUser_Id(userId);
         List<Long> list = user.getList();
         return list;
     }

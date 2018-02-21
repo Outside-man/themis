@@ -1,4 +1,4 @@
-package dangod.themis.service.impl;
+package dangod.themis.service.impl.common;
 
 import dangod.themis.dao.common.InformRepo;
 import dangod.themis.model.po.common.Inform;
@@ -30,7 +30,7 @@ public class InformServiceImpl implements InformService {
     @Autowired
     private UserInfoService userInfoService;
 
-    @Cacheable(value = "30m")
+    @Cacheable(value = "30m", key = "'inform_'+#id")
     @Override
     public InformVo getInformById(long id) {
         Inform inform = informRepo.findOne(id);
@@ -48,7 +48,7 @@ public class InformServiceImpl implements InformService {
         return new InformVo(inform, author);
     }
 
-    @CacheEvict(value = "30m")
+    @CacheEvict(value = "30m", key = "'inform_'+#id")
     @Override
     public Integer deleteInformById(long id) {
         try {
@@ -71,7 +71,7 @@ public class InformServiceImpl implements InformService {
         return true;
     }
 
-    @CachePut(value = "30m")
+    @CachePut(value = "30m", key = "'inform_'+#informId")
     @Override
     public InformVo updateInform(long informId, String title, String content, long userId) {
         Inform inform = getInformPoById(informId);
@@ -89,10 +89,9 @@ public class InformServiceImpl implements InformService {
         return informRepo.findOne(informId);
     }
 
-    @Cacheable(value = "30m")
     @Override
     public List<InformVo> getListByUserId(long userId) {
-        List<Inform> informList = informRepo.getInformByUserId(userId);
+        List<Inform> informList = informRepo.findAllByUser_IdOrderByDate(userId);
         if(informList == null) return null;
         List<InformVo> list = new ArrayList<>();
         String author = null;
@@ -103,10 +102,9 @@ public class InformServiceImpl implements InformService {
         return list;
     }
 
-    @Cacheable(value = "30m")
     @Override
-    public List<InformVo> getPageInrom(Integer page, Integer size) {
-        Pageable pageable = new PageRequest(page, size, Sort.Direction.ASC, "id");
+    public List<InformVo> getPageInform(Integer page, Integer size) {
+        Pageable pageable = new PageRequest(page, size, new Sort("date"));
         Page<Inform> informList =  informRepo.findAll(pageable);
         if(informList == null) return null;
         List<InformVo> list = new ArrayList<>();

@@ -1,6 +1,12 @@
 package dangod.themis.controller.base.constant;
 
 public class Message {
+    public final static String BASE_MESSAGE_BAD_REQUEST = "请求格式错误错误";
+    public final static String BASE_MESSAGE_SERVER_ERROR = "服务器内部错误";
+    public final static String BASE_MESSAGE_NOT_FOUND = "请求API不存在";
+
+
+
     public final static String LOGIN_FAIL_MESSAGE = "账号或密码错误";
 
     public final static String LOGIN_SUCCESS_MESSAGE = "登录成功";
@@ -28,13 +34,18 @@ public class Message {
     public final static String STU_BASEINFO_FAIL_MESSAGE = "获取学生基础信息失败";
     public final static String STU_BASEINFO_SUCCESS_MESSAGE = "获取学生基础信息成功";
 
+    public final static String STU_BASEINFO_UPDATE_FAIL_MESSAGE = "更新学生基础信息失败";
+    public final static String STU_BASEINFO_UPDATE_SUCCESS_MESSAGE = "更新学生基础信息成功";
+
+
+
 
     public final static String REPLAY_ATTACK_MESSAGE = "请求失败，请重试";
 
     public final static String TOKEN_INVAILD_MESSAGE = "TOKEN错误或已失效";
     public final static String TOKEN_VAILD_MESSAGE = "TOKEN有效";
 
-    public final static String PERMISSIN_DENIED = "没有权限";
+    public final static String PERMISSIN_DENIED_MESSAGE = "没有权限";
 
 
 

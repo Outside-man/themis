@@ -4,7 +4,15 @@ import javax.servlet.http.HttpServletRequest;
 
 public class BaseController {
     protected static long getUserId(HttpServletRequest request){
-        return Long.parseLong(getAttribute(request, "userId"));
+        return (long)request.getAttribute("userId");
+    }
+
+    protected static long getManageClass(HttpServletRequest request){
+        return (long)request.getAttribute("classId");
+    }
+
+    protected static long getManageMajor(HttpServletRequest request){
+        return (long)request.getAttribute("majorId");
     }
 
     protected static String getAttribute(HttpServletRequest request, String key){

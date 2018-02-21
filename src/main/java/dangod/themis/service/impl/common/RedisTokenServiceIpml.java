@@ -1,4 +1,4 @@
-package dangod.themis.service.impl;
+package dangod.themis.service.impl.common;
 
 import dangod.themis.model.vo.TokenVo;
 import dangod.themis.service.TokenService;

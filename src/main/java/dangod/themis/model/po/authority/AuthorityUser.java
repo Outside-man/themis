@@ -7,14 +7,12 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "core_authority_user", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"user_id"})
-})
+@Table(name = "core_authority_user")
 public class AuthorityUser {
     @Id
     @GeneratedValue
     private long id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", nullable=false)
     private User user;
     @Column(name = "authority_list")

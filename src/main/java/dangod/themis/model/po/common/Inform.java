@@ -13,7 +13,7 @@ public class Inform {
     private String title;
     private String content;
     private Timestamp date;
-    @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.DETACH)
     @JoinColumn(name="user_id",nullable=true)
     private User user;
 

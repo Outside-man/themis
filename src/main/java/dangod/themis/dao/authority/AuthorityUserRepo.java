@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuthorityUserRepo extends JpaRepository<AuthorityUser, Long> {
-    @Query(value = "select * from core_authority_user where user_id = :userId", nativeQuery=true)
-    AuthorityUser findByUserId(@Param("userId")Long userId);
+    AuthorityUser findByUser_Id(long userId);
 }

@@ -55,7 +55,7 @@ public class TokenCheck {
 
         byte[] bytes = Base64.getDecoder().decode(token);
         String[] arr = new String(bytes, "utf-8").split("-");
-        request.setAttribute("userId", arr[0]);
+        request.setAttribute("userId", Long.parseLong(arr[0]));
         return proceedingJoinPoint.proceed();
     }
 

@@ -1,4 +1,4 @@
-package dangod.themis.service.impl;
+package dangod.themis.service.impl.score;
 
 import dangod.themis.dao.score.ClassRepo;
 import dangod.themis.dao.score.MajorRepo;

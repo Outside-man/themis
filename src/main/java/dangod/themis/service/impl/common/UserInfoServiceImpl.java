@@ -1,4 +1,4 @@
-package dangod.themis.service.impl;
+package dangod.themis.service.impl.common;
 
 import dangod.themis.dao.common.UserBaseInfoRepo;
 import dangod.themis.model.po.common.UserBaseInfo;
@@ -15,7 +15,7 @@ public class UserInfoServiceImpl implements UserInfoService{
     private UserBaseInfoRepo baseInfoRepo;
 
 
-    @Cacheable(value = "30m")
+    @Cacheable(value = "30m", key = "'user_base_'+#userId")
     @Override
     public UserBaseInfoVo getBaseInfoByUserId(long userId) {
         UserBaseInfo userBaseInfo = baseInfoRepo.findByUser_Id(userId);
@@ -25,7 +25,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 
 
 
-    @CachePut(value = "30m")
+    @CachePut(value = "30m", key = "'user_base_'+#userId")
     @Override
     public UserBaseInfoVo updateUserBaseInfo(long userId, String realName, String email, String sex) {
         UserBaseInfo baseInfo = getBaseInfoPoByUserId(userId);

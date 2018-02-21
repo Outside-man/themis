@@ -10,7 +10,7 @@ import java.util.List;
 public interface StudentBaseInfoRepo extends JpaRepository<StudentBaseInfo, Long> {
     StudentBaseInfo findByBaseInfo_User_Id(long userId);
 
-    StudentBaseInfo findBySchoolId(String schoolId);
+    StudentBaseInfo findByStuId(String stuId);
 
     List<StudentBaseInfo> findByDormitory_Id(long dormitoryId, Pageable pageable);
 

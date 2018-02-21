@@ -9,7 +9,7 @@ public class Class {
     @GeneratedValue
     private long id;
     private Integer classNum;
-    @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.DETACH)
     @JoinColumn(name="major_id",nullable=true)
     private Major major;
 

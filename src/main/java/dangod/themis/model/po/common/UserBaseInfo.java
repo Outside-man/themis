@@ -11,7 +11,7 @@ public class UserBaseInfo {
     private String realName;
     private String email;
     private String sex;
-    @OneToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
+    @OneToOne(fetch=FetchType.EAGER, cascade= CascadeType.DETACH)
     @JoinColumn(name="user_id",nullable=true)
     private User user;
 

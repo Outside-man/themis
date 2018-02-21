@@ -4,6 +4,7 @@ import dangod.themis.model.po.score.StudentBaseInfo;
 
 public class StudentBaseInfoVo {
     private long userId;
+    private String stuId;
     private String realName;
     private String sex;
     private String className;
@@ -76,11 +77,20 @@ public class StudentBaseInfoVo {
         this.political = political;
     }
 
+    public String getStuId() {
+        return stuId;
+    }
+
+    public void setStuId(String stuId) {
+        this.stuId = stuId;
+    }
+
     public StudentBaseInfoVo() {
     }
 
     public StudentBaseInfoVo(StudentBaseInfo baseInfo) {
         this.userId = baseInfo.getBaseInfo().getUser().getId();
+        this.stuId = baseInfo.getStuId();
         this.realName = baseInfo.getBaseInfo().getRealName();
         this.sex = baseInfo.getBaseInfo().getSex();
         if(baseInfo.getaClass()!=null)
@@ -96,8 +106,9 @@ public class StudentBaseInfoVo {
         this.political = baseInfo.getPolitical();
     }
 
-    public StudentBaseInfoVo(long userId, String realName, String sex, String className, String photo, String entrance_time, String dormitory, String political) {
+    public StudentBaseInfoVo(long userId, String stuId, String realName, String sex, String className, String photo, String entrance_time, String dormitory, String political) {
         this.userId = userId;
+        this.stuId = stuId;
         this.realName = realName;
         this.sex = sex;
         this.className = className;

@@ -14,7 +14,7 @@ public class AuthorityMenu {
     private String path;
     private String component;
     private String icon;
-    @ManyToOne(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
+    @ManyToOne(fetch= FetchType.EAGER, cascade= CascadeType.DETACH)
     @JoinColumn(name="parent_id",nullable=true)
     private AuthorityMenu parent;
 

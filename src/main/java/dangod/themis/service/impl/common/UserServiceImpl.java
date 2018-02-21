@@ -1,4 +1,4 @@
-package dangod.themis.service.impl;
+package dangod.themis.service.impl.common;
 
 import dangod.themis.dao.common.UserBaseInfoRepo;
 import dangod.themis.dao.common.UserRepo;
@@ -7,7 +7,6 @@ import dangod.themis.model.po.common.UserBaseInfo;
 import dangod.themis.service.UserService;
 import dangod.themis.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -50,7 +49,6 @@ public class UserServiceImpl implements UserService {
         return 0;
     }
 
-    @Cacheable(value = "30m")
     @Override
     public User getUserById(Long userId) {
         return userRepo.findOne(userId);

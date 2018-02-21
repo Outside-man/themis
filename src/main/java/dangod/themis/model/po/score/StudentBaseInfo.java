@@ -11,7 +11,7 @@ public class StudentBaseInfo {
     @Id
     @GeneratedValue
     private long id;
-    private String schoolId;
+    private String stuId;
     private String photo;
     private String entrance_time;
     private String political;
@@ -34,12 +34,12 @@ public class StudentBaseInfo {
         this.id = id;
     }
 
-    public String getSchoolId() {
-        return schoolId;
+    public String getStuId() {
+        return stuId;
     }
 
-    public void setSchoolId(String schoolId) {
-        this.schoolId = schoolId;
+    public void setStuId(String stuId) {
+        this.stuId = stuId;
     }
 
     public String getPhoto() {

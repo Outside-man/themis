@@ -59,7 +59,7 @@ public interface InformService {
      * @param size
      * @return
      */
-    List<InformVo> getPageInrom(Integer page, Integer size);
+    List<InformVo> getPageInform(Integer page, Integer size);
 
     /**
      * 获取分页通知(默认一页5个)

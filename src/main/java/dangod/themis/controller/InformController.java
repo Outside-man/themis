@@ -46,7 +46,7 @@ public class InformController extends BaseController{
         int size = 6;
         if(getAttribute(request, "size") != null)
             size = Integer.parseInt(getAttribute(request, "size"));
-        List<InformVo> list = informService.getPageInrom(page, size);
+        List<InformVo> list = informService.getPageInform(page, size);
         if(list == null) return Result.send(NOT_FIND, null, INFORM_NOT_EXISTS_MESSAGE);
         return Result.send(SUCCESS, list, INFORM_SUCCESS_MESSAGE);
     }
@@ -102,7 +102,7 @@ public class InformController extends BaseController{
             if(informVo == null) return Result.send(FAIL, null, INFORM_UPDATE_FAIL_MESSAGE);
             return Result.send(SUCCESS, informVo, INFORM_UPDATE_SUCCESS_MESSAGE);
         }else{
-            return Result.send(UNAUTHORIZED, null, PERMISSIN_DENIED);
+            return Result.send(PERMISSIN_DENIED, null, PERMISSIN_DENIED_MESSAGE);
         }
     }
 
@@ -131,7 +131,7 @@ public class InformController extends BaseController{
             if(status != 0) return Result.send(FAIL, null, INFORM_UPDATE_FAIL_MESSAGE);
             return Result.send(SUCCESS, null, INFORM_UPDATE_SUCCESS_MESSAGE);
         }else{
-            return Result.send(UNAUTHORIZED, null, PERMISSIN_DENIED);
+            return Result.send(PERMISSIN_DENIED, null, PERMISSIN_DENIED_MESSAGE);
         }
     }
 
