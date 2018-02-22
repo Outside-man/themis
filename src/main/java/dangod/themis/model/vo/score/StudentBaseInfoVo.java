@@ -1,4 +1,4 @@
-package dangod.themis.model.vo;
+package dangod.themis.model.vo.score;
 
 import dangod.themis.model.po.score.StudentBaseInfo;
 

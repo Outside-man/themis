@@ -1,6 +1,6 @@
 package dangod.themis.service;
 
-import dangod.themis.model.vo.StudentBaseInfoVo;
+import dangod.themis.model.vo.score.StudentBaseInfoVo;
 
 import java.util.List;
 

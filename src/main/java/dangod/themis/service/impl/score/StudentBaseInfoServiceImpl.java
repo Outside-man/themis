@@ -7,7 +7,7 @@ import dangod.themis.model.po.common.UserBaseInfo;
 import dangod.themis.model.po.score.Class;
 import dangod.themis.model.po.score.Dormitory;
 import dangod.themis.model.po.score.StudentBaseInfo;
-import dangod.themis.model.vo.StudentBaseInfoVo;
+import dangod.themis.model.vo.score.StudentBaseInfoVo;
 import dangod.themis.service.StudentBaseInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -148,6 +148,26 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
         StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(stuId);
         if(baseInfo == null)return null;
         baseInfo.setPolitical(political);
+        try {
+            studentBaseInfoRepo.saveAndFlush(baseInfo);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        return new StudentBaseInfoVo(baseInfo);
+    }
+
+    @Override
+    public StudentBaseInfoVo updateBaseInfo(String stuId, long dormitoryId, String political) {
+        Dormitory dormitory = null;
+        if(dormitoryId != -1) {
+            dormitory = dormitoryRepo.findOne(dormitoryId);
+            if(dormitory == null)return null;
+        }
+        StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(stuId);
+        if(baseInfo == null)return null;
+        baseInfo.setPolitical(political);
+        baseInfo.setDormitory(dormitory);
         try {
             studentBaseInfoRepo.saveAndFlush(baseInfo);
         }catch (Exception e){

@@ -23,9 +23,9 @@ public class MenuTable {
 
         MENU_TABLE.put(13L, new AuthorityMenu(13L, "student", "cogs", "德育分管理", "/common", null));
         MENU_TABLE.put(9L, new AuthorityMenu(9L, "student/self", "cogs", "个人信息查看", "/self", MENU_TABLE.get(13L)));
-        MENU_TABLE.put(10L, new AuthorityMenu(10L, "student/class", "cogs", "班级学生信息管理", "/class", MENU_TABLE.get(13L)));
-        MENU_TABLE.put(11L, new AuthorityMenu(11L, "student/major", "cogs", "专业学生信息管理", "/major", MENU_TABLE.get(13L)));
-        MENU_TABLE.put(12L, new AuthorityMenu(12L, "student/school", "cogs", "全校学生信息管理", "/school", MENU_TABLE.get(13L)));
+        MENU_TABLE.put(10L, new AuthorityMenu(10L, "student/class", "cogs", "班级信息管理", "/class", MENU_TABLE.get(13L)));
+        MENU_TABLE.put(11L, new AuthorityMenu(11L, "student/major", "cogs", "专业信息管理", "/major", MENU_TABLE.get(13L)));
+        MENU_TABLE.put(12L, new AuthorityMenu(12L, "student/school", "cogs", "全校信息管理", "/school", MENU_TABLE.get(13L)));
 
 
     }

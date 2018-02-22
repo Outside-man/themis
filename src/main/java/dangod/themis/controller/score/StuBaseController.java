@@ -6,7 +6,7 @@ import dangod.themis.controller.base.annotation.ContainAuthority;
 import dangod.themis.controller.base.annotation.score.Class;
 import dangod.themis.controller.base.annotation.score.Major;
 import dangod.themis.core.result.Result;
-import dangod.themis.model.vo.StudentBaseInfoVo;
+import dangod.themis.model.vo.score.StudentBaseInfoVo;
 import dangod.themis.service.StudentBaseInfoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,8 +76,8 @@ public class StuBaseController extends BaseController{
                                                        @RequestParam("id")long id,
                                                        @RequestParam("page")Integer page){
         int size = 6;
-        if(getAttribute(request, "size") != null)
-            size = Integer.parseInt(getAttribute(request, "size"));
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
         List<StudentBaseInfoVo> list = studentBaseInfoService.getStudentListBaseByClass(id, page, size);
         if(list == null) return Result.send(FAIL, null, STU_BASEINFO_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_BASEINFO_SUCCESS_MESSAGE);
@@ -91,8 +91,8 @@ public class StuBaseController extends BaseController{
                                                        @RequestParam("id")long id,
                                                        @RequestParam("page")Integer page){
         int size = 6;
-        if(getAttribute(request, "size") != null)
-            size = Integer.parseInt(getAttribute(request, "size"));
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
         List<StudentBaseInfoVo> list = studentBaseInfoService.getStudentListBaseByMajor(id, page, size);
         if(list == null) return Result.send(FAIL, null, STU_BASEINFO_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_BASEINFO_SUCCESS_MESSAGE);
@@ -106,8 +106,8 @@ public class StuBaseController extends BaseController{
                                                        @RequestParam("id")long id,
                                                        @RequestParam("page")Integer page){
         int size = 6;
-        if(getAttribute(request, "size") != null)
-            size = Integer.parseInt(getAttribute(request, "size"));
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
         List<StudentBaseInfoVo> list = studentBaseInfoService.getStudentListBaseByDormitory(id, page, size);
         if(list == null) return Result.send(FAIL, null, STU_BASEINFO_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_BASEINFO_SUCCESS_MESSAGE);
@@ -135,8 +135,8 @@ public class StuBaseController extends BaseController{
     public String getStudentBaseInfoListClassAdmin(HttpServletRequest request, HttpServletResponse response,
                                                       @RequestParam("page")Integer page){
         int size = 6;
-        if(getAttribute(request, "size") != null)
-            size = Integer.parseInt(getAttribute(request, "size"));
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
         List<StudentBaseInfoVo> list = studentBaseInfoService.getStudentListBaseByClass(getManageClass(request), page, size);
         if(list == null) return Result.send(FAIL, null, STU_BASEINFO_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_BASEINFO_SUCCESS_MESSAGE);
@@ -167,8 +167,8 @@ public class StuBaseController extends BaseController{
         if(!studentBaseInfoService.checkClassMajor(id, getManageMajor(request)))
             return Result.send(PERMISSIN_DENIED, null, PERMISSIN_DENIED_MESSAGE);
         int size = 6;
-        if(getAttribute(request, "size") != null)
-            size = Integer.parseInt(getAttribute(request, "size"));
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
         List<StudentBaseInfoVo> list = studentBaseInfoService.getStudentListBaseByClass(id, page, size);
         if(list == null) return Result.send(FAIL, null, STU_BASEINFO_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_BASEINFO_SUCCESS_MESSAGE);
@@ -183,8 +183,8 @@ public class StuBaseController extends BaseController{
     public String getStudentBaseInfoListMajorAdmin(HttpServletRequest request, HttpServletResponse response,
                                                       @RequestParam("page")Integer page){
         int size = 6;
-        if(getAttribute(request, "size") != null)
-            size = Integer.parseInt(getAttribute(request, "size"));
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
         List<StudentBaseInfoVo> list = studentBaseInfoService.getStudentListBaseByMajor(getManageMajor(request), page, size);
         if(list == null) return Result.send(FAIL, null, STU_BASEINFO_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_BASEINFO_SUCCESS_MESSAGE);

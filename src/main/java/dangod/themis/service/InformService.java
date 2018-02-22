@@ -51,7 +51,7 @@ public interface InformService {
      * @param userId
      * @return
      */
-    List<InformVo> getListByUserId(long userId);
+    List<InformVo> getListByUserId(long userId, Integer page, Integer size);
 
     /**
      * 获取分页通知

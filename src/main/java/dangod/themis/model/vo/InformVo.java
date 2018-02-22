@@ -17,7 +17,7 @@ public class InformVo {
 
     public InformVo(Inform inform, String author) {
         this.informId = inform.getId();
-        this.userId = inform.getId();
+        this.userId = inform.getUser().getId();
         this.title = inform.getTitle();
         this.content = inform.getContent();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 E ");

@@ -18,4 +18,7 @@ public class BaseController {
     protected static String getAttribute(HttpServletRequest request, String key){
         return (String)request.getAttribute(key);
     }
+    protected static String getParameter(HttpServletRequest request, String key){
+        return request.getParameter(key);
+    }
 }

@@ -57,16 +57,18 @@ public class AuthorityServiceImpl implements AuthorityService {
         Map<Long, AuthorityMenu> menuMap = getMenuListByAuthorityList(authorityList);
 
         //构建菜单结构
+        Map<Long, MenuVo> t = new HashMap<>();
+        for(AuthorityMenu menu : menuMap.values()){
+            t.put(menu.getId(), new MenuVo(menu));
+        }
+
 
         Map<Long, MenuVo> menuVoMap = new HashMap<>();
         for(AuthorityMenu menu : menuMap.values()){
             if(menu.getParent() == null ){
-                menuVoMap.put(menu.getId(), new MenuVo(menu));
-            }
-        }
-        for(AuthorityMenu menu : menuMap.values()){
-            if(menu.getParent() != null ){
-                menuVoMap.get(menu.getParent().getId()).setChildrenByMenuVo(new MenuVo(menu));
+                menuVoMap.put(menu.getId(), t.get(menu.getId()));
+            }else{
+                t.get(menu.getParent().getId()).setChildrenByMenuVo(t.get(menu.getId()));
             }
         }
         List<MenuVo> menuVoList = new ArrayList<>();

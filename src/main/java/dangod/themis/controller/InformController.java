@@ -30,22 +30,22 @@ public class InformController extends BaseController{
     @Autowired
     private InformService informService;
 
-    @RequestMapping(value = "/id/{id}", method = GET)
+    @RequestMapping(value = "/id", method = GET)
     @ApiOperation(value = "通过id获取通知")
     public String getInformById(HttpServletRequest request, HttpServletResponse response,
-                                 @PathVariable("id")Long id){
+                                    @RequestParam("id")Long id){
         InformVo informVo = informService.getInformById(id);
         if(informVo == null) return Result.send(NOT_FIND, null, INFORM_NOT_EXISTS_MESSAGE);
         return Result.send(SUCCESS, informVo, INFORM_SUCCESS_MESSAGE);
     }
 
-    @RequestMapping(value = "/page/{page}", method = GET)
+    @RequestMapping(value = "/page", method = GET)
     @ApiOperation(value = "分页获取通知")
     public String getInformByPage(HttpServletRequest request, HttpServletResponse response,
-                                    @PathVariable("page")Integer page){
+                                    @RequestParam("page")Integer page){
         int size = 6;
-        if(getAttribute(request, "size") != null)
-            size = Integer.parseInt(getAttribute(request, "size"));
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
         List<InformVo> list = informService.getPageInform(page, size);
         if(list == null) return Result.send(NOT_FIND, null, INFORM_NOT_EXISTS_MESSAGE);
         return Result.send(SUCCESS, list, INFORM_SUCCESS_MESSAGE);
@@ -56,22 +56,28 @@ public class InformController extends BaseController{
     @Authorization
     @ContainAuthority(INFORM_SELF)
     public String getInformBySelf(HttpServletRequest request, HttpServletResponse response,
-                                    @RequestHeader(AUTHORIZATION)String token){
-
-        List<InformVo> list = informService.getListByUserId(getUserId(request));
+                                    @RequestHeader(AUTHORIZATION)String token,
+                                    @RequestParam("page")Integer page){
+        int size = 6;
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
+        List<InformVo> list = informService.getListByUserId(getUserId(request), page, size);
         if(list == null) return Result.send(NOT_FIND, null, INFORM_NOT_EXISTS_MESSAGE);
         return Result.send(SUCCESS, list, INFORM_SUCCESS_MESSAGE);
     }
 
-    @RequestMapping(value = "/user/{userId}", method = GET)
+    @RequestMapping(value = "/admin", method = GET)
     @ApiOperation(value = "管理通过userId获取通知")
     @Authorization
     @ContainAuthority(INFORM_MANAGE)
     public String getInformByUserId(HttpServletRequest request, HttpServletResponse response,
                                     @RequestHeader(AUTHORIZATION)String token,
-                                    @PathVariable("userId")Long userId){
-
-        List<InformVo> list = informService.getListByUserId(userId);
+                                    @RequestParam("userId")Long userId,
+                                    @RequestParam("page")Integer page){
+        int size = 6;
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
+        List<InformVo> list = informService.getListByUserId(userId, page, size);
         if(list == null) return Result.send(NOT_FIND, null, INFORM_NOT_EXISTS_MESSAGE);
         return Result.send(SUCCESS, list, INFORM_SUCCESS_MESSAGE);
     }
