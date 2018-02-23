@@ -10,6 +10,7 @@ import dangod.themis.model.vo.score.StudentBaseInfoVo;
 import dangod.themis.service.StudentBaseInfoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ import static dangod.themis.model.po.authority.constant.TypeContant.SCHOOL_STUDE
 import static dangod.themis.model.po.authority.constant.TypeContant.SELF_STUDENT;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/stu/base")
 public class StuBaseController extends BaseController{
@@ -109,6 +110,20 @@ public class StuBaseController extends BaseController{
         if(getParameter(request, "size") != null)
             size = Integer.parseInt(getParameter(request, "size"));
         List<StudentBaseInfoVo> list = studentBaseInfoService.getStudentListBaseByDormitory(id, page, size);
+        if(list == null) return Result.send(FAIL, null, STU_BASEINFO_FAIL_MESSAGE);
+        return Result.send(SUCCESS, list, STU_BASEINFO_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "school",method = GET)
+    @ApiOperation(value = "校级管理员获取学生信息列表")
+    @ContainAuthority(SCHOOL_STUDENT_MANAGE)
+    @Authorization
+    public String getStudentBaseInfoSchoolAdmin(HttpServletRequest request, HttpServletResponse response,
+                                                           @RequestParam("page")Integer page){
+        int size = 6;
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
+        List<StudentBaseInfoVo> list = studentBaseInfoService.getStudentListBaseAll(page, size);
         if(list == null) return Result.send(FAIL, null, STU_BASEINFO_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_BASEINFO_SUCCESS_MESSAGE);
     }

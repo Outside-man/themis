@@ -10,6 +10,7 @@ public class InformVo {
     private String title;
     private String content;
     private String date;
+    private String modified;
     private String author;
 
     public InformVo() {
@@ -22,16 +23,21 @@ public class InformVo {
         this.content = inform.getContent();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 E ");
         this.date = sdf.format(inform.getDate());
+        if(inform.getModified() != null)
+            this.modified = sdf.format(inform.getModified());
+        else
+            this.modified = this.date;
         if(author == null) this.author = "未知";
         else this.author = author;
     }
 
-    public InformVo(long informId, long userId, String title, String content, String date, String author) {
+    public InformVo(long informId, long userId, String title, String content, String date, String modified, String author) {
         this.informId = informId;
         this.userId = userId;
         this.title = title;
         this.content = content;
         this.date = date;
+        this.modified = modified;
         this.author = author;
     }
 
@@ -65,6 +71,14 @@ public class InformVo {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getModified() {
+        return modified;
+    }
+
+    public void setModified(String modified) {
+        this.modified = modified;
     }
 
     public String getAuthor() {

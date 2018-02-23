@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static dangod.themis.controller.base.constant.Message.BASEINFO_FAIL_MESSAGE;
-import static dangod.themis.controller.base.constant.Message.BASEINFO_SUCCESS_MESSAGE;
+import java.util.List;
+
+import static dangod.themis.controller.base.constant.Message.*;
 import static dangod.themis.controller.base.constant.Status.FAIL;
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
 import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
@@ -67,7 +68,22 @@ public class UserBaseInfoController extends BaseController {
 
         UserBaseInfoVo baseInfoVo = userInfoService.updateUserBaseInfo(userId, realName, email, sex);
         if(baseInfoVo == null)
+            return Result.send(FAIL, null, BASEINFO_UPDATE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, baseInfoVo, BASEINFO_UPDATE_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/admin", method = GET)
+    @ApiOperation(value = "管理员获取所有用户账号信息")
+    @ContainAuthority(ACCOUNT_MANAGE)
+    @Authorization
+    public String updateBaseInfo(HttpServletRequest request, HttpServletResponse response,
+                                 @RequestParam("page")Integer page){
+        int size = 6;
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
+        List<UserBaseInfoVo> list = userInfoService.getAllUserBaseInfo(page, size);
+        if(list == null)
             return Result.send(FAIL, null, BASEINFO_FAIL_MESSAGE);
-        return Result.send(SUCCESS, baseInfoVo, BASEINFO_SUCCESS_MESSAGE);
+        return Result.send(SUCCESS, list, BASEINFO_SUCCESS_MESSAGE);
     }
 }

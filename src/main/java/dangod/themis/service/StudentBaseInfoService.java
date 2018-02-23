@@ -11,6 +11,8 @@ public interface StudentBaseInfoService {
 
     StudentBaseInfoVo getStudentBaseByStuId(String stuId);
 
+    List<StudentBaseInfoVo> getStudentListBaseAll(Integer page, Integer size);
+
     List<StudentBaseInfoVo> getStudentListBaseByDormitory(long dormitoryId, Integer page, Integer size);
 
     List<StudentBaseInfoVo> getStudentListBaseByClass(long classId, Integer page, Integer size);

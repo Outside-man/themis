@@ -7,7 +7,14 @@ import dangod.themis.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService{
@@ -37,6 +44,17 @@ public class UserInfoServiceImpl implements UserInfoService{
         baseInfoRepo.save(baseInfo);
         if(baseInfo == null) return null;
         return new UserBaseInfoVo(baseInfo);
+    }
+
+    @Override
+    public List<UserBaseInfoVo> getAllUserBaseInfo(Integer page, Integer size) {
+        Pageable pageable = new PageRequest(page, size, new Sort("id"));
+        Page<UserBaseInfo> poList= baseInfoRepo.findAll(pageable);
+        List<UserBaseInfoVo> voList = new ArrayList<>();
+        for(UserBaseInfo baseInfo : poList){
+            voList.add(new UserBaseInfoVo(baseInfo));
+        }
+        return voList;
     }
 
     private UserBaseInfo getBaseInfoPoByUserId(long userId){

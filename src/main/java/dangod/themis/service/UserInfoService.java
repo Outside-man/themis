@@ -2,6 +2,8 @@ package dangod.themis.service;
 
 import dangod.themis.model.vo.UserBaseInfoVo;
 
+import java.util.List;
+
 public interface UserInfoService {
 
     //基础信息处理方法
@@ -22,4 +24,6 @@ public interface UserInfoService {
      * @return
      */
     UserBaseInfoVo updateUserBaseInfo(long userId, String realName, String email, String sex);
+
+    List<UserBaseInfoVo> getAllUserBaseInfo(Integer page, Integer size);
 }

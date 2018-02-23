@@ -91,7 +91,7 @@ public class InformServiceImpl implements InformService {
 
     @Override
     public List<InformVo> getListByUserId(long userId, Integer page, Integer size) {
-        List<Inform> informList =  informRepo.findByUser_Id(userId, new PageRequest(page, size, new Sort("date")));
+        List<Inform> informList =  informRepo.findByUser_Id(userId, new PageRequest(page, size, new Sort(Sort.Direction.DESC, "date")));
         if(informList == null) return null;
         List<InformVo> list = new ArrayList<>();
         String author = null;
@@ -104,7 +104,7 @@ public class InformServiceImpl implements InformService {
 
     @Override
     public List<InformVo> getPageInform(Integer page, Integer size) {
-        Pageable pageable = new PageRequest(page, size, new Sort("date"));
+        Pageable pageable = new PageRequest(page, size, new Sort(Sort.Direction.DESC, "date"));
         Page<Inform> informList =  informRepo.findAll(pageable);
         if(informList == null) return null;
         List<InformVo> list = new ArrayList<>();

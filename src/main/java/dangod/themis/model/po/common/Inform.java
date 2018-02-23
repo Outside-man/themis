@@ -13,6 +13,8 @@ public class Inform {
     private String title;
     private String content;
     private Timestamp date;
+    private Timestamp modified;
+
     @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.DETACH)
     @JoinColumn(name="user_id",nullable=true)
     private User user;
@@ -49,8 +51,16 @@ public class Inform {
         this.date = date;
     }
 
+    public Timestamp getModified() {
+        return modified;
+    }
+
+    public void setModified(Timestamp modified) {
+        this.modified = modified;
+    }
+
     public void updateDate() {
-        this.date = new Timestamp(Calendar.getInstance().getTime().getTime());
+        this.modified = new Timestamp(Calendar.getInstance().getTime().getTime());
     }
 
     public User getUser() {
@@ -65,6 +75,7 @@ public class Inform {
         this.title = title;
         this.content = content;
         this.date = new Timestamp(Calendar.getInstance().getTime().getTime());
+        this.modified = this.date;
         this.user = user;
     }
 

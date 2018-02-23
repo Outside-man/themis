@@ -49,7 +49,7 @@ public class TokenCheck {
 
         String token = request.getHeader(AUTHORIZATION);
 
-        if (!tokenService.checkToken(token)) {
+        if (token == null || !tokenService.checkToken(token)) {
             return Result.send(UNAUTHORIZED, null, TOKEN_INVAILD_MESSAGE);
         }
 

@@ -10,7 +10,9 @@ import dangod.themis.model.po.score.StudentBaseInfo;
 import dangod.themis.model.vo.score.StudentBaseInfoVo;
 import dangod.themis.service.StudentBaseInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +46,17 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
         StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(stuId);
         if(baseInfo == null)return null;
         return new StudentBaseInfoVo(baseInfo);
+    }
+
+    @Override
+    public List<StudentBaseInfoVo> getStudentListBaseAll(Integer page, Integer size) {
+        Pageable pageable = new PageRequest(page, size, new Sort("id"));
+        Page<StudentBaseInfo> poList= studentBaseInfoRepo.findAll(pageable);
+        List<StudentBaseInfoVo> voList = new ArrayList<>();
+        for(StudentBaseInfo baseInfo : poList){
+            voList.add(new StudentBaseInfoVo(baseInfo));
+        }
+        return voList;
     }
 
     @Override
