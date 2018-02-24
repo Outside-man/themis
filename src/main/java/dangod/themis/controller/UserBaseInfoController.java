@@ -76,9 +76,10 @@ public class UserBaseInfoController extends BaseController {
     @ApiOperation(value = "管理员获取所有用户账号信息")
     @ContainAuthority(ACCOUNT_MANAGE)
     @Authorization
-    public String updateBaseInfo(HttpServletRequest request, HttpServletResponse response,
-                                 @RequestParam("page")Integer page){
-        int size = 6;
+    public String getBaseInfoList(HttpServletRequest request, HttpServletResponse response,
+                                  @RequestHeader(AUTHORIZATION)String token,
+                                  @RequestParam("page")Integer page){
+        int size = DEFAULT_SIZE;
         if(getParameter(request, "size") != null)
             size = Integer.parseInt(getParameter(request, "size"));
         List<UserBaseInfoVo> list = userInfoService.getAllUserBaseInfo(page, size);

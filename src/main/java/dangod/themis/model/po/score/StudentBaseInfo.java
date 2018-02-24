@@ -11,6 +11,7 @@ public class StudentBaseInfo {
     @Id
     @GeneratedValue
     private long id;
+    @Column(unique = true, nullable = false)
     private String stuId;
     private String photo;
     private String entrance_time;

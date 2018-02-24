@@ -43,7 +43,7 @@ public class InformController extends BaseController{
     @ApiOperation(value = "分页获取通知")
     public String getInformByPage(HttpServletRequest request, HttpServletResponse response,
                                     @RequestParam("page")Integer page){
-        int size = 6;
+        int size = DEFAULT_SIZE;
         if(getParameter(request, "size") != null)
             size = Integer.parseInt(getParameter(request, "size"));
         List<InformVo> list = informService.getPageInform(page, size);
@@ -58,7 +58,7 @@ public class InformController extends BaseController{
     public String getInformBySelf(HttpServletRequest request, HttpServletResponse response,
                                     @RequestHeader(AUTHORIZATION)String token,
                                     @RequestParam("page")Integer page){
-        int size = 6;
+        int size = DEFAULT_SIZE;
         if(getParameter(request, "size") != null)
             size = Integer.parseInt(getParameter(request, "size"));
         List<InformVo> list = informService.getListByUserId(getUserId(request), page, size);
@@ -74,7 +74,7 @@ public class InformController extends BaseController{
                                     @RequestHeader(AUTHORIZATION)String token,
                                     @RequestParam("userId")Long userId,
                                     @RequestParam("page")Integer page){
-        int size = 6;
+        int size = DEFAULT_SIZE;
         if(getParameter(request, "size") != null)
             size = Integer.parseInt(getParameter(request, "size"));
         List<InformVo> list = informService.getListByUserId(userId, page, size);

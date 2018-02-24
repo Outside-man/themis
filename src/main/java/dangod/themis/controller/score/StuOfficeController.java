@@ -10,15 +10,13 @@ import dangod.themis.model.vo.score.record.OfficeVo;
 import dangod.themis.service.StudentRecordService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
 import static dangod.themis.controller.base.constant.Message.STU_BASEINFO_FAIL_MESSAGE;
 import static dangod.themis.controller.base.constant.Message.STU_BASEINFO_SUCCESS_MESSAGE;
 import static dangod.themis.controller.base.constant.Status.FAIL;
@@ -38,8 +36,9 @@ public class StuOfficeController extends BaseController{
     @ContainAuthority(SELF_STUDENT)
     @Authorization
     public String getStudentActivity(HttpServletRequest request, HttpServletResponse response,
+                                     @RequestHeader(AUTHORIZATION)String token,
                                      @RequestParam("page")Integer page){
-        List<OfficeVo> list = recordService.getOfficeByUserId(getUserId(request), page, 5);
+        List<OfficeVo> list = recordService.getOfficeByUserId(getUserId(request), page, DEFAULT_SIZE);
         if(list == null)
             return Result.send(FAIL, null, STU_BASEINFO_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_BASEINFO_SUCCESS_MESSAGE);

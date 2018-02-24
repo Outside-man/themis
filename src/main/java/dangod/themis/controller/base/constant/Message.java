@@ -28,8 +28,8 @@ public class Message {
 
     public final static String MENU_SUCCESS_MESSAGE = "获取菜单";
 
-    public final static String BASEINFO_FAIL_MESSAGE = "获取基本信息成功";
-    public final static String BASEINFO_SUCCESS_MESSAGE = "获取基本信息失败";
+    public final static String BASEINFO_FAIL_MESSAGE = "获取基本信息失败";
+    public final static String BASEINFO_SUCCESS_MESSAGE = "获取基本信息成功";
 
     public final static String BASEINFO_UPDATE_FAIL_MESSAGE = "更新基本信息成功";
     public final static String BASEINFO_UPDATE_SUCCESS_MESSAGE = "更新基本信息失败";
