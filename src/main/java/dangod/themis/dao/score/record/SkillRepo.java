@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface SkillRepo extends JpaRepository<Skill, Long>{
-    List<Skill> findByBaseInfo_BaseInfo_User_Id(long userId, Pageable pageable);
+    List<Skill> findByBaseInfo_BaseInfo_User_IdOrderByTerm(long userId, Pageable pageable);
 }

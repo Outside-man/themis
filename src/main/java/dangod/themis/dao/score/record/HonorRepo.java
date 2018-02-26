@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface HonorRepo extends JpaRepository<Honor, Long>{
-    List<Honor> findByBaseInfo_BaseInfo_User_Id(long userId, Pageable pageable);
+    List<Honor> findByBaseInfo_BaseInfo_User_IdOrderByTerm(long userId, Pageable pageable);
 }

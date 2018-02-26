@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ReserveRepo extends JpaRepository<Reserve, Long>{
-    List<Reserve> findByBaseInfo_BaseInfo_User_Id(long userId, Pageable pageable);
+    List<Reserve> findByBaseInfo_BaseInfo_User_IdOrderByTerm(long userId, Pageable pageable);
 }

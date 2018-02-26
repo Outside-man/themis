@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface VolunteerRepo extends JpaRepository<Volunteer, Long> {
-    List<Volunteer> findByBaseInfo_BaseInfo_User_Id(long userId, Pageable pageable);
+    List<Volunteer> findByBaseInfo_BaseInfo_User_IdOrderByTerm(long userId, Pageable pageable);
 }

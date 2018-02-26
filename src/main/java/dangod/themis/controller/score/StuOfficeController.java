@@ -38,7 +38,10 @@ public class StuOfficeController extends BaseController{
     public String getStudentActivity(HttpServletRequest request, HttpServletResponse response,
                                      @RequestHeader(AUTHORIZATION)String token,
                                      @RequestParam("page")Integer page){
-        List<OfficeVo> list = recordService.getOfficeByUserId(getUserId(request), page, DEFAULT_SIZE);
+        int size = DEFAULT_SIZE;
+        if(getParameter(request, "size") != null)
+            size = Integer.parseInt(getParameter(request, "size"));
+        List<OfficeVo> list = recordService.getOfficeByUserId(getUserId(request), page, size);
         if(list == null)
             return Result.send(FAIL, null, STU_BASEINFO_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_BASEINFO_SUCCESS_MESSAGE);

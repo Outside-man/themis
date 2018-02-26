@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface PracticeRepo extends JpaRepository<Practice, Long>{
-    List<Practice> findByBaseInfo_BaseInfo_User_Id(long userId, Pageable pageable);
+    List<Practice> findByBaseInfo_BaseInfo_User_IdOrderByTerm(long userId, Pageable pageable);
 }

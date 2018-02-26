@@ -32,7 +32,7 @@ public class StudentRecordServiceImpl implements StudentRecordService {
     private PracticeRepo practiceRepo;
     @Override
     public List<ActivityVo> getActivityByUserId(long userId, Integer page, Integer size) {
-        List<Activity> poList = activityRepo.findByBaseInfo_BaseInfo_User_Id(userId, new PageRequest(page, size, new Sort("id")));
+        List<Activity> poList = activityRepo.findByBaseInfo_BaseInfo_User_IdOrderByTerm(userId, new PageRequest(page, size, new Sort("id")));
         if(poList == null)return null;
         List<ActivityVo> voList = new ArrayList<>();
         for(Activity activity : poList){
@@ -43,7 +43,7 @@ public class StudentRecordServiceImpl implements StudentRecordService {
 
     @Override
     public List<OfficeVo> getOfficeByUserId(long userId, Integer page, Integer size) {
-        List<Office> poList = officeRepo.findByBaseInfo_BaseInfo_User_Id(userId, new PageRequest(page, size, new Sort("id")));
+        List<Office> poList = officeRepo.findByBaseInfo_BaseInfo_User_IdOrderByTerm(userId, new PageRequest(page, size, new Sort("id")));
         if(poList == null)return null;
         List<OfficeVo> voList = new ArrayList<>();
         for(Office office : poList){
@@ -54,7 +54,7 @@ public class StudentRecordServiceImpl implements StudentRecordService {
 
     @Override
     public List<HonorVo> getHonorByUserId(long userId, Integer page, Integer size) {
-        List<Honor> poList = honorRepo.findByBaseInfo_BaseInfo_User_Id(userId, new PageRequest(page, size, new Sort("id")));
+        List<Honor> poList = honorRepo.findByBaseInfo_BaseInfo_User_IdOrderByTerm(userId, new PageRequest(page, size, new Sort("id")));
         if(poList == null)return null;
         List<HonorVo> voList = new ArrayList<>();
         for(Honor honor : poList){
@@ -65,7 +65,7 @@ public class StudentRecordServiceImpl implements StudentRecordService {
 
     @Override
     public List<PracticeVo> getPracticeByUserId(long userId, Integer page, Integer size) {
-        List<Practice> poList = practiceRepo.findByBaseInfo_BaseInfo_User_Id(userId, new PageRequest(page, size, new Sort("id")));
+        List<Practice> poList = practiceRepo.findByBaseInfo_BaseInfo_User_IdOrderByTerm(userId, new PageRequest(page, size, new Sort("id")));
         if(poList == null)return null;
         List<PracticeVo> voList = new ArrayList<>();
         for(Practice practice : poList){
@@ -76,7 +76,7 @@ public class StudentRecordServiceImpl implements StudentRecordService {
 
     @Override
     public List<ReserveVo> getReserveByUserId(long userId, Integer page, Integer size) {
-        List<Reserve> poList = reserveRepo.findByBaseInfo_BaseInfo_User_Id(userId, new PageRequest(page, size, new Sort("id")));
+        List<Reserve> poList = reserveRepo.findByBaseInfo_BaseInfo_User_IdOrderByTerm(userId, new PageRequest(page, size, new Sort("id")));
         if(poList == null)return null;
         List<ReserveVo> voList = new ArrayList<>();
         for(Reserve reserve : poList){
@@ -87,7 +87,7 @@ public class StudentRecordServiceImpl implements StudentRecordService {
 
     @Override
     public List<SkillVo> getSkillByUserId(long userId, Integer page, Integer size) {
-        List<Skill> poList = skillRepo.findByBaseInfo_BaseInfo_User_Id(userId, new PageRequest(page, size, new Sort("id")));
+        List<Skill> poList = skillRepo.findByBaseInfo_BaseInfo_User_IdOrderByTerm(userId, new PageRequest(page, size, new Sort("id")));
         if(poList == null)return null;
         List<SkillVo> voList = new ArrayList<>();
         for(Skill skill : poList){
@@ -98,7 +98,7 @@ public class StudentRecordServiceImpl implements StudentRecordService {
 
     @Override
     public List<VolunteerVo> getVolunteerByUserId(long userId, Integer page, Integer size) {
-        List<Volunteer> poList = volunteerRepo.findByBaseInfo_BaseInfo_User_Id(userId, new PageRequest(page, size, new Sort("id")));
+        List<Volunteer> poList = volunteerRepo.findByBaseInfo_BaseInfo_User_IdOrderByTerm(userId, new PageRequest(page, size, new Sort("id")));
         if(poList == null)return null;
         List<VolunteerVo> voList = new ArrayList<>();
         for(Volunteer volunteer : poList){

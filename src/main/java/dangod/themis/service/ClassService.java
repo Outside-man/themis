@@ -1,6 +1,12 @@
 package dangod.themis.service;
 
+import dangod.themis.model.po.score.Class;
 import dangod.themis.model.po.score.Major;
+import dangod.themis.model.vo.score.ClassVo;
+import dangod.themis.model.vo.score.MajorVo;
+
+import java.util.List;
+import java.util.Map;
 
 public interface ClassService {
     /**
@@ -18,4 +24,14 @@ public interface ClassService {
      * @return
      */
     Integer addClass(long majorId, Integer classNum);
+
+    List<Integer> getYearList();
+
+    List<MajorVo> getMajorList(Integer year);
+
+    List<ClassVo> getClassList(long majorId);
+
+
+
+
 }

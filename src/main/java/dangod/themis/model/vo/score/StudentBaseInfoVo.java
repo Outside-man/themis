@@ -4,6 +4,8 @@ import dangod.themis.model.po.score.StudentBaseInfo;
 
 public class StudentBaseInfoVo {
     private long userId;
+    private long classId;
+    private long dormitoryId;
     private String stuId;
     private String realName;
     private String sex;
@@ -19,6 +21,22 @@ public class StudentBaseInfoVo {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public long getClassId() {
+        return classId;
+    }
+
+    public void setClassId(long classId) {
+        this.classId = classId;
+    }
+
+    public long getDormitoryId() {
+        return dormitoryId;
+    }
+
+    public void setDormitoryId(long dormitoryId) {
+        this.dormitoryId = dormitoryId;
     }
 
     public String getRealName() {
@@ -93,16 +111,22 @@ public class StudentBaseInfoVo {
         this.stuId = baseInfo.getStuId();
         this.realName = baseInfo.getBaseInfo().getRealName();
         this.sex = baseInfo.getBaseInfo().getSex();
-        if(baseInfo.getaClass()!=null)
-            this.className = baseInfo.getaClass().getMajor().getYear()+"级"+baseInfo.getaClass().getMajor().getMajorName()+baseInfo.getaClass().getClassNum()+"班";
-        else
+        if(baseInfo.getaClass()!=null) {
+            this.className = baseInfo.getaClass().getMajor().getYear() + "级" + baseInfo.getaClass().getMajor().getMajorName() + baseInfo.getaClass().getClassNum() + "班";
+            this.classId = baseInfo.getaClass().getId();
+        }else {
             this.className = "未分班";
+            this.classId = -1;
+        }
         this.photo = baseInfo.getPhoto();
         this.entrance_time = baseInfo.getEntrance_time();
-        if(baseInfo.getDormitory()!=null)
-            this.dormitory = baseInfo.getDormitory().getBuild()+"号楼"+baseInfo.getDormitory().getFloor()+"-"+baseInfo.getDormitory().getRoom();
-        else
+        if(baseInfo.getDormitory()!=null) {
+            this.dormitory = baseInfo.getDormitory().getBuild() + "号楼" + baseInfo.getDormitory().getFloor() + "-" + baseInfo.getDormitory().getRoom();
+            this.dormitoryId = baseInfo.getDormitory().getId();
+        }else {
             this.dormitory = "未分寝";
+            this.dormitoryId = -1;
+        }
         this.political = baseInfo.getPolitical();
     }
 

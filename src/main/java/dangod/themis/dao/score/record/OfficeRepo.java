@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface OfficeRepo extends JpaRepository<Office, Long>{
-    List<Office> findByBaseInfo_BaseInfo_User_Id(long userId, Pageable pageable);
+    List<Office> findByBaseInfo_BaseInfo_User_IdOrderByTerm(long userId, Pageable pageable);
 //    List<Office> findByBaseInfo_BaseInfo_User_IdAndTerm(long userId, Pageable pageable);
 
 }
