@@ -41,6 +41,10 @@ public class Message {
     public final static String STU_BASEINFO_UPDATE_SUCCESS_MESSAGE = "更新学生基础信息成功";
 
 
+    public final static String STU_FAIL_MESSAGE = "获取学生信息失败";
+    public final static String STU_SUCCESS_MESSAGE = "获取学生信息成功";
+
+
 
 
     public final static String REPLAY_ATTACK_MESSAGE = "请求失败，请重试";

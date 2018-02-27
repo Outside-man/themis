@@ -23,9 +23,13 @@ import static dangod.themis.controller.base.constant.Message.PERMISSIN_DENIED_ME
 import static dangod.themis.controller.base.constant.Message.TOKEN_INVAILD_MESSAGE;
 import static dangod.themis.controller.base.constant.Status.*;
 
+/**
+ * 前置检查: TokenCheck, AuthorityCheck
+ * 获取管理员所管理的集合
+ */
 @Component
 @Aspect
-@Order(-80)
+@Order(-97)
 public class ScoreAuthCheck {
     @Autowired
     private DutyManagerService dutyManagerService;

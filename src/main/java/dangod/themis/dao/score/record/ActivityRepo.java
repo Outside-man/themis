@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ActivityRepo extends JpaRepository<Activity, Long>{
-    List<Activity> findByBaseInfo_BaseInfo_User_IdOrderByTerm(long userId, Pageable pageable);
+    List<Activity> findByBaseInfo_BaseInfo_User_IdAndTerm(long userId, String term, Pageable pageable);
+
+    List<Activity> findByBaseInfo_StuIdAndTerm(String stuId, String term, Pageable pageable);
 }

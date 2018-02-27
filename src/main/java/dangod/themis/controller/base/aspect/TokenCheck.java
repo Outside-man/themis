@@ -17,7 +17,10 @@ import java.util.Base64;
 import static dangod.themis.controller.base.constant.Message.TOKEN_INVAILD_MESSAGE;
 import static dangod.themis.controller.base.constant.Status.UNAUTHORIZED;
 import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
-
+/**
+ * 前置检查:
+ * 检测是否登录并解析出userId
+ */
 @Component
 @Aspect
 @Order(-99)
@@ -32,21 +35,8 @@ public class TokenCheck {
 
     @Around("RequestCheck()")
     public Object tokenValid(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        HttpServletRequest request = null;
-        HttpServletResponse response = null;
-        Object[] args = proceedingJoinPoint.getArgs();
-        //获取请求方法的request & response
-        for (Object arg : args) {
-            if (arg instanceof HttpServletRequest) {
-                request = (HttpServletRequest) arg;
-                request.setCharacterEncoding("UTF-8");
-            }
-            if (arg instanceof HttpServletResponse) {
-                response = (HttpServletResponse) arg;
-                response.setCharacterEncoding("UTF-8");
-            }
-        }
-
+        HttpServletRequest request = ParamUtil.getRequest(proceedingJoinPoint.getArgs());
+        HttpServletResponse response = ParamUtil.getResponse(proceedingJoinPoint.getArgs());
         String token = request.getHeader(AUTHORIZATION);
 
         if (token == null || !tokenService.checkToken(token)) {

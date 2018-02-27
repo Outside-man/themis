@@ -17,7 +17,10 @@ import java.util.List;
 
 import static dangod.themis.controller.base.constant.Message.PERMISSIN_DENIED_MESSAGE;
 import static dangod.themis.controller.base.constant.Status.PERMISSIN_DENIED;
-
+/**
+ * 前置检查: TokenCheck
+ * 检测该用户是否拥有权限
+ */
 @Component
 @Aspect
 @Order(-98)
@@ -31,20 +34,8 @@ public class AuthorityCheck {
 
     @Around("RequestCheck() && @annotation(authority)")
     public Object containAuthority(ProceedingJoinPoint proceedingJoinPoint, ContainAuthority authority) throws Throwable {
-        HttpServletRequest request = null;
-        HttpServletResponse response = null;
-        Object[] args = proceedingJoinPoint.getArgs();
-        //获取请求方法的request & response
-        for (Object arg : args) {
-            if (arg instanceof HttpServletRequest) {
-                request = (HttpServletRequest) arg;
-                request.setCharacterEncoding("UTF-8");
-            }
-            if (arg instanceof HttpServletResponse) {
-                response = (HttpServletResponse) arg;
-                response.setCharacterEncoding("UTF-8");
-            }
-        }
+        HttpServletRequest request = ParamUtil.getRequest(proceedingJoinPoint.getArgs());
+        HttpServletResponse response = ParamUtil.getResponse(proceedingJoinPoint.getArgs());
         List<Long> authorityList = authorityService.getAuthoritiesByUserId((long)request.getAttribute("userId"));
         if(authorityList == null||!authorityList.contains(authority.value())){
             return Result.send(PERMISSIN_DENIED, null, PERMISSIN_DENIED_MESSAGE);

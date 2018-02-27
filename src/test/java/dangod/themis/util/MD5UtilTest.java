@@ -6,54 +6,59 @@ import dangod.themis.model.po.score.Class;
 import javassist.bytecode.analysis.Executor;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ClassUtils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.*;
 
 
 public class MD5UtilTest {
     @Test
-    public void MD5() throws Exception {
-        Thread.sleep(1000);
-        System.out.println(":start");
-
-        int poolSize = 5;
-        ExecutorService pool = Executors.newFixedThreadPool(poolSize);
-        List<Future> list = new ArrayList<>();
-        for(int i =0;i<5;i++){
-            list.add(pool.submit(new test(i)));
+    public void RecordGen() throws Exception {
+        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
+        String targetPath = "src/main/java/dangod/themis/dao/score/record/";
+        for(String str : list){
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", str);
+            CodeGenerate.generate("RecordRepo.ftl", targetPath+str+"Repo.java", map);
         }
-        pool.shutdown();
-        for(Future future : list){
-            future.get();
-        }
-
     }
+
     @Test
-    public void Test() throws Exception {
-        Map<String, String> map = new HashMap<>();
-        map.put("name", "yxm");
-        CodeGenerate.Generrate("template", "test.ftl", "template/test.html", map);
+    public void RecordSeviceImp() throws Exception {
+        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
+        String targetPath = "src/main/java/dangod/themis/service/";
+        Map<String, Object> map = new HashMap<>();
+
+        List<String> entityList = Arrays.asList(list);
+        map.put("entityList", entityList);
+
+        CodeGenerate.generate("StudentRecordService.ftl", targetPath + "StudentRecordService.java", map);
+
     }
 
-}
-class test implements Callable<Integer>{
-    private int status = 0;
+    @Test
+    public void RecordSeviceImplGen() throws Exception {
+        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
+        String targetPath = "src/main/java/dangod/themis/service/impl/score/";
+        Map<String, Object> map = new HashMap<>();
 
-    test(int t){
-        status = t;
+        List<String> entityList = Arrays.asList(list);
+        map.put("entityList", entityList);
+
+        CodeGenerate.generate("StudentRecordServiceImpl.ftl", targetPath + "StudentRecordServiceImpl.java", map);
+
     }
 
-    @Override
-    public Integer call() throws Exception {
-        for(int i =0;i<10;i++) {
-            System.out.println(this.status + ":start");
-            Thread.sleep(1000);
+    @Test
+    public void RecordControllerGen() throws Exception {
+        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
+        String targetPath = "src/main/java/dangod/themis/controller/score/record/";
+        for(String str : list){
+            Map<String, Object> map = new HashMap<>();
+            map.put("entity", str);
+            CodeGenerate.generate("RecordController.ftl", targetPath+"Stu"+str+"Controller.java", map);
         }
-        return status;
     }
 }
