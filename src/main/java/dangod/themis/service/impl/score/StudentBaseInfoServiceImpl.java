@@ -1,8 +1,11 @@
 package dangod.themis.service.impl.score;
 
+import dangod.themis.core.util.BaseFile;
+import dangod.themis.core.util.HSSF;
 import dangod.themis.dao.score.ClassRepo;
 import dangod.themis.dao.score.DormitoryRepo;
 import dangod.themis.dao.score.StudentBaseInfoRepo;
+import dangod.themis.model.po.common.Inform;
 import dangod.themis.model.po.common.UserBaseInfo;
 import dangod.themis.model.po.score.Class;
 import dangod.themis.model.po.score.Dormitory;
@@ -15,8 +18,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 @Service
 public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
@@ -26,6 +35,8 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
     private ClassRepo classRepo;
     @Autowired
     private DormitoryRepo dormitoryRepo;
+
+    private static final String STU_BASE_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "base";
 
     @Override
     public StudentBaseInfoVo getStudentBaseById(long id) {
@@ -189,4 +200,24 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
         }
         return new StudentBaseInfoVo(baseInfo);
     }
+
+    @Override
+    public Integer addStudentBaseByFile(MultipartFile file, String opName) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
+        long now = Calendar.getInstance().getTime().getTime();
+        String fileName = String.format("[%s](%s)import", sdf.format(now), opName);
+        if(BaseFile.upload(file, STU_BASE_IMPORT_PATH, fileName) == 0){
+            String[] arr = file.getOriginalFilename().split("[.]");
+            String suffix = "." + arr[arr.length - 1];
+            HSSF hssf = new HSSF(STU_BASE_IMPORT_PATH, fileName + suffix);
+//            hssf.open();
+            for(int i = 1;i<5;i++)
+                for(int j =0;j<5;j++)
+                    System.out.println(hssf.get(0,i,j));
+        }else {
+            return -1;
+        }
+        return 0;
+    }
+
 }

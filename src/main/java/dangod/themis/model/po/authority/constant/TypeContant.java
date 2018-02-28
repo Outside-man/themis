@@ -10,6 +10,8 @@ public class TypeContant {
     public static final long CLASS_STUDENT_MANAGE = 8L;//班级学生信息管理
     public static final long MAJOR_STUDENT_MANAGE = 9L;//专业学生信息管理
     public static final long SCHOOL_STUDENT_MANAGE = 10L;//全校学生信息管理
+    public static final long DB_STU_BASE = 11L;//学生数据管理
+
 
 
 

@@ -36,7 +36,7 @@ public class StudentRecordServiceImpl implements StudentRecordService{
         if(poList == null)return null;
         List<ActivityVo> voList = new ArrayList<>();
         for(Activity entity : poList){
-            voList.add(new ActivityVo(entity));
+            voList.add(new ActivityVo(entity, ACTIVITY_SCORE));
         }
         return voList;
     }
@@ -47,7 +47,7 @@ public class StudentRecordServiceImpl implements StudentRecordService{
         if(poList == null)return null;
         List<ActivityVo> voList = new ArrayList<>();
         for(Activity entity : poList){
-            voList.add(new ActivityVo(entity));
+            voList.add(new ActivityVo(entity, ACTIVITY_SCORE));
         }
         return voList;
     }

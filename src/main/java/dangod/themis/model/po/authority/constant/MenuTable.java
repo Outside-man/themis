@@ -8,8 +8,8 @@ import java.util.Map;
 public class MenuTable {
     public static final Map<Long, AuthorityMenu> MENU_TABLE = new HashMap();
     static{
-        MENU_TABLE.put(1L, new AuthorityMenu(1L, "self", "cogs", "个人资料", "/self", null));
-
+        MENU_TABLE.put(1L, new AuthorityMenu(1L, "db", "cogs", "数据库管理", "/db", null));
+        MENU_TABLE.put(14L, new AuthorityMenu(14L, "db/stu", "cogs", "学生基础管理", "stu", MENU_TABLE.get(1L)));
 
         MENU_TABLE.put(2L, new AuthorityMenu(2L, "inform", "file", "公告", "/inform", null));
         MENU_TABLE.put(3L, new AuthorityMenu(3L, "inform/send", "send", "公告发送", "send", MENU_TABLE.get(2L)));
@@ -29,6 +29,6 @@ public class MenuTable {
 
 
     }
-    //total 13
+    //total 14
 
 }

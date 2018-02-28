@@ -25,3 +25,7 @@ nbdist/
 
 ### logs ###
 logs/
+
+### others ###
+file/*
+templates/*

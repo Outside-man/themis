@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class CodeGenerate {
     private static final String ROOT_PATH = ClassUtils.getDefaultClassLoader().getResource("").getPath();
-//    private static final String TEMPLATES_PATH = ROOT_PATH + File.separator + "templates";
+//    private static final String TEMPLATES_PATH = ROOT_PATH + BaseFile.separator + "templates";
     private static final String TEMPLATES_PATH = "templates" + File.separator;
 
     public static String getRootPath() {

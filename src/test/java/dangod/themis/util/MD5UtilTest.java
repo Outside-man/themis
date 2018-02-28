@@ -61,4 +61,11 @@ public class MD5UtilTest {
             CodeGenerate.generate("RecordController.ftl", targetPath+"Stu"+str+"Controller.java", map);
         }
     }
+
+    @Test
+    public void test(){
+        String str = "xxxxx.XLs";
+        String[] a = str.split("[.]");
+        System.out.println(a[a.length-1].toLowerCase());
+    }
 }

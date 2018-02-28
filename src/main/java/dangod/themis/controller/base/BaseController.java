@@ -1,26 +1,35 @@
 package dangod.themis.controller.base;
 
+import dangod.themis.service.UserInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.servlet.http.HttpServletRequest;
 
 public class BaseController {
+    @Autowired
+    private UserInfoService userInfoService;
     protected static final int DEFAULT_SIZE = 6;
 
-    protected static long getUserId(HttpServletRequest request){
+    protected long getUserId(HttpServletRequest request){
         return (long)request.getAttribute("userId");
     }
 
-    protected static long getManageClass(HttpServletRequest request){
+    protected long getManageClass(HttpServletRequest request){
         return (long)request.getAttribute("classId");
     }
 
-    protected static long getManageMajor(HttpServletRequest request){
+    protected long getManageMajor(HttpServletRequest request){
         return (long)request.getAttribute("majorId");
     }
 
-    protected static String getAttribute(HttpServletRequest request, String key){
+    protected String getAttribute(HttpServletRequest request, String key){
         return (String)request.getAttribute(key);
     }
-    protected static String getParameter(HttpServletRequest request, String key){
+    protected String getParameter(HttpServletRequest request, String key){
         return request.getParameter(key);
+    }
+
+    protected String getRealName(HttpServletRequest request){
+        return userInfoService.getBaseInfoByUserId(getUserId(request)).getRealName();
     }
 }

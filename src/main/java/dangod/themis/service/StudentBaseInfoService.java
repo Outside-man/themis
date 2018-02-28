@@ -1,6 +1,7 @@
 package dangod.themis.service;
 
 import dangod.themis.model.vo.score.StudentBaseInfoVo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,4 +32,7 @@ public interface StudentBaseInfoService {
     StudentBaseInfoVo updateBaseInfo(String stuId, String political);
 
     StudentBaseInfoVo updateBaseInfo(String stuId, long dormitoryId, String political);
+
+    Integer addStudentBaseByFile(MultipartFile file, String opName);
+
 }

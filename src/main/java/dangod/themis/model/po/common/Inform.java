@@ -80,5 +80,7 @@ public class Inform {
     }
 
     public Inform() {
+        this.date = new Timestamp(Calendar.getInstance().getTime().getTime());
+        this.modified = this.date;
     }
 }

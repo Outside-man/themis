@@ -18,7 +18,7 @@ public class StudentBaseInfo {
     private String political;
 
     @OneToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
-    @JoinColumn(name="base_id",nullable=true, unique = true)
+    @JoinColumn(name="base_id",nullable=false, unique = true)
     private UserBaseInfo baseInfo;
     @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
     @JoinColumn(name="class_id",nullable=true)
