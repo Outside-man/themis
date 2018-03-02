@@ -25,4 +25,6 @@ public interface AuthorityService {
      * @return
      */
     List<Long> getAuthoritiesByUserId(long userId);
+
+
 }

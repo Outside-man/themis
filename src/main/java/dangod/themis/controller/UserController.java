@@ -37,7 +37,7 @@ public class UserController extends BaseController{
                            @RequestParam("email")String email,
                            @RequestParam("sex")String sex){
         Integer status = userService.addUser(username, password, realName, email, sex);
-        if(status != 0)
+        if(status != null)
             return Result.send(FAIL, null, REGISTER_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, REGISTER_SUCCESS_MESSAGE);
     }

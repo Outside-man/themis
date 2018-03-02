@@ -14,7 +14,7 @@ public class StudentBaseInfo {
     @Column(unique = true, nullable = false)
     private String stuId;
     private String photo;
-    private String entrance_time;
+    private String entranceTime;
     private String political;
 
     @OneToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
@@ -51,12 +51,12 @@ public class StudentBaseInfo {
         this.photo = photo;
     }
 
-    public String getEntrance_time() {
-        return entrance_time;
+    public String getEntranceTime() {
+        return entranceTime;
     }
 
-    public void setEntrance_time(String entrance_time) {
-        this.entrance_time = entrance_time;
+    public void setEntranceTime(String entrance_time) {
+        this.entranceTime = entrance_time;
     }
 
     public String getPolitical() {
@@ -91,4 +91,16 @@ public class StudentBaseInfo {
         this.dormitory = dormitory;
     }
 
+    public StudentBaseInfo() {
+    }
+
+    public StudentBaseInfo(String stuId, String photo, String entranceTime, String political, UserBaseInfo baseInfo, Class aClass, Dormitory dormitory) {
+        this.stuId = stuId;
+        this.photo = photo;
+        this.entranceTime = entranceTime;
+        this.political = political;
+        this.baseInfo = baseInfo;
+        this.aClass = aClass;
+        this.dormitory = dormitory;
+    }
 }

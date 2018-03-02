@@ -2,16 +2,21 @@ package dangod.themis.service.impl.score;
 
 import dangod.themis.core.util.BaseFile;
 import dangod.themis.core.util.HSSF;
-import dangod.themis.dao.score.ClassRepo;
-import dangod.themis.dao.score.DormitoryRepo;
+import dangod.themis.dao.authority.AuthorityUserRepo;
 import dangod.themis.dao.score.StudentBaseInfoRepo;
-import dangod.themis.model.po.common.Inform;
+import dangod.themis.model.po.authority.AuthorityUser;
+import dangod.themis.model.po.common.User;
 import dangod.themis.model.po.common.UserBaseInfo;
 import dangod.themis.model.po.score.Class;
 import dangod.themis.model.po.score.Dormitory;
 import dangod.themis.model.po.score.StudentBaseInfo;
 import dangod.themis.model.vo.score.StudentBaseInfoVo;
+import dangod.themis.model.vo.score.StudentImportVo;
+import dangod.themis.service.ClassService;
 import dangod.themis.service.StudentBaseInfoService;
+import dangod.themis.service.DormitoryService;
+import dangod.themis.service.UserService;
+import dangod.themis.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,8 +25,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,9 +35,15 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
     @Autowired
     private StudentBaseInfoRepo studentBaseInfoRepo;
     @Autowired
-    private ClassRepo classRepo;
+    private ClassService classService;
     @Autowired
-    private DormitoryRepo dormitoryRepo;
+    private DormitoryService dormitoryService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private AuthorityUserRepo authorityUserRepo;
+
+    private String STU_BASE_AUTH = "[6]";//6:个人学生信息查看
 
     private static final String STU_BASE_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "base";
 
@@ -127,7 +136,7 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
     @Override
     public boolean checkClassMajor(long classId, long majorId) {
         try {
-            if(classRepo.findOne(classId).getMajor().getId() == majorId)
+            if(classService.getClassById(classId).getMajor().getId() == majorId)
                 return true;
             else
                 return false;
@@ -141,18 +150,18 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
         Dormitory dormitory = null;
         Class aClass = null;
         if(dormitoryId != -1) {
-            dormitory = dormitoryRepo.findOne(dormitoryId);
+            dormitory = dormitoryService.getDormitoryById(dormitoryId);
             if(dormitory == null)return null;
         }
         if(classId != -1){
-            aClass = classRepo.findOne(classId);
+            aClass = classService.getClassById(classId);
             if(aClass == null)return null;
         }
         StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(stuId);
         if(baseInfo == null)return null;
         baseInfo.setaClass(aClass);
         baseInfo.setDormitory(dormitory);
-        baseInfo.setEntrance_time(entranceTime);
+        baseInfo.setEntranceTime(entranceTime);
         baseInfo.setPhoto(photo);
         baseInfo.setPolitical(political);
         UserBaseInfo base = baseInfo.getBaseInfo();
@@ -185,7 +194,7 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
     public StudentBaseInfoVo updateBaseInfo(String stuId, long dormitoryId, String political) {
         Dormitory dormitory = null;
         if(dormitoryId != -1) {
-            dormitory = dormitoryRepo.findOne(dormitoryId);
+            dormitory = dormitoryService.getDormitoryById(dormitoryId);
             if(dormitory == null)return null;
         }
         StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(stuId);
@@ -210,14 +219,22 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
             String[] arr = file.getOriginalFilename().split("[.]");
             String suffix = "." + arr[arr.length - 1];
             HSSF hssf = new HSSF(STU_BASE_IMPORT_PATH, fileName + suffix);
-//            hssf.open();
-            for(int i = 1;i<5;i++)
-                for(int j =0;j<5;j++)
-                    System.out.println(hssf.get(0,i,j));
+            int row = hssf.getSheetRowSize(0);
+            List<StudentBaseInfo> stuBasePoList = new ArrayList<>();
+            List<AuthorityUser> stuBaseAuthList = new ArrayList<>();
+            for(int i = 1; i<=row; i++){
+                StudentImportVo importVo = new StudentImportVo(hssf.getRowValue(0, i, 8));
+                UserBaseInfo baseInfo = userService.addAndCheckUser(importVo.getStuId(), MD5Util.MD5(importVo.getStuId().substring(importVo.getStuId().length()-4)), importVo.getRealName(), importVo.getEmail(), importVo.getSex());
+                if(baseInfo != null){
+                    stuBasePoList.add(new StudentBaseInfo(importVo.getStuId(), null, importVo.getEntranceTime(), importVo.getPolitical(), baseInfo, classService.getClassById(importVo.getClassId()), dormitoryService.getDormitoryById(importVo.getDormitoryId())));
+                    stuBaseAuthList.add(new AuthorityUser(baseInfo.getUser(), STU_BASE_AUTH));
+                }
+            }
+            studentBaseInfoRepo.save(stuBasePoList);
+            authorityUserRepo.save(stuBaseAuthList);
+            return stuBaseAuthList.size();
         }else {
             return -1;
         }
-        return 0;
     }
-
 }

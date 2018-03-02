@@ -26,15 +26,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer addUser(String username, String password, String realname, String email, String sex) {
+    public Integer addUser(String username, String password, String realName, String email, String sex) {
         if (userRepo.countByUsername(username) != 0)
             return -1;
         User user = new User(username, password);
-        return addUserBaseInfo(realname, email, sex, user);
+        return addUserBaseInfo(realName, email, sex, user);
     }
 
-    private Integer addUserBaseInfo(String realname, String email, String sex, User user) {
-        UserBaseInfo baseInfo = baseInfoRepo.save(new UserBaseInfo(realname, email, sex, user));
+    private Integer addUserBaseInfo(String realName, String email, String sex, User user) {
+        UserBaseInfo baseInfo = baseInfoRepo.save(new UserBaseInfo(realName, email, sex, user));
         if(baseInfo == null)return -1;
         return 0;
     }
@@ -52,6 +52,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Long userId) {
         return userRepo.findOne(userId);
+    }
+
+    @Override
+    public UserBaseInfo addAndCheckUser(String username, String password, String realName, String email, String sex) {
+        if (userRepo.countByUsername(username) != 0)
+            return null;
+        User user = new User(username, password);
+        userRepo.saveAndFlush(user);
+        UserBaseInfo baseInfo = addAndCheckUserBaseInfo(realName, email, sex, user);
+        if(baseInfo != null)return baseInfo;
+        return null;
+    }
+
+    private UserBaseInfo addAndCheckUserBaseInfo(String realName, String email, String sex, User user) {
+        UserBaseInfo baseInfo = baseInfoRepo.saveAndFlush(new UserBaseInfo(realName, email, sex, user));
+        if(baseInfo == null)return null;
+        return baseInfo;
     }
 
 }

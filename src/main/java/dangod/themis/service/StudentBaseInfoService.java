@@ -33,6 +33,12 @@ public interface StudentBaseInfoService {
 
     StudentBaseInfoVo updateBaseInfo(String stuId, long dormitoryId, String political);
 
+    /**
+     * 数据库管理员 通过excel上传 实现批量添加学生
+     * @param file
+     * @param opName
+     * @return
+     */
     Integer addStudentBaseByFile(MultipartFile file, String opName);
 
 }

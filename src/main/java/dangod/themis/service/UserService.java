@@ -1,6 +1,7 @@
 package dangod.themis.service;
 
 import dangod.themis.model.po.common.User;
+import dangod.themis.model.po.common.UserBaseInfo;
 
 public interface UserService {
     /**
@@ -31,4 +32,7 @@ public interface UserService {
     Integer updatePassword(Long userId, String password);
 
     User getUserById(Long userId);
+
+    UserBaseInfo addAndCheckUser(String username, String password, String realName, String email, String sex);
+
 }

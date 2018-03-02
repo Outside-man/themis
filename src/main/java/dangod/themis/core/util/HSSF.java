@@ -230,6 +230,34 @@ public class HSSF {
         return str;
     }
 
+    public List<String> getRowValue(int sheetIndex, int rowIndex) {
+        List<String> cellList = new ArrayList<>();
+        try {
+            int col = this.getRowSize(sheetIndex, rowIndex);
+            return getRowValue(sheetIndex, rowIndex, col);
+
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return cellList;
+    }
+
+    public List<String> getRowValue(int sheetIndex, int rowIndex, int colSize) {
+        List<String> cellList = new ArrayList<>();
+        try {
+            if (wb == null) throw new Exception("未打开文件");
+            for(int i =0;i<colSize;i++){
+                Cell cell = wb.getSheetAt(sheetIndex).getRow(rowIndex).getCell(i);
+                cell.setCellType(Cell.CELL_TYPE_STRING);//处理读取xls时 单元格使用各类函数的数据读取问题
+                cellList.add(cell.getStringCellValue());
+            }
+
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return cellList;
+    }
+
     public int getSheetRowSize(int sheetIndex){
         return wb.getSheetAt(sheetIndex).getLastRowNum();
     }

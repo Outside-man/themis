@@ -1,5 +1,6 @@
 package dangod.themis.controller.score;
 
+import com.sun.javafx.binding.StringFormatter;
 import dangod.themis.controller.base.BaseController;
 import dangod.themis.controller.base.annotation.Authorization;
 import dangod.themis.controller.base.annotation.ContainAuthority;
@@ -37,17 +38,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 public class StuBaseController extends BaseController{
     @Autowired
     private StudentBaseInfoService studentBaseInfoService;
-
-    @RequestMapping(value = "db/file",method = POST)
-    @ApiOperation(value = "专业管理员修改学生信息(stuid)")
-    @Authorization
-//    @ContainAuthority(DB_STU_BASE)
-    public String addStudentByFile(HttpServletRequest request, HttpServletResponse response,
-                                   @RequestHeader(AUTHORIZATION)String token,
-                                   @RequestParam("file") MultipartFile file){
-        studentBaseInfoService.addStudentBaseByFile(file, getRealName(request));
-        return getRealName(request);
-    }
 
     @RequestMapping(method = GET)
     @ApiOperation(value = "用户获取学生信息")

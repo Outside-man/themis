@@ -49,4 +49,12 @@ public class AuthorityUser {
     public void setList(List<Long> authorityList) {
         this.authorityList = JSON.toJSONString(authorityList);
     }
+
+    public AuthorityUser() {
+    }
+
+    public AuthorityUser(User user, String authorityList) {
+        this.user = user;
+        this.authorityList = authorityList;
+    }
 }

@@ -1,6 +1,7 @@
 package dangod.themis.service;
 
 import dangod.themis.model.po.score.Class;
+import dangod.themis.model.po.score.Dormitory;
 import dangod.themis.model.po.score.Major;
 import dangod.themis.model.vo.score.ClassVo;
 import dangod.themis.model.vo.score.MajorVo;
@@ -30,6 +31,12 @@ public interface ClassService {
     List<MajorVo> getMajorList(Integer year);
 
     List<ClassVo> getClassList(long majorId);
+
+    Major getMajorById(long majorId);
+
+    Class getClassById(long classId);
+
+
 
 
 

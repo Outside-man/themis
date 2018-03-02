@@ -75,7 +75,7 @@ public class StuVolunteerController extends BaseController{
 
     @RequestMapping(value = "/class", method = GET)
     @ApiOperation(value = "班级管理员获取学生Volunteer信息(按学期)")
-    @ContainAuthority(MAJOR_STUDENT_MANAGE)
+    @ContainAuthority(CLASS_STUDENT_MANAGE)
     @Class
     @Authorization
     public String classAdminGetStudentVolunteerByTerm(HttpServletRequest request, HttpServletResponse response,
@@ -96,7 +96,7 @@ public class StuVolunteerController extends BaseController{
             
     @RequestMapping(value = "/major", method = GET)
     @ApiOperation(value = "专业管理员获取学生Volunteer信息(按学期)")
-    @ContainAuthority(CLASS_STUDENT_MANAGE)
+    @ContainAuthority(MAJOR_STUDENT_MANAGE)
     @Major
     @Authorization
     public String majorAdminGetStudentVolunteerByTerm(HttpServletRequest request, HttpServletResponse response,

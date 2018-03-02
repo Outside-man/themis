@@ -119,7 +119,7 @@ public class StudentBaseInfoVo {
             this.classId = -1;
         }
         this.photo = baseInfo.getPhoto();
-        this.entrance_time = baseInfo.getEntrance_time();
+        this.entrance_time = baseInfo.getEntranceTime();
         if(baseInfo.getDormitory()!=null) {
             this.dormitory = baseInfo.getDormitory().getBuild() + "号楼" + baseInfo.getDormitory().getFloor() + "-" + baseInfo.getDormitory().getRoom();
             this.dormitoryId = baseInfo.getDormitory().getId();

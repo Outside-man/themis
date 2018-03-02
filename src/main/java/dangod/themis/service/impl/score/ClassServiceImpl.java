@@ -8,6 +8,7 @@ import dangod.themis.model.vo.score.ClassVo;
 import dangod.themis.model.vo.score.MajorVo;
 import dangod.themis.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -69,7 +70,15 @@ public class ClassServiceImpl implements ClassService {
         return result;
     }
 
-    private Major getMajorById(long majorId){
+    @Cacheable(value = "30s")
+    @Override
+    public Major getMajorById(long majorId){
         return majorRepo.findOne(majorId);
+    }
+
+    @Cacheable(value = "30s")
+    @Override
+    public Class getClassById(long classId) {
+        return classRepo.findOne(classId);
     }
 }
