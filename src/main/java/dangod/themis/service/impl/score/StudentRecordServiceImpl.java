@@ -1,15 +1,32 @@
 package dangod.themis.service.impl.score;
 
+import dangod.themis.core.util.BaseFile;
+import dangod.themis.core.util.HSSF;
+import dangod.themis.dao.score.StudentBaseInfoRepo;
 import dangod.themis.dao.score.record.*;
+import dangod.themis.model.po.authority.AuthorityUser;
+import dangod.themis.model.po.common.UserBaseInfo;
+import dangod.themis.model.po.score.StudentBaseInfo;
 import dangod.themis.model.po.score.record.*;
+import dangod.themis.model.vo.score.file.*;
+import dangod.themis.model.vo.score.file.result.ImportResult;
 import dangod.themis.model.vo.score.record.*;
+import dangod.themis.service.StudentBaseInfoService;
 import dangod.themis.service.StudentRecordService;
+import dangod.themis.service.UserInfoService;
+import dangod.themis.service.UserService;
+import dangod.themis.util.MD5Util;
+import dangod.themis.util.TermUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static dangod.themis.config.ScoreConstant.ACTIVITY_SCORE;
@@ -30,6 +47,8 @@ public class StudentRecordServiceImpl implements StudentRecordService{
     private ReserveRepo reserveRepo;
     @Autowired
     private PracticeRepo practiceRepo;
+    @Autowired
+    private StudentBaseInfoRepo studentBaseInfoRepo;
     @Override
     public List<ActivityVo> getActivityByUserIdAndTerm(long userId, String term, Integer page, Integer size) {
         List<Activity> poList = activityRepo.findByBaseInfo_BaseInfo_User_IdAndTerm(userId, term, new PageRequest(page, size, new Sort("id")));
@@ -47,7 +66,7 @@ public class StudentRecordServiceImpl implements StudentRecordService{
         if(poList == null)return null;
         List<ActivityVo> voList = new ArrayList<>();
         for(Activity entity : poList){
-            voList.add(new ActivityVo(entity, ACTIVITY_SCORE));
+            voList.add(new ActivityVo(entity,  ACTIVITY_SCORE));
         }
         return voList;
     }
@@ -184,4 +203,245 @@ public class StudentRecordServiceImpl implements StudentRecordService{
         return voList;
     }
 
+    private static final String STU_ACTIVITY_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "activity";
+
+    private static final String STU_HONOR_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "honor";
+
+    private static final String STU_OFFICE_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "office";
+
+    private static final String STU_PRACTICE_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "practice";
+
+    private static final String STU_RESERVE_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "reserve";
+
+    private static final String STU_SKILL_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "skill";
+
+    private static final String STU_VOLUNTEER_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "volunteer";
+
+
+
+    @Override
+    public ImportResult addActivityByFile(MultipartFile file, String opName) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
+            long now = Calendar.getInstance().getTime().getTime();
+            String fileName = String.format("[%s](%s)import", sdf.format(now), opName);
+            if (BaseFile.upload(file, STU_ACTIVITY_IMPORT_PATH, fileName) == 0) {
+                String[] arr = file.getOriginalFilename().split("[.]");
+                String suffix = "." + arr[arr.length - 1];
+                HSSF hssf = new HSSF(STU_ACTIVITY_IMPORT_PATH, fileName + suffix);
+                int row = hssf.getSheetRowSize(0);
+                List<Activity> addList = new ArrayList<>();
+                List<String> failList = new ArrayList<>();
+                for (int i = 1; i <= row; i++) {
+                    ActivityImport importVo = new ActivityImport(hssf.getRowValue(0, i, 5));
+                    StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
+                    if (baseInfo != null) {
+                        addList.add(new Activity(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getActivityDate(), importVo.getActivityName()));
+                    }else {
+                        failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getActivityName());
+                    }
+                }
+                activityRepo.save(addList);
+                return new ImportResult(addList.size(), failList.size(), failList);
+            } else {
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+    }
+/*
+    @Override
+    public ImportResult addHonorByFile(MultipartFile file, String opName) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
+            long now = Calendar.getInstance().getTime().getTime();
+            String fileName = String.format("[%s](%s)import", sdf.format(now), opName);
+            if (BaseFile.upload(file, STU_HONOR_IMPORT_PATH, fileName) == 0) {
+                String[] arr = file.getOriginalFilename().split("[.]");
+                String suffix = "." + arr[arr.length - 1];
+                HSSF hssf = new HSSF(STU_HONOR_IMPORT_PATH, fileName + suffix);
+                int row = hssf.getSheetRowSize(0);
+                List<Honor> addList = new ArrayList<>();
+                List<String> failList = new ArrayList<>();
+                for (int i = 1; i <= row; i++) {
+                    HonorImport importVo = new HonorImport(hssf.getRowValue(0, i, 5));
+                    StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
+                    if (baseInfo != null) {
+                        addList.add(new Honor(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getHonorDate(), importVo.getHonorName()));
+                    }else {
+                        failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getHonorName());
+                    }
+                }
+                honorRepo.save(addList);
+                return new ImportResult(addList.size(), failList.size(), failList);
+            } else {
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public ImportResult addOfficeByFile(MultipartFile file, String opName) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
+            long now = Calendar.getInstance().getTime().getTime();
+            String fileName = String.format("[%s](%s)import", sdf.format(now), opName);
+            if (BaseFile.upload(file, STU_OFFICE_IMPORT_PATH, fileName) == 0) {
+                String[] arr = file.getOriginalFilename().split("[.]");
+                String suffix = "." + arr[arr.length - 1];
+                HSSF hssf = new HSSF(STU_OFFICE_IMPORT_PATH, fileName + suffix);
+                int row = hssf.getSheetRowSize(0);
+                List<Office> addList = new ArrayList<>();
+                List<String> failList = new ArrayList<>();
+                for (int i = 1; i <= row; i++) {
+                    OfficeImport importVo = new OfficeImport(hssf.getRowValue(0, i, 5));
+                    StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
+                    if (baseInfo != null) {
+                        addList.add(new Office(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getOfficeDate(), importVo.getOfficeName()));
+                    }else {
+                        failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getOfficeName());
+                    }
+                }
+                officeRepo.save(addList);
+                return new ImportResult(addList.size(), failList.size(), failList);
+            } else {
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public ImportResult addPracticeByFile(MultipartFile file, String opName) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
+            long now = Calendar.getInstance().getTime().getTime();
+            String fileName = String.format("[%s](%s)import", sdf.format(now), opName);
+            if (BaseFile.upload(file, STU_PRACTICE_IMPORT_PATH, fileName) == 0) {
+                String[] arr = file.getOriginalFilename().split("[.]");
+                String suffix = "." + arr[arr.length - 1];
+                HSSF hssf = new HSSF(STU_PRACTICE_IMPORT_PATH, fileName + suffix);
+                int row = hssf.getSheetRowSize(0);
+                List<Practice> addList = new ArrayList<>();
+                List<String> failList = new ArrayList<>();
+                for (int i = 1; i <= row; i++) {
+                    PracticeImport importVo = new PracticeImport(hssf.getRowValue(0, i, 5));
+                    StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
+                    if (baseInfo != null) {
+                        addList.add(new Practice(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getPracticeDate(), importVo.getPracticeName()));
+                    }else {
+                        failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getPracticeName());
+                    }
+                }
+                practiceRepo.save(addList);
+                return new ImportResult(addList.size(), failList.size(), failList);
+            } else {
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public ImportResult addReserveByFile(MultipartFile file, String opName) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
+            long now = Calendar.getInstance().getTime().getTime();
+            String fileName = String.format("[%s](%s)import", sdf.format(now), opName);
+            if (BaseFile.upload(file, STU_RESERVE_IMPORT_PATH, fileName) == 0) {
+                String[] arr = file.getOriginalFilename().split("[.]");
+                String suffix = "." + arr[arr.length - 1];
+                HSSF hssf = new HSSF(STU_RESERVE_IMPORT_PATH, fileName + suffix);
+                int row = hssf.getSheetRowSize(0);
+                List<Reserve> addList = new ArrayList<>();
+                List<String> failList = new ArrayList<>();
+                for (int i = 1; i <= row; i++) {
+                    ReserveImport importVo = new ReserveImport(hssf.getRowValue(0, i, 5));
+                    StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
+                    if (baseInfo != null) {
+                        addList.add(new Reserve(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getReserveDate(), importVo.getReserveName()));
+                    }else {
+                        failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getReserveName());
+                    }
+                }
+                reserveRepo.save(addList);
+                return new ImportResult(addList.size(), failList.size(), failList);
+            } else {
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public ImportResult addSkillByFile(MultipartFile file, String opName) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
+            long now = Calendar.getInstance().getTime().getTime();
+            String fileName = String.format("[%s](%s)import", sdf.format(now), opName);
+            if (BaseFile.upload(file, STU_SKILL_IMPORT_PATH, fileName) == 0) {
+                String[] arr = file.getOriginalFilename().split("[.]");
+                String suffix = "." + arr[arr.length - 1];
+                HSSF hssf = new HSSF(STU_SKILL_IMPORT_PATH, fileName + suffix);
+                int row = hssf.getSheetRowSize(0);
+                List<Skill> addList = new ArrayList<>();
+                List<String> failList = new ArrayList<>();
+                for (int i = 1; i <= row; i++) {
+                    SkillImport importVo = new SkillImport(hssf.getRowValue(0, i, 5));
+                    StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
+                    if (baseInfo != null) {
+                        addList.add(new Skill(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getSkillDate(), importVo.getSkillName()));
+                    }else {
+                        failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getSkillName());
+                    }
+                }
+                skillRepo.save(addList);
+                return new ImportResult(addList.size(), failList.size(), failList);
+            } else {
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @Override
+    public ImportResult addVolunteerByFile(MultipartFile file, String opName) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
+            long now = Calendar.getInstance().getTime().getTime();
+            String fileName = String.format("[%s](%s)import", sdf.format(now), opName);
+            if (BaseFile.upload(file, STU_VOLUNTEER_IMPORT_PATH, fileName) == 0) {
+                String[] arr = file.getOriginalFilename().split("[.]");
+                String suffix = "." + arr[arr.length - 1];
+                HSSF hssf = new HSSF(STU_VOLUNTEER_IMPORT_PATH, fileName + suffix);
+                int row = hssf.getSheetRowSize(0);
+                List<Volunteer> addList = new ArrayList<>();
+                List<String> failList = new ArrayList<>();
+                for (int i = 1; i <= row; i++) {
+                    VolunteerImport importVo = new VolunteerImport(hssf.getRowValue(0, i, 5));
+                    StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
+                    if (baseInfo != null) {
+                        addList.add(new Volunteer(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getVolunteerDate(), importVo.getVolunteerName()));
+                    }else {
+                        failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getVolunteerName());
+                    }
+                }
+                volunteerRepo.save(addList);
+                return new ImportResult(addList.size(), failList.size(), failList);
+            } else {
+                return null;
+            }
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+*/
 }

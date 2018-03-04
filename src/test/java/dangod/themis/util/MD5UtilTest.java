@@ -14,58 +14,63 @@ import java.util.concurrent.*;
 
 
 public class MD5UtilTest {
-    @Test
-    public void RecordGen() throws Exception {
-        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
-        String targetPath = "src/main/java/dangod/themis/dao/score/record/";
-        for(String str : list){
-            Map<String, Object> map = new HashMap<>();
-            map.put("name", str);
-            CodeGenerate.generate("RecordRepo.ftl", targetPath+str+"Repo.java", map);
-        }
-    }
-
-    @Test
-    public void RecordSeviceImp() throws Exception {
-        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
-        String targetPath = "src/main/java/dangod/themis/service/";
-        Map<String, Object> map = new HashMap<>();
-
-        List<String> entityList = Arrays.asList(list);
-        map.put("entityList", entityList);
-
-        CodeGenerate.generate("StudentRecordService.ftl", targetPath + "StudentRecordService.java", map);
-
-    }
-
-    @Test
-    public void RecordSeviceImplGen() throws Exception {
-        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
-        String targetPath = "src/main/java/dangod/themis/service/impl/score/";
-        Map<String, Object> map = new HashMap<>();
-
-        List<String> entityList = Arrays.asList(list);
-        map.put("entityList", entityList);
-
-        CodeGenerate.generate("StudentRecordServiceImpl.ftl", targetPath + "StudentRecordServiceImpl.java", map);
-
-    }
-
+//    @Test
+//    public void RecordGen() throws Exception {
+//        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
+//        String targetPath = "src/main/java/dangod/themis/dao/score/record/";
+//        for(String str : list){
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("name", str);
+//            CodeGenerate.generate("RecordRepo.ftl", targetPath+str+"Repo.java", map);
+//        }
+//    }
+//
+//    @Test
+//    public void RecordSeviceImp() throws Exception {
+//        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
+//        String targetPath = "src/main/java/dangod/themis/service/";
+//        Map<String, Object> map = new HashMap<>();
+//
+//        List<String> entityList = Arrays.asList(list);
+//        map.put("entityList", entityList);
+//
+//        CodeGenerate.generate("StudentRecordService.ftl", targetPath + "StudentRecordService.java", map);
+//
+//    }
+//
+//    @Test
+//    public void RecordSeviceImplGen() throws Exception {
+//        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
+//        String targetPath = "src/main/java/dangod/themis/service/impl/score/";
+//        Map<String, Object> map = new HashMap<>();
+//
+//        List<String> entityList = Arrays.asList(list);
+//        map.put("entityList", entityList);
+//
+//        CodeGenerate.generate("StudentRecordServiceImpl.ftl", targetPath + "StudentRecordServiceImpl.java", map);
+//
+//    }
+//
+//    @Test
+//    public void RecordControllerGen() throws Exception {
+//        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
+//        String targetPath = "src/main/java/dangod/themis/controller/score/record/";
+//        for(String str : list){
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("entity", str);
+//            CodeGenerate.generate("RecordController.ftl", targetPath+"Stu"+str+"Controller.java", map);
+//        }
+//    }
+//
     @Test
     public void RecordControllerGen() throws Exception {
-        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
-        String targetPath = "src/main/java/dangod/themis/controller/score/record/";
-        for(String str : list){
-            Map<String, Object> map = new HashMap<>();
-            map.put("entity", str);
-            CodeGenerate.generate("RecordController.ftl", targetPath+"Stu"+str+"Controller.java", map);
-        }
-    }
-
-    @Test
-    public void test(){
-        String str = "xxxxx.XLs";
-        String[] a = str.split("[.]");
-        System.out.println(a[a.length-1].toLowerCase());
+//        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
+//        String targetPath = "src/main/java/dangod/themis/service/";
+//        Map<String, Object> map = new HashMap<>();
+//
+//        List<String> entityList = Arrays.asList(list);
+//        map.put("entityList", entityList);
+//
+//        CodeGenerate.generate("test.ftl", targetPath + "test.java", map);
     }
 }

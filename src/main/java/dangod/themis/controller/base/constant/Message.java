@@ -35,7 +35,9 @@ public class Message {
     public final static String BASEINFO_UPDATE_SUCCESS_MESSAGE = "更新基本信息失败";
 
     public final static String STU_DB_BASEINFO_FAIL_MESSAGE = "添加学生数据失败";
-    public final static String STU_DB_BASEINFO_SUCCESS_MESSAGE = "添加%d条学生数据成功";
+    public final static String STU_DB_BASEINFO_SUCCESS_MESSAGE = "%d条学生数据添加成功, %d条学生数据添加失败";
+    public final static String STU_DB_DOWNLOAD_FAIL_MESSAGE = "添加学生数据失败";
+    public final static String STU_DB_DOWNLOAD_SUCCESS_MESSAGE = "添加%d条学生数据成功";
 
     public final static String STU_BASEINFO_FAIL_MESSAGE = "获取学生基础信息失败";
     public final static String STU_BASEINFO_SUCCESS_MESSAGE = "获取学生基础信息成功";

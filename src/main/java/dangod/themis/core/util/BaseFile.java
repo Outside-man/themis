@@ -65,9 +65,9 @@ public class BaseFile {
         if (file.exists()) {
             response.setContentType("application/force-download");// 设置下载后不打开
             try {
-                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(targetName, "UTF-8"));
             } catch (UnsupportedEncodingException e) {
-                response.addHeader("Content-Disposition","attachment;fileName=" +  targetName);// 设置下载后文件名
+                e.printStackTrace();
             }
             byte[] buffer = new byte[1024];
             FileInputStream fis = null;

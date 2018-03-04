@@ -75,7 +75,7 @@ public class Stu${entity}Controller extends BaseController{
 
     @RequestMapping(value = "/class", method = GET)
     @ApiOperation(value = "班级管理员获取学生${entity}信息(按学期)")
-    @ContainAuthority(MAJOR_STUDENT_MANAGE)
+    @ContainAuthority(CLASS_STUDENT_MANAGE)
     @Class
     @Authorization
     public String classAdminGetStudent${entity}ByTerm(HttpServletRequest request, HttpServletResponse response,
@@ -96,7 +96,7 @@ public class Stu${entity}Controller extends BaseController{
             
     @RequestMapping(value = "/major", method = GET)
     @ApiOperation(value = "专业管理员获取学生${entity}信息(按学期)")
-    @ContainAuthority(CLASS_STUDENT_MANAGE)
+    @ContainAuthority(MAJOR_STUDENT_MANAGE)
     @Major
     @Authorization
     public String majorAdminGetStudent${entity}ByTerm(HttpServletRequest request, HttpServletResponse response,
@@ -104,7 +104,7 @@ public class Stu${entity}Controller extends BaseController{
                                     @RequestParam("stuId")String stuId,
                                     @RequestParam("term")String term,
                                     @RequestParam("page")Integer page){
-        if(!studentBaseInfoService.checkStuClass(stuId, getManageMajor(request)))
+        if(!studentBaseInfoService.checkStuMajor(stuId, getManageMajor(request)))
             return Result.send(PERMISSIN_DENIED, null, PERMISSIN_DENIED_MESSAGE);
         int size = DEFAULT_SIZE;
         if(getParameter(request, "size") != null)

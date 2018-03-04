@@ -118,7 +118,7 @@ public class StudentBaseInfoVo {
             this.className = "未分班";
             this.classId = -1;
         }
-        this.photo = baseInfo.getPhoto();
+        this.photo = baseInfo.getPhoto() == null ? "" : baseInfo.getPhoto();
         this.entrance_time = baseInfo.getEntranceTime();
         if(baseInfo.getDormitory()!=null) {
             this.dormitory = baseInfo.getDormitory().getBuild() + "号楼" + baseInfo.getDormitory().getFloor() + "-" + baseInfo.getDormitory().getRoom();

@@ -66,4 +66,12 @@ public class Activity {
     public void setActivityName(String activityName) {
         this.activityName = activityName;
     }
+
+    public Activity(StudentBaseInfo baseInfo, String common, String term, String activityDate, String activityName) {
+        this.baseInfo = baseInfo;
+        this.common = common;
+        this.term = term;
+        this.activityDate = activityDate;
+        this.activityName = activityName;
+    }
 }

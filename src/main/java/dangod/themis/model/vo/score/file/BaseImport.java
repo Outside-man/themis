@@ -1,11 +1,11 @@
-package dangod.themis.model.vo.score;
+package dangod.themis.model.vo.score.file;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.util.List;
 
-public class StudentImportVo {
+public class BaseImport {
     private String stuId;
     private String realName;
     private String sex;
@@ -79,10 +79,10 @@ public class StudentImportVo {
         this.dormitoryId = dormitoryId;
     }
 
-    public StudentImportVo() {
+    public BaseImport() {
     }
 
-    public StudentImportVo(List<String> list) {
+    public BaseImport(List<String> list) {
         this.stuId = list.get(0);
         this.realName = list.get(1);
         this.sex = list.get(2);

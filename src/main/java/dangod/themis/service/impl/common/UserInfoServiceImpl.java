@@ -21,8 +21,6 @@ public class UserInfoServiceImpl implements UserInfoService{
     @Autowired
     private UserBaseInfoRepo baseInfoRepo;
 
-
-    @Cacheable(value = "30m", key = "'user_base_'+#userId")
     @Override
     public UserBaseInfoVo getBaseInfoByUserId(long userId) {
         UserBaseInfo userBaseInfo = baseInfoRepo.findByUser_Id(userId);
@@ -30,9 +28,6 @@ public class UserInfoServiceImpl implements UserInfoService{
         return new UserBaseInfoVo(userBaseInfo);
     }
 
-
-
-    @CachePut(value = "30m", key = "'user_base_'+#userId")
     @Override
     public UserBaseInfoVo updateUserBaseInfo(long userId, String realName, String email, String sex) {
         UserBaseInfo baseInfo = getBaseInfoPoByUserId(userId);

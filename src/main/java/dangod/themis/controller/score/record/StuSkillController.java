@@ -104,7 +104,7 @@ public class StuSkillController extends BaseController{
                                     @RequestParam("stuId")String stuId,
                                     @RequestParam("term")String term,
                                     @RequestParam("page")Integer page){
-        if(!studentBaseInfoService.checkStuClass(stuId, getManageMajor(request)))
+        if(!studentBaseInfoService.checkStuMajor(stuId, getManageMajor(request)))
             return Result.send(PERMISSIN_DENIED, null, PERMISSIN_DENIED_MESSAGE);
         int size = DEFAULT_SIZE;
         if(getParameter(request, "size") != null)

@@ -5,13 +5,13 @@ import dangod.themis.core.util.HSSF;
 import dangod.themis.dao.authority.AuthorityUserRepo;
 import dangod.themis.dao.score.StudentBaseInfoRepo;
 import dangod.themis.model.po.authority.AuthorityUser;
-import dangod.themis.model.po.common.User;
 import dangod.themis.model.po.common.UserBaseInfo;
 import dangod.themis.model.po.score.Class;
 import dangod.themis.model.po.score.Dormitory;
 import dangod.themis.model.po.score.StudentBaseInfo;
 import dangod.themis.model.vo.score.StudentBaseInfoVo;
-import dangod.themis.model.vo.score.StudentImportVo;
+import dangod.themis.model.vo.score.file.BaseImport;
+import dangod.themis.model.vo.score.file.result.ImportResult;
 import dangod.themis.service.ClassService;
 import dangod.themis.service.StudentBaseInfoService;
 import dangod.themis.service.DormitoryService;
@@ -43,7 +43,7 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
     @Autowired
     private AuthorityUserRepo authorityUserRepo;
 
-    private String STU_BASE_AUTH = "[6]";//6:个人学生信息查看
+    private String STU_BASE_AUTH = "[6, 7]";//6:个人学生信息查看
 
     private static final String STU_BASE_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "base";
 
@@ -211,30 +211,37 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
     }
 
     @Override
-    public Integer addStudentBaseByFile(MultipartFile file, String opName) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
-        long now = Calendar.getInstance().getTime().getTime();
-        String fileName = String.format("[%s](%s)import", sdf.format(now), opName);
-        if(BaseFile.upload(file, STU_BASE_IMPORT_PATH, fileName) == 0){
-            String[] arr = file.getOriginalFilename().split("[.]");
-            String suffix = "." + arr[arr.length - 1];
-            HSSF hssf = new HSSF(STU_BASE_IMPORT_PATH, fileName + suffix);
-            int row = hssf.getSheetRowSize(0);
-            List<StudentBaseInfo> stuBasePoList = new ArrayList<>();
-            List<AuthorityUser> stuBaseAuthList = new ArrayList<>();
-            for(int i = 1; i<=row; i++){
-                StudentImportVo importVo = new StudentImportVo(hssf.getRowValue(0, i, 8));
-                UserBaseInfo baseInfo = userService.addAndCheckUser(importVo.getStuId(), MD5Util.MD5(importVo.getStuId().substring(importVo.getStuId().length()-4)), importVo.getRealName(), importVo.getEmail(), importVo.getSex());
-                if(baseInfo != null){
-                    stuBasePoList.add(new StudentBaseInfo(importVo.getStuId(), null, importVo.getEntranceTime(), importVo.getPolitical(), baseInfo, classService.getClassById(importVo.getClassId()), dormitoryService.getDormitoryById(importVo.getDormitoryId())));
-                    stuBaseAuthList.add(new AuthorityUser(baseInfo.getUser(), STU_BASE_AUTH));
+    public ImportResult addStudentBaseByFile(MultipartFile file, String opName) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
+            long now = Calendar.getInstance().getTime().getTime();
+            String fileName = String.format("[%s](%s)import", sdf.format(now), opName);
+            if (BaseFile.upload(file, STU_BASE_IMPORT_PATH, fileName) == 0) {
+                String[] arr = file.getOriginalFilename().split("[.]");
+                String suffix = "." + arr[arr.length - 1];
+                HSSF hssf = new HSSF(STU_BASE_IMPORT_PATH, fileName + suffix);
+                int row = hssf.getSheetRowSize(0);
+                List<StudentBaseInfo> stuBasePoList = new ArrayList<>();
+                List<AuthorityUser> stuBaseAuthList = new ArrayList<>();
+                List<String> failAdd = new ArrayList<>();
+                for (int i = 1; i <= row; i++) {
+                    BaseImport importVo = new BaseImport(hssf.getRowValue(0, i, 8));
+                    UserBaseInfo baseInfo = userService.addAndCheckUser(importVo.getStuId(), MD5Util.MD5(importVo.getStuId().substring(importVo.getStuId().length() - 4)), importVo.getRealName(), importVo.getEmail(), importVo.getSex());
+                    if (baseInfo != null) {
+                        stuBasePoList.add(new StudentBaseInfo(importVo.getStuId(), null, importVo.getEntranceTime(), importVo.getPolitical(), baseInfo, classService.getClassById(importVo.getClassId()), dormitoryService.getDormitoryById(importVo.getDormitoryId())));
+                        stuBaseAuthList.add(new AuthorityUser(baseInfo.getUser(), STU_BASE_AUTH));
+                    }else {
+                        failAdd.add(importVo.getStuId()+":"+importVo.getRealName());
+                    }
                 }
+                studentBaseInfoRepo.save(stuBasePoList);
+                authorityUserRepo.save(stuBaseAuthList);
+                return new ImportResult(stuBasePoList.size(), failAdd.size(), failAdd);
+            } else {
+                return null;
             }
-            studentBaseInfoRepo.save(stuBasePoList);
-            authorityUserRepo.save(stuBaseAuthList);
-            return stuBaseAuthList.size();
-        }else {
-            return -1;
+        }catch (Exception e){
+            return null;
         }
     }
 }

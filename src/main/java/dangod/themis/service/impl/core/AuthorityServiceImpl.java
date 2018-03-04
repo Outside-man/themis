@@ -22,9 +22,6 @@ import static dangod.themis.model.po.authority.constant.TypeTable.TYPE_TABLE;
 public class AuthorityServiceImpl implements AuthorityService {
 
     @Autowired
-    private TokenService tokenService;
-
-    @Autowired
     private AuthorityUserRepo userRepo;
     @Autowired
     private AuthorityTypeRepo typeRepo;

@@ -1,6 +1,8 @@
 package dangod.themis.service;
 
+import dangod.themis.model.vo.score.file.result.ImportResult;
 import dangod.themis.model.vo.score.record.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -33,8 +35,17 @@ public interface StudentRecordService {
 
     List<VolunteerVo> getVolunteerByStuIdAndTerm(String stuId, String term, Integer page, Integer size);
 
+    ImportResult addActivityByFile(MultipartFile file, String opName);
 
-
-
-
+//    public ImportResult addHonorByFile(MultipartFile file, String opName);
+//
+//    public ImportResult addOfficeByFile(MultipartFile file, String opName);
+//
+//    public ImportResult addPracticeByFile(MultipartFile file, String opName);
+//
+//    public ImportResult addReserveByFile(MultipartFile file, String opName);
+//
+//    public ImportResult addSkillByFile(MultipartFile file, String opName);
+//
+//    public ImportResult addVolunteerByFile(MultipartFile file, String opName);
 }
