@@ -3,10 +3,11 @@ package dangod.themis.model.po.common;
 import dangod.themis.util.MD5Util;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "common_user")
-public class User {
+public class User implements Serializable{
     @Id
     @GeneratedValue
     private long id;

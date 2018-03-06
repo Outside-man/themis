@@ -33,6 +33,15 @@ public interface UserService {
 
     User getUserById(Long userId);
 
+    /**
+     * 验证用户是否新增
+     * @param username
+     * @param password
+     * @param realName
+     * @param email
+     * @param sex
+     * @return
+     */
     UserBaseInfo addAndCheckUser(String username, String password, String realName, String email, String sex);
 
 }

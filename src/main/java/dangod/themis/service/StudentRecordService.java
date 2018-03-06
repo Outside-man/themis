@@ -37,15 +37,15 @@ public interface StudentRecordService {
 
     ImportResult addActivityByFile(MultipartFile file, String opName);
 
-//    public ImportResult addHonorByFile(MultipartFile file, String opName);
-//
-//    public ImportResult addOfficeByFile(MultipartFile file, String opName);
-//
-//    public ImportResult addPracticeByFile(MultipartFile file, String opName);
-//
-//    public ImportResult addReserveByFile(MultipartFile file, String opName);
-//
-//    public ImportResult addSkillByFile(MultipartFile file, String opName);
-//
-//    public ImportResult addVolunteerByFile(MultipartFile file, String opName);
+    public ImportResult addHonorByFile(MultipartFile file, String opName);
+
+    public ImportResult addOfficeByFile(MultipartFile file, String opName);
+
+    public ImportResult addPracticeByFile(MultipartFile file, String opName);
+
+    public ImportResult addReserveByFile(MultipartFile file, String opName);
+
+    public ImportResult addSkillByFile(MultipartFile file, String opName);
+
+    public ImportResult addVolunteerByFile(MultipartFile file, String opName);
 }

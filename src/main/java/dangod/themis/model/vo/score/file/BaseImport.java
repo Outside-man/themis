@@ -89,7 +89,15 @@ public class BaseImport {
         this.email = list.get(3);
         this.political = list.get(4);
         this.entranceTime = list.get(5);
-        this.classId = Long.parseLong(list.get(6));
-        this.dormitoryId = Long.parseLong(list.get(7));
+        try {
+            this.classId = Long.parseLong(list.get(6));
+        }catch (Exception e){
+            this.classId = -1L;
+        }
+        try {
+            this.dormitoryId = Long.parseLong(list.get(7));
+        }catch (Exception e){
+            this.classId = -1L;
+        }
     }
 }

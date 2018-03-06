@@ -10,6 +10,14 @@ public class MenuTable {
     static{
         MENU_TABLE.put(1L, new AuthorityMenu(1L, "db", "cogs", "数据库管理", "/db", null));
         MENU_TABLE.put(14L, new AuthorityMenu(14L, "db/stu", "cogs", "学生基础管理", "stu", MENU_TABLE.get(1L)));
+        MENU_TABLE.put(15L, new AuthorityMenu(15L, "db/activity", "cogs", "学生活动加分", "activity", MENU_TABLE.get(1L)));
+        MENU_TABLE.put(16L, new AuthorityMenu(16L, "db/honor", "cogs", "学生荣誉加分", "honor", MENU_TABLE.get(1L)));
+        MENU_TABLE.put(17L, new AuthorityMenu(17L, "db/office", "cogs", "学生任职加分", "office", MENU_TABLE.get(1L)));
+        MENU_TABLE.put(18L, new AuthorityMenu(18L, "db/practice", "cogs", "学生实践加分", "practice", MENU_TABLE.get(1L)));
+        MENU_TABLE.put(19L, new AuthorityMenu(19L, "db/volunteer", "cogs", "学生志愿加分", "volunteer", MENU_TABLE.get(1L)));
+        MENU_TABLE.put(20L, new AuthorityMenu(20L, "db/skill", "cogs", "学生技能加分", "skill", MENU_TABLE.get(1L)));
+        MENU_TABLE.put(21L, new AuthorityMenu(21L, "db/reserve", "cogs", "学生其他加分", "reserve", MENU_TABLE.get(1L)));
+
 
         MENU_TABLE.put(2L, new AuthorityMenu(2L, "inform", "file", "公告", "/inform", null));
         MENU_TABLE.put(3L, new AuthorityMenu(3L, "inform/send", "send", "公告发送", "send", MENU_TABLE.get(2L)));
@@ -29,6 +37,6 @@ public class MenuTable {
 
 
     }
-    //total 14
+    //total 21
 
 }

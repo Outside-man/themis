@@ -21,5 +21,13 @@ public class TypeTable {
         TYPE_TABLE.put(9L, new AuthorityType(9L, "专业信息管理", null, MENU_TABLE.get(11L)));
         TYPE_TABLE.put(10L, new AuthorityType(10L, "全校信息管理", null, MENU_TABLE.get(12L)));
         TYPE_TABLE.put(11L, new AuthorityType(11L, "学生基础管理", null, MENU_TABLE.get(14L)));
+        TYPE_TABLE.put(12L, new AuthorityType(12L, "学生活动加分", null, MENU_TABLE.get(15L)));
+        TYPE_TABLE.put(13L, new AuthorityType(13L, "学生荣誉加分", null, MENU_TABLE.get(16L)));
+        TYPE_TABLE.put(14L, new AuthorityType(14L, "学生任职加分", null, MENU_TABLE.get(17L)));
+        TYPE_TABLE.put(15L, new AuthorityType(15L, "学生实践加分", null, MENU_TABLE.get(18L)));
+        TYPE_TABLE.put(16L, new AuthorityType(16L, "学生志愿加分", null, MENU_TABLE.get(19L)));
+        TYPE_TABLE.put(17L, new AuthorityType(17L, "学生技能加分", null, MENU_TABLE.get(20L)));
+        TYPE_TABLE.put(18L, new AuthorityType(18L, "学生其他加分", null, MENU_TABLE.get(21L)));
+
     }
 }

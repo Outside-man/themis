@@ -75,4 +75,13 @@ public class Volunteer {
     public void setVolunteerTime(Double volunteerTime) {
         this.volunteerTime = volunteerTime;
     }
+
+    public Volunteer(StudentBaseInfo baseInfo, String common, String term, String volunteerName, String volunteerDate, Double volunteerTime) {
+        this.baseInfo = baseInfo;
+        this.common = common;
+        this.term = term;
+        this.volunteerName = volunteerName;
+        this.volunteerDate = volunteerDate;
+        this.volunteerTime = volunteerTime;
+    }
 }

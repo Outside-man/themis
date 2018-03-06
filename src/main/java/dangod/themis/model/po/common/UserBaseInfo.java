@@ -1,17 +1,18 @@
 package dangod.themis.model.po.common;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "common_user_info")
-public class UserBaseInfo {
+public class UserBaseInfo implements Serializable {
     @Id
     @GeneratedValue
     private long id;
     private String realName;
     private String email;
     private String sex;
-    @OneToOne(fetch=FetchType.EAGER, cascade= CascadeType.DETACH)
+    @OneToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
     @JoinColumn(name="user_id",nullable=true)
     private User user;
 

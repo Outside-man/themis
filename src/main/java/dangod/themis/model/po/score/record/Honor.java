@@ -75,4 +75,16 @@ public class Honor {
     public void setHonorScore(Double honorScore) {
         this.honorScore = honorScore;
     }
+
+    public Honor() {
+    }
+
+    public Honor(StudentBaseInfo baseInfo, String common, String term, String honorName, Integer honorLv, Double honorScore) {
+        this.baseInfo = baseInfo;
+        this.common = common;
+        this.term = term;
+        this.honorName = honorName;
+        this.honorLv = honorLv;
+        this.honorScore = honorScore;
+    }
 }

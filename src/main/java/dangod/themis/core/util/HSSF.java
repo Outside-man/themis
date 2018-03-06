@@ -246,10 +246,14 @@ public class HSSF {
         List<String> cellList = new ArrayList<>();
         try {
             if (wb == null) throw new Exception("未打开文件");
-            for(int i =0;i<colSize;i++){
+            int col = this.getRowSize(sheetIndex, rowIndex);
+            for(int i = 0;i<col;i++){
                 Cell cell = wb.getSheetAt(sheetIndex).getRow(rowIndex).getCell(i);
                 cell.setCellType(Cell.CELL_TYPE_STRING);//处理读取xls时 单元格使用各类函数的数据读取问题
-                cellList.add(cell.getStringCellValue());
+                cellList.add(cell.getStringCellValue().trim());
+            }
+            for(int i = col-1; i<colSize;i++){
+                cellList.add("");
             }
 
         } catch (Exception e) {

@@ -67,4 +67,12 @@ public class Reserve {
     public void setScore(Double score) {
         this.score = score;
     }
+
+    public Reserve(StudentBaseInfo baseInfo, String common, String term, String course, Double score) {
+        this.baseInfo = baseInfo;
+        this.common = common;
+        this.term = term;
+        this.course = course;
+        this.score = score;
+    }
 }

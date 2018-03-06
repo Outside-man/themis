@@ -12,6 +12,15 @@ public class TypeContant {
     public static final long SCHOOL_STUDENT_MANAGE = 10L;//全校学生信息管理
     public static final long DB_STU_BASE = 11L;//学生数据管理
 
+    public static final long DB_STU_ACTIVITY = 12L;//学生活动加分
+    public static final long DB_STU_HONOR = 13L;//学生荣誉加分
+    public static final long DB_STU_OFFICE = 14L;//学生任职加分
+    public static final long DB_STU_PRACTICE = 15L;//学生实践加分
+    public static final long DB_STU_VOLUNTEER = 16L;//学生志愿加分
+    public static final long DB_STU_SKILL = 17L;//学生技能加分
+    public static final long DB_STU_RESERVE = 18L;//学生其他加分
+
+
 
 
 

@@ -93,4 +93,15 @@ public class Office {
     public void setTerm(String term) {
         this.term = term;
     }
+
+    public Office(StudentBaseInfo baseInfo, String common, String term, String officeName, Integer officeLv, String startDate, String endDate, Integer result) {
+        this.baseInfo = baseInfo;
+        this.common = common;
+        this.term = term;
+        this.officeName = officeName;
+        this.officeLv = officeLv;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.result = result;
+    }
 }

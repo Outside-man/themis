@@ -75,4 +75,13 @@ public class Skill {
     public void setSkillScore(Double skillScore) {
         this.skillScore = skillScore;
     }
+
+    public Skill(StudentBaseInfo baseInfo, String common, String term, Integer skillLv, String skillName, Double skillScore) {
+        this.baseInfo = baseInfo;
+        this.common = common;
+        this.term = term;
+        this.skillLv = skillLv;
+        this.skillName = skillName;
+        this.skillScore = skillScore;
+    }
 }

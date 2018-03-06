@@ -75,4 +75,13 @@ public class Practice {
     public void setResult(Integer result) {
         this.result = result;
     }
+
+    public Practice(StudentBaseInfo baseInfo, String common, String term, String practiceName, String practiceDate, Integer result) {
+        this.baseInfo = baseInfo;
+        this.common = common;
+        this.term = term;
+        this.practiceName = practiceName;
+        this.practiceDate = practiceDate;
+        this.result = result;
+    }
 }

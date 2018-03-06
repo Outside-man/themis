@@ -247,10 +247,11 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 return null;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }
-/*
+
     @Override
     public ImportResult addHonorByFile(MultipartFile file, String opName) {
         try {
@@ -265,10 +266,10 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 List<Honor> addList = new ArrayList<>();
                 List<String> failList = new ArrayList<>();
                 for (int i = 1; i <= row; i++) {
-                    HonorImport importVo = new HonorImport(hssf.getRowValue(0, i, 5));
+                    HonorImport importVo = new HonorImport(hssf.getRowValue(0, i, 6));
                     StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
                     if (baseInfo != null) {
-                        addList.add(new Honor(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getHonorDate(), importVo.getHonorName()));
+                        addList.add(new Honor(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getHonorName(), importVo.getHonorLv(), importVo.getHonorScore()));
                     }else {
                         failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getHonorName());
                     }
@@ -279,6 +280,7 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 return null;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }
@@ -297,10 +299,10 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 List<Office> addList = new ArrayList<>();
                 List<String> failList = new ArrayList<>();
                 for (int i = 1; i <= row; i++) {
-                    OfficeImport importVo = new OfficeImport(hssf.getRowValue(0, i, 5));
+                    OfficeImport importVo = new OfficeImport(hssf.getRowValue(0, i, 9));
                     StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
                     if (baseInfo != null) {
-                        addList.add(new Office(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getOfficeDate(), importVo.getOfficeName()));
+                        addList.add(new Office(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getOfficeName(), importVo.getOfficeLv(), importVo.getStartDate(), importVo.getEndDate(), importVo.getResult()));
                     }else {
                         failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getOfficeName());
                     }
@@ -311,6 +313,7 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 return null;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }
@@ -329,10 +332,10 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 List<Practice> addList = new ArrayList<>();
                 List<String> failList = new ArrayList<>();
                 for (int i = 1; i <= row; i++) {
-                    PracticeImport importVo = new PracticeImport(hssf.getRowValue(0, i, 5));
+                    PracticeImport importVo = new PracticeImport(hssf.getRowValue(0, i, 6));
                     StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
                     if (baseInfo != null) {
-                        addList.add(new Practice(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getPracticeDate(), importVo.getPracticeName()));
+                        addList.add(new Practice(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getPracticeName(), importVo.getPracticeDate(), importVo.getResult()));
                     }else {
                         failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getPracticeName());
                     }
@@ -343,6 +346,7 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 return null;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }
@@ -364,9 +368,9 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                     ReserveImport importVo = new ReserveImport(hssf.getRowValue(0, i, 5));
                     StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
                     if (baseInfo != null) {
-                        addList.add(new Reserve(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getReserveDate(), importVo.getReserveName()));
+                        addList.add(new Reserve(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getCourse(), importVo.getScore()));
                     }else {
-                        failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getReserveName());
+                        failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getCourse());
                     }
                 }
                 reserveRepo.save(addList);
@@ -375,6 +379,7 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 return null;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }
@@ -393,10 +398,10 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 List<Skill> addList = new ArrayList<>();
                 List<String> failList = new ArrayList<>();
                 for (int i = 1; i <= row; i++) {
-                    SkillImport importVo = new SkillImport(hssf.getRowValue(0, i, 5));
+                    SkillImport importVo = new SkillImport(hssf.getRowValue(0, i, 6));
                     StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
                     if (baseInfo != null) {
-                        addList.add(new Skill(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getSkillDate(), importVo.getSkillName()));
+                        addList.add(new Skill(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getSkillLv(), importVo.getSkillName(), importVo.getSkillScore()));
                     }else {
                         failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getSkillName());
                     }
@@ -407,6 +412,7 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 return null;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }
@@ -425,10 +431,10 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 List<Volunteer> addList = new ArrayList<>();
                 List<String> failList = new ArrayList<>();
                 for (int i = 1; i <= row; i++) {
-                    VolunteerImport importVo = new VolunteerImport(hssf.getRowValue(0, i, 5));
+                    VolunteerImport importVo = new VolunteerImport(hssf.getRowValue(0, i, 6));
                     StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(importVo.getStuId());
                     if (baseInfo != null) {
-                        addList.add(new Volunteer(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getVolunteerDate(), importVo.getVolunteerName()));
+                        addList.add(new Volunteer(baseInfo, importVo.getCommon(), TermUtil.get(), importVo.getVolunteerName(), importVo.getVolunteerDate(), importVo.getVolunteerTime()));
                     }else {
                         failList.add(importVo.getStuId()+":"+importVo.getRealName()+"-"+importVo.getVolunteerName());
                     }
@@ -439,9 +445,9 @@ public class StudentRecordServiceImpl implements StudentRecordService{
                 return null;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
     }
 
-*/
 }
