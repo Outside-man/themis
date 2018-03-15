@@ -19,14 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
-import static dangod.themis.controller.base.constant.Message.PERMISSIN_DENIED_MESSAGE;
-import static dangod.themis.controller.base.constant.Message.STU_FAIL_MESSAGE;
-import static dangod.themis.controller.base.constant.Message.STU_SUCCESS_MESSAGE;
+import static dangod.themis.controller.base.constant.Message.*;
 import static dangod.themis.controller.base.constant.Status.FAIL;
 import static dangod.themis.controller.base.constant.Status.PERMISSIN_DENIED;
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
 import static dangod.themis.model.po.authority.constant.TypeContant.*;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
 @CrossOrigin
@@ -71,6 +69,52 @@ public class StuActivityController extends BaseController{
         if(list == null)
             return Result.send(FAIL, null, STU_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/school", method = POST)
+    @ApiOperation(value = "校级管理员添加学生Activity信息")
+    @ContainAuthority(SCHOOL_STUDENT_MANAGE)
+    @Authorization
+    public String schoolAdminAddStudentActivityByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                      @RequestHeader(AUTHORIZATION)String token,
+                                                      @RequestParam("stuId")String stuId,
+                                                      @RequestParam("activityName")String activityName,
+                                                      @RequestParam("activityDate")String activityDate,
+                                                      @RequestParam("common")String common){
+
+        Integer status = recordService.addActivity(stuId, activityName, activityDate, common);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_ADD_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_ADD_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/school", method = DELETE)
+    @ApiOperation(value = "校级管理员删除学生Activity信息")
+    @ContainAuthority(SCHOOL_STUDENT_MANAGE)
+    @Authorization
+    public String schoolAdminDeleteStudentActivityByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                         @RequestHeader(AUTHORIZATION)String token,
+                                                         @RequestParam("recordId")Long recordId){
+        Integer status = recordService.deleteActivity(recordId);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_DELETE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_DELETE_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/school", method = PUT)
+    @ApiOperation(value = "校级管理员修改学生Activity信息")
+    @ContainAuthority(SCHOOL_STUDENT_MANAGE)
+    @Authorization
+    public String schoolAdminUpdateStudentActivityByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                         @RequestHeader(AUTHORIZATION)String token,
+                                                         @RequestParam("recordId")Long recordId,
+                                                         @RequestParam("activityName")String activityName,
+                                                         @RequestParam("activityDate")String activityDate,
+                                                         @RequestParam("common")String common){
+        Integer status = recordService.updateActivity(recordId,activityName, activityDate, common);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_UPDATE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_UPDATE_SUCCESS_MESSAGE);
     }
 
     @RequestMapping(value = "/class", method = GET)

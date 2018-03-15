@@ -36,6 +36,7 @@ public class SkillVo extends BaseRecordVo{
 
     public SkillVo(Skill skill) {
         this.recordId = skill.getId();
+        this.stuId = skill.getBaseInfo().getStuId();
         this.common = skill.getCommon();
         this.term = skill.getTerm();
         this.skillScore = skill.getSkillScore();

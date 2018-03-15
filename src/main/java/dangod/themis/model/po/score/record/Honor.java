@@ -10,7 +10,7 @@ public class Honor {
     @Id
     @GeneratedValue
     private long id;
-    @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.DETACH)
     @JoinColumn(name="base_id",nullable=true)
     private StudentBaseInfo baseInfo;
     private String common;

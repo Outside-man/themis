@@ -37,6 +37,7 @@ public class HonorVo extends BaseRecordVo {
 
     public HonorVo(Honor honor) {
         this.recordId = honor.getId();
+        this.stuId = honor.getBaseInfo().getStuId();
         this.common = honor.getCommon();
         this.term = honor.getTerm();
         this.honorName = honor.getHonorName();

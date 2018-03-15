@@ -45,9 +45,19 @@ public class Message {
     public final static String STU_BASEINFO_UPDATE_FAIL_MESSAGE = "更新学生基础信息失败";
     public final static String STU_BASEINFO_UPDATE_SUCCESS_MESSAGE = "更新学生基础信息成功";
 
+    public final static String STU_ADD_FAIL_MESSAGE = "添加学生信息失败";
+    public final static String STU_ADD_SUCCESS_MESSAGE = "添加学生信息成功";
+
+    public final static String STU_DELETE_FAIL_MESSAGE = "删除学生信息失败";
+    public final static String STU_DELETE_SUCCESS_MESSAGE = "删除学生信息成功";
+
+    public final static String STU_UPDATE_FAIL_MESSAGE = "更新学生信息失败";
+    public final static String STU_UPDATE_SUCCESS_MESSAGE = "更新学生信息成功";
+
 
     public final static String STU_FAIL_MESSAGE = "获取学生信息失败";
     public final static String STU_SUCCESS_MESSAGE = "获取学生信息成功";
+
 
 
 

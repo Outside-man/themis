@@ -97,7 +97,7 @@ public class BaseImport {
         try {
             this.dormitoryId = Long.parseLong(list.get(7));
         }catch (Exception e){
-            this.classId = -1L;
+            this.dormitoryId = -1L;
         }
     }
 }

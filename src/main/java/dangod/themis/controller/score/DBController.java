@@ -52,7 +52,7 @@ public class DBController extends BaseController{
     @RequestMapping(value = "/base/file",method = GET)
     @ApiOperation(value = "数据库管理员下载学生模板文件")
     public String downloadBaseTemplate(HttpServletRequest request, HttpServletResponse response){
-        int status = BaseFile.download(response, FOLDER + "templates", "stu_base_import.xlsx", "学生导入模板.xlsx");
+        int status = BaseFile.download(response, FOLDER + "templates", "stu_base_import.xls", "学生导入模板.xls");
         if(status == -1)
             return Result.send(FAIL, null, STU_DB_DOWNLOAD_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, STU_DB_DOWNLOAD_SUCCESS_MESSAGE);
@@ -75,7 +75,7 @@ public class DBController extends BaseController{
     @RequestMapping(value = "/activity/file",method = GET)
     @ApiOperation(value = "数据库管理员下载活动模板文件")
     public String downloadActivityTemplate(HttpServletRequest request, HttpServletResponse response){
-        int status = BaseFile.download(response, FOLDER + "templates", "stu_activity_import.xlsx", "活动导入模板.xlsx");
+        int status = BaseFile.download(response, FOLDER + "templates", "stu_activity_import.xls", "活动导入模板.xls");
         if(status == -1)
             return Result.send(FAIL, null, STU_DB_DOWNLOAD_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, STU_DB_DOWNLOAD_SUCCESS_MESSAGE);
@@ -98,7 +98,7 @@ public class DBController extends BaseController{
     @RequestMapping(value = "/honor/file",method = GET)
     @ApiOperation(value = "数据库管理员下载荣誉模板文件")
     public String downloadHonorTemplate(HttpServletRequest request, HttpServletResponse response){
-        int status = BaseFile.download(response, FOLDER + "templates", "stu_honor_import.xlsx", "荣誉导入模板.xlsx");
+        int status = BaseFile.download(response, FOLDER + "templates", "stu_honor_import.xls", "荣誉导入模板.xls");
         if(status == -1)
             return Result.send(FAIL, null, STU_DB_DOWNLOAD_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, STU_DB_DOWNLOAD_SUCCESS_MESSAGE);
@@ -121,7 +121,7 @@ public class DBController extends BaseController{
     @RequestMapping(value = "/office/file",method = GET)
     @ApiOperation(value = "数据库管理员下载任职模板文件")
     public String downloadOfficeTemplate(HttpServletRequest request, HttpServletResponse response){
-        int status = BaseFile.download(response, FOLDER + "templates", "stu_office_import.xlsx", "任职导入模板.xlsx");
+        int status = BaseFile.download(response, FOLDER + "templates", "stu_office_import.xls", "任职导入模板.xls");
         if(status == -1)
             return Result.send(FAIL, null, STU_DB_DOWNLOAD_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, STU_DB_DOWNLOAD_SUCCESS_MESSAGE);
@@ -144,7 +144,7 @@ public class DBController extends BaseController{
     @RequestMapping(value = "/practice/file",method = GET)
     @ApiOperation(value = "数据库管理员下载实践模板文件")
     public String downloadPracticeTemplate(HttpServletRequest request, HttpServletResponse response){
-        int status = BaseFile.download(response, FOLDER + "templates", "stu_practice_import.xlsx", "实践导入模板.xlsx");
+        int status = BaseFile.download(response, FOLDER + "templates", "stu_practice_import.xls", "实践导入模板.xls");
         if(status == -1)
             return Result.send(FAIL, null, STU_DB_DOWNLOAD_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, STU_DB_DOWNLOAD_SUCCESS_MESSAGE);
@@ -167,7 +167,7 @@ public class DBController extends BaseController{
     @RequestMapping(value = "/reserve/file",method = GET)
     @ApiOperation(value = "数据库管理员下载其他加分模板文件")
     public String downloadReserveTemplate(HttpServletRequest request, HttpServletResponse response){
-        int status = BaseFile.download(response, FOLDER + "templates", "stu_reserve_import.xlsx", "其他加分导入模板.xlsx");
+        int status = BaseFile.download(response, FOLDER + "templates", "stu_reserve_import.xls", "其他加分导入模板.xls");
         if(status == -1)
             return Result.send(FAIL, null, STU_DB_DOWNLOAD_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, STU_DB_DOWNLOAD_SUCCESS_MESSAGE);
@@ -190,7 +190,7 @@ public class DBController extends BaseController{
     @RequestMapping(value = "/skill/file",method = GET)
     @ApiOperation(value = "数据库管理员下载技能模板文件")
     public String downloadSkillTemplate(HttpServletRequest request, HttpServletResponse response){
-        int status = BaseFile.download(response, FOLDER + "templates", "stu_skill_import.xlsx", "技能导入模板.xlsx");
+        int status = BaseFile.download(response, FOLDER + "templates", "stu_skill_import.xls", "技能导入模板.xls");
         if(status == -1)
             return Result.send(FAIL, null, STU_DB_DOWNLOAD_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, STU_DB_DOWNLOAD_SUCCESS_MESSAGE);
@@ -213,7 +213,7 @@ public class DBController extends BaseController{
     @RequestMapping(value = "/volunteer/file",method = GET)
     @ApiOperation(value = "数据库管理员下载志愿模板文件")
     public String downloadVolunteerTemplate(HttpServletRequest request, HttpServletResponse response){
-        int status = BaseFile.download(response, FOLDER + "templates", "stu_volunteer_import.xlsx", "志愿导入模板.xlsx");
+        int status = BaseFile.download(response, FOLDER + "templates", "stu_volunteer_import.xls", "志愿导入模板.xls");
         if(status == -1)
             return Result.send(FAIL, null, STU_DB_DOWNLOAD_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, STU_DB_DOWNLOAD_SUCCESS_MESSAGE);

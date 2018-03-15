@@ -43,7 +43,7 @@ public class StudentBaseInfoServiceImpl implements StudentBaseInfoService {
     @Autowired
     private AuthorityUserRepo authorityUserRepo;
 
-    private String STU_BASE_AUTH = "[6, 7]";//6:个人学生信息查看
+    private String STU_BASE_AUTH = "[6]";//6:个人学生信息查看
 
     private static final String STU_BASE_IMPORT_PATH = BaseFile.FOLDER + "score" + File.separator + "import" + File.separator + "base";
 

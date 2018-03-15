@@ -450,4 +450,137 @@ public class StudentRecordServiceImpl implements StudentRecordService{
         }
     }
 
+    @Override
+    public Integer addActivity(String stuId, String activityName, String activityDate, String common) {
+        try {
+            StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(stuId);
+            activityRepo.save(new Activity(baseInfo, common, TermUtil.get(), activityDate, activityName));
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer deleteActivity(long recordId) {
+        try {
+            activityRepo.delete(recordId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer updateActivity(long recordId, String activityName, String activityDate, String common) {
+        try {
+            Activity activity = activityRepo.findOne(recordId);
+            activity.setActivityName(activityName);
+            activity.setActivityDate(activityDate);
+            activity.setCommon(common);
+            activity.setTerm(TermUtil.get());
+            activityRepo.save(activity);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer deleteHonor(long recordId) {
+        try {
+            honorRepo.delete(recordId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer deleteOffice(long recordId) {
+        try {
+            officeRepo.delete(recordId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer deletePractice(long recordId) {
+        try {
+            practiceRepo.delete(recordId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer deleteReserve(long recordId) {
+        try {
+            reserveRepo.delete(recordId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer deleteSkill(long recordId) {
+        try {
+            skillRepo.delete(recordId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer deleteVolunteer(long recordId) {
+        try {
+            volunteerRepo.delete(recordId);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+    @Override
+    public Integer addHonor(String stuId, String honorName, int honorLv, double honorScore, String common) {
+        try {
+            StudentBaseInfo baseInfo = studentBaseInfoRepo.findByStuId(stuId);
+            honorRepo.save(new Honor(baseInfo, common, TermUtil.get(), honorName, honorLv, honorScore));
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
+
+//    @Override
+//    public Integer updateHonor(long recordId, String honorName, int honorLv, double honorScore, String common) {
+//        try {
+//            Activity activity = activityRepo.findOne(recordId);
+//            activity.setActivityName(activityName);
+//            activity.setActivityDate(activityDate);
+//            activity.setCommon(common);
+//            activity.setTerm(TermUtil.get());
+//            activityRepo.save(activity);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return -1;
+//        }
+//        return 0;
+//    }
+
 }

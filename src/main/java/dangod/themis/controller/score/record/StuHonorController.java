@@ -19,13 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
-import static dangod.themis.controller.base.constant.Message.PERMISSIN_DENIED_MESSAGE;
-import static dangod.themis.controller.base.constant.Message.STU_FAIL_MESSAGE;
-import static dangod.themis.controller.base.constant.Message.STU_SUCCESS_MESSAGE;
+import static dangod.themis.controller.base.constant.Message.*;
+import static dangod.themis.controller.base.constant.Message.STU_DELETE_SUCCESS_MESSAGE;
 import static dangod.themis.controller.base.constant.Status.FAIL;
 import static dangod.themis.controller.base.constant.Status.PERMISSIN_DENIED;
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
 import static dangod.themis.model.po.authority.constant.TypeContant.*;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 
@@ -73,6 +73,19 @@ public class StuHonorController extends BaseController{
         return Result.send(SUCCESS, list, STU_SUCCESS_MESSAGE);
     }
 
+    @RequestMapping(value = "/school", method = DELETE)
+    @ApiOperation(value = "校级管理员删除学生Honor信息")
+    @ContainAuthority(SCHOOL_STUDENT_MANAGE)
+    @Authorization
+    public String schoolAdminDeleteStudentHonorByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                      @RequestHeader(AUTHORIZATION)String token,
+                                                      @RequestParam("record")Long recordId) {
+        Integer status = recordService.deleteHonor(recordId);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_DELETE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_DELETE_SUCCESS_MESSAGE);
+    }
+
     @RequestMapping(value = "/class", method = GET)
     @ApiOperation(value = "班级管理员获取学生Honor信息(按学期)")
     @ContainAuthority(CLASS_STUDENT_MANAGE)
@@ -92,6 +105,23 @@ public class StuHonorController extends BaseController{
         if(list == null)
             return Result.send(FAIL, null, STU_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/class", method = DELETE)
+    @ApiOperation(value = "班级管理员删除学生Honor信息")
+    @ContainAuthority(CLASS_STUDENT_MANAGE)
+    @Class
+    @Authorization
+    public String classAdminDeleteStudentHonorByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                     @RequestHeader(AUTHORIZATION)String token,
+                                                     @RequestParam("stuId")String stuId,
+                                                     @RequestParam("record")Long recordId) {
+        if(!studentBaseInfoService.checkStuClass(stuId, getManageClass(request)))
+            return Result.send(PERMISSIN_DENIED, null, PERMISSIN_DENIED_MESSAGE);
+        Integer status = recordService.deleteHonor(recordId);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_DELETE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_DELETE_SUCCESS_MESSAGE);
     }
             
     @RequestMapping(value = "/major", method = GET)
@@ -113,5 +143,19 @@ public class StuHonorController extends BaseController{
         if(list == null)
             return Result.send(FAIL, null, STU_FAIL_MESSAGE);
         return Result.send(SUCCESS, list, STU_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/major", method = DELETE)
+    @ApiOperation(value = "专业管理员删除学生Honor信息(按学期)")
+    @ContainAuthority(MAJOR_STUDENT_MANAGE)
+    @Major
+    @Authorization
+    public String majorAdminGetStudentHonorByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                  @RequestHeader(AUTHORIZATION)String token,
+                                                  @RequestParam("record")Long recordId) {
+        Integer status = recordService.deleteHonor(recordId);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_DELETE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_DELETE_SUCCESS_MESSAGE);
     }
 }

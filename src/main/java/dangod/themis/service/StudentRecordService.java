@@ -37,15 +37,35 @@ public interface StudentRecordService {
 
     ImportResult addActivityByFile(MultipartFile file, String opName);
 
-    public ImportResult addHonorByFile(MultipartFile file, String opName);
+    ImportResult addHonorByFile(MultipartFile file, String opName);
 
-    public ImportResult addOfficeByFile(MultipartFile file, String opName);
+    ImportResult addOfficeByFile(MultipartFile file, String opName);
 
-    public ImportResult addPracticeByFile(MultipartFile file, String opName);
+    ImportResult addPracticeByFile(MultipartFile file, String opName);
 
-    public ImportResult addReserveByFile(MultipartFile file, String opName);
+    ImportResult addReserveByFile(MultipartFile file, String opName);
 
-    public ImportResult addSkillByFile(MultipartFile file, String opName);
+    ImportResult addSkillByFile(MultipartFile file, String opName);
 
-    public ImportResult addVolunteerByFile(MultipartFile file, String opName);
+    ImportResult addVolunteerByFile(MultipartFile file, String opName);
+
+    Integer deleteActivity(long recordId);
+
+    Integer deleteHonor (long recordId);
+
+    Integer deleteOffice (long recordId);
+
+    Integer deletePractice (long recordId);
+
+    Integer deleteReserve (long recordId);
+
+    Integer deleteSkill (long recordId);
+
+    Integer deleteVolunteer (long recordId);
+
+    Integer addActivity(String stuId, String activityName, String activityDate, String common);
+
+    Integer updateActivity(long recordId, String activityName, String activityDate, String common);
+
+    Integer addHonor(String stuId, String honorName, int honorLv, double honorScore, String common);
 }

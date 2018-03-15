@@ -36,6 +36,7 @@ public class VolunteerVo extends BaseRecordVo {
 
     public VolunteerVo(Volunteer volunteer) {
         this.recordId = volunteer.getId();
+        this.stuId = volunteer.getBaseInfo().getStuId();
         this.common = volunteer.getCommon();
         this.term = volunteer.getTerm();
         this.volunteerDate = volunteer.getVolunteerDate();

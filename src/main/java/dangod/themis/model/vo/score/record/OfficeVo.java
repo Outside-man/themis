@@ -66,6 +66,7 @@ public class OfficeVo extends BaseRecordVo {
 
     public OfficeVo(Office office) {
         this.recordId = office.getId();
+        this.stuId = office.getBaseInfo().getStuId();
         this.common = office.getCommon();
         this.term = office.getTerm();
         this.officeName = office.getOfficeName();

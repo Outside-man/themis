@@ -47,6 +47,7 @@ public class PracticeVo extends BaseRecordVo {
 
     public PracticeVo(Practice practice) {
         this.recordId = practice.getId();
+        this.stuId = practice.getBaseInfo().getStuId();
         this.common = practice.getCommon();
         this.term = practice.getTerm();
         this.practiceDate = practice.getPracticeDate();

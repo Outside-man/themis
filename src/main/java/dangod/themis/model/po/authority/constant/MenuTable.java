@@ -8,7 +8,7 @@ import java.util.Map;
 public class MenuTable {
     public static final Map<Long, AuthorityMenu> MENU_TABLE = new HashMap();
     static{
-        MENU_TABLE.put(1L, new AuthorityMenu(1L, "db", "cogs", "数据库管理", "/db", null));
+        MENU_TABLE.put(1L, new AuthorityMenu(1L, "db", "cogs", "德育分数据库", "/db", null));
         MENU_TABLE.put(14L, new AuthorityMenu(14L, "db/stu", "cogs", "学生基础管理", "stu", MENU_TABLE.get(1L)));
         MENU_TABLE.put(15L, new AuthorityMenu(15L, "db/activity", "cogs", "学生活动加分", "activity", MENU_TABLE.get(1L)));
         MENU_TABLE.put(16L, new AuthorityMenu(16L, "db/honor", "cogs", "学生荣誉加分", "honor", MENU_TABLE.get(1L)));

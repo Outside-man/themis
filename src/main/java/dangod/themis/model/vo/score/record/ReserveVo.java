@@ -27,6 +27,7 @@ public class ReserveVo extends BaseRecordVo {
 
     public ReserveVo(Reserve reserve) {
         this.recordId = reserve.getId();
+        this.stuId = reserve.getBaseInfo().getStuId();
         this.common = reserve.getCommon();
         this.term = reserve.getTerm();
         this.course = reserve.getCourse();

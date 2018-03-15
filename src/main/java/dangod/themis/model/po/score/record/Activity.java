@@ -10,7 +10,7 @@ public class Activity {
     @Id
     @GeneratedValue
     private long id;
-    @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
+    @ManyToOne(fetch=FetchType.EAGER, cascade= CascadeType.DETACH)
     @JoinColumn(name="base_id",nullable=true)
     private StudentBaseInfo baseInfo;
     private String common;
@@ -65,6 +65,9 @@ public class Activity {
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;
+    }
+
+    public Activity() {
     }
 
     public Activity(StudentBaseInfo baseInfo, String common, String term, String activityDate, String activityName) {

@@ -38,6 +38,7 @@ public class ActivityVo extends BaseRecordVo{
 
     public ActivityVo(Activity activity, double score) {
         this.recordId = activity.getId();
+        this.stuId = activity.getBaseInfo().getStuId();
         this.activityDate = activity.getActivityDate();
         this.activityName = activity.getActivityName();
         this.term = activity.getTerm();
