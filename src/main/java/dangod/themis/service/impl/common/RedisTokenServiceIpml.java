@@ -1,7 +1,7 @@
 package dangod.themis.service.impl.common;
 
 import dangod.themis.model.vo.TokenVo;
-import dangod.themis.service.TokenService;
+import dangod.themis.service.common.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;

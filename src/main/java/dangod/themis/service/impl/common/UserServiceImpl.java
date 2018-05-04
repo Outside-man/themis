@@ -4,7 +4,7 @@ import dangod.themis.dao.common.UserBaseInfoRepo;
 import dangod.themis.dao.common.UserRepo;
 import dangod.themis.model.po.common.User;
 import dangod.themis.model.po.common.UserBaseInfo;
-import dangod.themis.service.UserService;
+import dangod.themis.service.common.UserService;
 import dangod.themis.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

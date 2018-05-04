@@ -1,4 +1,4 @@
-package dangod.themis.service;
+package dangod.themis.service.score;
 
 import dangod.themis.model.vo.score.file.result.ImportResult;
 import dangod.themis.model.vo.score.record.*;

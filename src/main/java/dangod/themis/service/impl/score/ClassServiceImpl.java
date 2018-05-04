@@ -6,7 +6,7 @@ import dangod.themis.model.po.score.Class;
 import dangod.themis.model.po.score.Major;
 import dangod.themis.model.vo.score.ClassVo;
 import dangod.themis.model.vo.score.MajorVo;
-import dangod.themis.service.ClassService;
+import dangod.themis.service.score.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

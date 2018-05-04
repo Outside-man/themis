@@ -2,8 +2,7 @@ package dangod.themis.controller.base.aspect;
 
 import dangod.themis.core.result.Result;
 import dangod.themis.model.po.score.DutyManager;
-import dangod.themis.service.AuthorityService;
-import dangod.themis.service.DutyManagerService;
+import dangod.themis.service.score.DutyManagerService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,13 +13,9 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Base64;
-import java.util.List;
 
-import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
 import static dangod.themis.controller.base.constant.Message.BASE_MESSAGE_SERVER_ERROR;
 import static dangod.themis.controller.base.constant.Message.PERMISSIN_DENIED_MESSAGE;
-import static dangod.themis.controller.base.constant.Message.TOKEN_INVAILD_MESSAGE;
 import static dangod.themis.controller.base.constant.Status.*;
 
 /**

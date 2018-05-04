@@ -1,4 +1,4 @@
-package dangod.themis.service;
+package dangod.themis.service.core;
 
 import dangod.themis.model.vo.MenuVo;
 import org.springframework.cache.annotation.Cacheable;

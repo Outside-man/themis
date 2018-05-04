@@ -2,7 +2,7 @@ package dangod.themis.controller.base.aspect;
 
 import dangod.themis.controller.base.annotation.ContainAuthority;
 import dangod.themis.core.result.Result;
-import dangod.themis.service.AuthorityService;
+import dangod.themis.service.core.AuthorityService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

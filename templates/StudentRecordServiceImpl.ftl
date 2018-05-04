@@ -3,7 +3,7 @@ package dangod.themis.service.impl.score;
 import dangod.themis.dao.score.record.*;
 import dangod.themis.model.po.score.record.*;
 import dangod.themis.model.vo.score.record.*;
-import dangod.themis.service.StudentRecordService;
+import dangod.themis.service.score.StudentRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;

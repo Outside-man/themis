@@ -2,7 +2,7 @@ package dangod.themis.service.impl.score;
 
 import dangod.themis.dao.score.DormitoryRepo;
 import dangod.themis.model.po.score.Dormitory;
-import dangod.themis.service.DormitoryService;
+import dangod.themis.service.score.DormitoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

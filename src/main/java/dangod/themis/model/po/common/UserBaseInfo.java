@@ -12,6 +12,7 @@ public class UserBaseInfo implements Serializable {
     private String realName;
     private String email;
     private String sex;
+    private String phone;
     @OneToOne(fetch=FetchType.EAGER, cascade= CascadeType.ALL)
     @JoinColumn(name="user_id",nullable=true)
     private User user;
@@ -46,6 +47,14 @@ public class UserBaseInfo implements Serializable {
 
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public User getUser() {

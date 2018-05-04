@@ -1,4 +1,4 @@
-package dangod.themis.service;
+package dangod.themis.service.common;
 
 import dangod.themis.model.vo.UserBaseInfoVo;
 

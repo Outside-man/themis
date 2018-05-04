@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Table(name = "core_authority_menu")
 public class AuthorityMenu {
     @Id
-    @GeneratedValue
     private long id;
     private String name;
     private String path;

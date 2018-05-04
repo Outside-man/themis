@@ -1,4 +1,4 @@
-package dangod.themis.service;
+package dangod.themis.service.common;
 
 import dangod.themis.model.po.common.User;
 import dangod.themis.model.po.common.UserBaseInfo;

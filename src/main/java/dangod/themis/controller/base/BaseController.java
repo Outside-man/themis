@@ -1,6 +1,6 @@
 package dangod.themis.controller.base;
 
-import dangod.themis.service.UserInfoService;
+import dangod.themis.service.common.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;

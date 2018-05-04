@@ -5,7 +5,7 @@ import dangod.themis.controller.base.annotation.Authorization;
 import dangod.themis.controller.base.annotation.ContainAuthority;
 import dangod.themis.core.result.Result;
 import dangod.themis.model.vo.UserBaseInfoVo;
-import dangod.themis.service.UserInfoService;
+import dangod.themis.service.common.UserInfoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

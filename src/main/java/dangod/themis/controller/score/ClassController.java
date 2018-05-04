@@ -7,7 +7,7 @@ import dangod.themis.controller.base.annotation.ContainAuthority;
 import dangod.themis.core.result.Result;
 import dangod.themis.model.vo.score.ClassVo;
 import dangod.themis.model.vo.score.MajorVo;
-import dangod.themis.service.ClassService;
+import dangod.themis.service.score.ClassService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.util.List;
-import java.util.Map;
 
 import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
 import static dangod.themis.controller.base.constant.Message.STU_BASEINFO_FAIL_MESSAGE;

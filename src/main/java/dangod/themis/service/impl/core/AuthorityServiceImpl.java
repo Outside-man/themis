@@ -1,5 +1,6 @@
 package dangod.themis.service.impl.core;
 
+import com.alibaba.fastjson.JSON;
 import dangod.themis.dao.authority.AuthorityMenuRepo;
 import dangod.themis.dao.authority.AuthorityTypeRepo;
 import dangod.themis.dao.authority.AuthorityUserRepo;
@@ -7,13 +8,14 @@ import dangod.themis.model.po.authority.AuthorityMenu;
 import dangod.themis.model.po.authority.AuthorityType;
 import dangod.themis.model.po.authority.AuthorityUser;
 import dangod.themis.model.vo.MenuVo;
-import dangod.themis.service.AuthorityService;
-import dangod.themis.service.TokenService;
+import dangod.themis.service.core.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import static dangod.themis.model.po.authority.constant.MenuTable.MENU_TABLE;
 import static dangod.themis.model.po.authority.constant.TypeTable.TYPE_TABLE;
@@ -32,7 +34,9 @@ public class AuthorityServiceImpl implements AuthorityService {
     public Integer initAuthorityTable(){
         try {
             menuRepo.save(MENU_TABLE.values());
+            menuRepo.flush();
             typeRepo.save(TYPE_TABLE.values());
+            typeRepo.flush();
         }catch (Exception e){
             throw new RuntimeException("权限表初始化错误");
         }

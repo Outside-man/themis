@@ -1,0 +1,197 @@
+package dangod.themis.model.vo.club;
+
+import dangod.themis.model.po.club.Application;
+import dangod.themis.model.po.club.Club;
+
+import javax.persistence.*;
+
+public class ApplicationVo {
+    private long applicationId;
+    private String applyDate;
+    private String clubName;
+    private long chiefId;
+    private String chiefName;
+    private String chiefPhone;
+    private String activityName;
+    private String activityPlace;
+    private String activityStart;
+    private String activityEnd;
+    private String activitypeople;
+    private Integer isFine;
+    private String introduce;
+    private Integer hasFile;
+    private String status;
+
+    public long getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(long applicationId) {
+        this.applicationId = applicationId;
+    }
+
+    public String getApplyDate() {
+        return applyDate;
+    }
+
+    public void setApplyDate(String applyDate) {
+        this.applyDate = applyDate;
+    }
+
+    public String getClubName() {
+        return clubName;
+    }
+
+    public void setClubName(String clubName) {
+        this.clubName = clubName;
+    }
+
+    public long getChiefId() {
+        return chiefId;
+    }
+
+    public void setChiefId(long chiefId) {
+        this.chiefId = chiefId;
+    }
+
+    public String getChiefName() {
+        return chiefName;
+    }
+
+    public void setChiefName(String chiefName) {
+        this.chiefName = chiefName;
+    }
+
+    public String getChiefPhone() {
+        return chiefPhone;
+    }
+
+    public void setChiefPhone(String chiefPhone) {
+        this.chiefPhone = chiefPhone;
+    }
+
+    public String getActivityName() {
+        return activityName;
+    }
+
+    public void setActivityName(String activityName) {
+        this.activityName = activityName;
+    }
+
+    public String getActivityPlace() {
+        return activityPlace;
+    }
+
+    public void setActivityPlace(String activityPlace) {
+        this.activityPlace = activityPlace;
+    }
+
+    public String getActivityStart() {
+        return activityStart;
+    }
+
+    public void setActivityStart(String activityStart) {
+        this.activityStart = activityStart;
+    }
+
+    public String getActivityEnd() {
+        return activityEnd;
+    }
+
+    public void setActivityEnd(String activityEnd) {
+        this.activityEnd = activityEnd;
+    }
+
+    public String getActivitypeople() {
+        return activitypeople;
+    }
+
+    public void setActivitypeople(String activitypeople) {
+        this.activitypeople = activitypeople;
+    }
+
+    public Integer getIsFine() {
+        return isFine;
+    }
+
+    public void setIsFine(Integer isFine) {
+        this.isFine = isFine;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public Integer getHasFile() {
+        return hasFile;
+    }
+
+    public void setHasFile(Integer hasFile) {
+        this.hasFile = hasFile;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        switch (status){
+            case -1:
+                this.status = "审核未通过";break;
+            case 0:
+                this.status = "审核通过";break;
+            default:
+                this.status = "审核中";
+        }
+    }
+
+    public ApplicationVo() {
+    }
+
+    public ApplicationVo(Application application) {
+        this.applicationId = application.getId();
+        this.applyDate = application.getApplyDate();
+        this.clubName = application.getClub().getClubName();
+        this.chiefId = application.getClub().getBaseInfo().getUser().getId();
+        this.chiefName = application.getClub().getBaseInfo().getRealName();
+        this.chiefPhone = application.getClub().getBaseInfo().getPhone();
+        this.activityName = application.getActivityName();
+        this.activityPlace = application.getActivityPlace();
+        this.activityStart = application.getActivityStart();
+        this.activityEnd = application.getActivityEnd();
+        this.activitypeople = application.getActivitypeople();
+        this.isFine = application.getIsFine();
+        this.introduce = application.getIntroduce();
+        this.hasFile = application.getHasFile();
+        switch (application.getStatus()){
+            case -1:
+                this.status = "审核未通过";break;
+            case 0:
+                this.status = "审核通过";break;
+            default:
+                this.status = "审核中";
+        }
+    }
+
+    public ApplicationVo(long applicationId, String applyDate, String clubName, long chiefId, String chiefName, String chiefPhone, String activityName, String activityPlace, String activityStart, String activityEnd, String activitypeople, Integer isFine, String introduce, Integer hasFile, String status) {
+        this.applicationId = applicationId;
+        this.applyDate = applyDate;
+        this.clubName = clubName;
+        this.chiefId = chiefId;
+        this.chiefName = chiefName;
+        this.chiefPhone = chiefPhone;
+        this.activityName = activityName;
+        this.activityPlace = activityPlace;
+        this.activityStart = activityStart;
+        this.activityEnd = activityEnd;
+        this.activitypeople = activitypeople;
+        this.isFine = isFine;
+        this.introduce = introduce;
+        this.hasFile = hasFile;
+        this.status = status;
+    }
+}

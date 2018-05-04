@@ -2,8 +2,8 @@ package dangod.themis.controller;
 
 import dangod.themis.controller.base.annotation.Authorization;
 import dangod.themis.core.result.Result;
-import dangod.themis.service.TokenService;
-import dangod.themis.service.UserService;
+import dangod.themis.service.common.TokenService;
+import dangod.themis.service.common.UserService;
 import dangod.themis.util.ReplayDefender;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

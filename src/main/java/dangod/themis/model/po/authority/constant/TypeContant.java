@@ -20,7 +20,11 @@ public class TypeContant {
     public static final long DB_STU_SKILL = 17L;//学生技能加分
     public static final long DB_STU_RESERVE = 18L;//学生其他加分
 
+    public static final long CLUB_ACTIVITY_APPLY = 19L;//活动申请
+    public static final long CLUB_ACTIVITY_CHECK = 20L;//申请查看
+    public static final long CLUB_ACTIVITY_APPROVE = 21L;//申请审批
 
+//21
 
 
 

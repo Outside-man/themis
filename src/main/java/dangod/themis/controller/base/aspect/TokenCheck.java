@@ -1,7 +1,7 @@
 package dangod.themis.controller.base.aspect;
 
 import dangod.themis.core.result.Result;
-import dangod.themis.service.TokenService;
+import dangod.themis.service.common.TokenService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;

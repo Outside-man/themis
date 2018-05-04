@@ -1,23 +1,17 @@
 package dangod.themis.controller.score;
 
-import com.sun.javafx.binding.StringFormatter;
 import dangod.themis.controller.base.BaseController;
 import dangod.themis.controller.base.annotation.Authorization;
 import dangod.themis.controller.base.annotation.ContainAuthority;
 import dangod.themis.controller.base.annotation.score.Class;
 import dangod.themis.controller.base.annotation.score.Major;
 import dangod.themis.core.result.Result;
-import dangod.themis.model.po.common.Inform;
 import dangod.themis.model.vo.score.StudentBaseInfoVo;
-import dangod.themis.service.StudentBaseInfoService;
+import dangod.themis.service.score.StudentBaseInfoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,7 +24,6 @@ import static dangod.themis.controller.base.constant.Status.PERMISSIN_DENIED;
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
 import static dangod.themis.model.po.authority.constant.TypeContant.*;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 @CrossOrigin
 @RestController
