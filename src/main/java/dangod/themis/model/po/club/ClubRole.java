@@ -29,6 +29,9 @@ public class ClubRole {
         return baseInfo;
     }
 
+    public ClubRole() {
+    }
+
     public ClubRole(Integer lv, UserBaseInfo baseInfo) {
         Lv = lv;
         this.baseInfo = baseInfo;

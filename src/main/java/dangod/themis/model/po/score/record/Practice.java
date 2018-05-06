@@ -76,6 +76,9 @@ public class Practice {
         this.result = result;
     }
 
+    public Practice() {
+    }
+
     public Practice(StudentBaseInfo baseInfo, String common, String term, String practiceName, String practiceDate, Integer result) {
         this.baseInfo = baseInfo;
         this.common = common;

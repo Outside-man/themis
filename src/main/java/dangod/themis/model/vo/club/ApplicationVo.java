@@ -1,9 +1,12 @@
 package dangod.themis.model.vo.club;
 
 import dangod.themis.model.po.club.Application;
+import dangod.themis.model.po.club.Approval;
 import dangod.themis.model.po.club.Club;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApplicationVo {
     private long applicationId;
@@ -21,6 +24,7 @@ public class ApplicationVo {
     private String introduce;
     private Integer hasFile;
     private String status;
+    private List<ApprovalVo> results;
 
     public long getApplicationId() {
         return applicationId;
@@ -149,6 +153,14 @@ public class ApplicationVo {
         }
     }
 
+    public List<ApprovalVo> getResults() {
+        return results;
+    }
+
+    public void setResults(List<ApprovalVo> results) {
+        this.results = results;
+    }
+
     public ApplicationVo() {
     }
 
@@ -175,6 +187,32 @@ public class ApplicationVo {
             default:
                 this.status = "审核中";
         }
+        this.results = new ArrayList<>();
+    }
+    public ApplicationVo(Application application, List<ApprovalVo> results){
+        this.applicationId = application.getId();
+        this.applyDate = application.getApplyDate();
+        this.clubName = application.getClub().getClubName();
+        this.chiefId = application.getClub().getBaseInfo().getUser().getId();
+        this.chiefName = application.getClub().getBaseInfo().getRealName();
+        this.chiefPhone = application.getClub().getBaseInfo().getPhone();
+        this.activityName = application.getActivityName();
+        this.activityPlace = application.getActivityPlace();
+        this.activityStart = application.getActivityStart();
+        this.activityEnd = application.getActivityEnd();
+        this.activitypeople = application.getActivitypeople();
+        this.isFine = application.getIsFine();
+        this.introduce = application.getIntroduce();
+        this.hasFile = application.getHasFile();
+        switch (application.getStatus()){
+            case -1:
+                this.status = "审核未通过";break;
+            case 0:
+                this.status = "审核通过";break;
+            default:
+                this.status = "审核中";
+        }
+        this.results = results;
     }
 
     public ApplicationVo(long applicationId, String applyDate, String clubName, long chiefId, String chiefName, String chiefPhone, String activityName, String activityPlace, String activityStart, String activityEnd, String activitypeople, Integer isFine, String introduce, Integer hasFile, String status) {
@@ -193,5 +231,6 @@ public class ApplicationVo {
         this.introduce = introduce;
         this.hasFile = hasFile;
         this.status = status;
+        this.results = new ArrayList<>();
     }
 }

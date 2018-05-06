@@ -10,8 +10,9 @@ public class Approval {
     @Id
     @GeneratedValue
     private long id;
+    @Column(name = "approval_lv")
     private Integer approvalLV;//1 2 3 4
-    private Integer result;
+    private Integer result;// 同意1 不同意0
     @Column(length = 1000)
     private String comment;
     @OneToOne(fetch= FetchType.EAGER, cascade= CascadeType.ALL)

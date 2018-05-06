@@ -68,6 +68,9 @@ public class Reserve {
         this.score = score;
     }
 
+    public Reserve() {
+    }
+
     public Reserve(StudentBaseInfo baseInfo, String common, String term, String course, Double score) {
         this.baseInfo = baseInfo;
         this.common = common;

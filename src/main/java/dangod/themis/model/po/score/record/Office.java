@@ -94,6 +94,9 @@ public class Office {
         this.term = term;
     }
 
+    public Office() {
+    }
+
     public Office(StudentBaseInfo baseInfo, String common, String term, String officeName, Integer officeLv, String startDate, String endDate, Integer result) {
         this.baseInfo = baseInfo;
         this.common = common;

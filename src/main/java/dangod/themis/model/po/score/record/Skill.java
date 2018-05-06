@@ -76,6 +76,9 @@ public class Skill {
         this.skillScore = skillScore;
     }
 
+    public Skill() {
+    }
+
     public Skill(StudentBaseInfo baseInfo, String common, String term, Integer skillLv, String skillName, Double skillScore) {
         this.baseInfo = baseInfo;
         this.common = common;

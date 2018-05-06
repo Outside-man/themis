@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class ApprovalVo {
     private long approvalId;
     private Integer approvalLV;
-    private Integer result;
+    private String result;
     private String comment;
     private String auditor;
     private long applicationId;
@@ -30,12 +30,13 @@ public class ApprovalVo {
         this.approvalLV = approvalLV;
     }
 
-    public Integer getResult() {
+    public String getResult() {
         return result;
     }
 
     public void setResult(Integer result) {
-        this.result = result;
+        if(result == 1)this.result = "同意";
+        else this.result = "不同意";
     }
 
     public String getComment() {
@@ -68,7 +69,7 @@ public class ApprovalVo {
     public ApprovalVo(Approval approval) {
         this.approvalId = approval.getId();
         this.approvalLV = approval.getApprovalLV();
-        this.result = approval.getResult();
+        this.setResult(approval.getResult());
         this.comment = approval.getComment();
         this.auditor = approval.getBaseInfo().getRealName();
         this.applicationId = approval.getApplication().getId();
@@ -77,7 +78,7 @@ public class ApprovalVo {
     public ApprovalVo(long approvalId, Integer approvalLV, Integer result, String comment, String auditor, long applicationId) {
         this.approvalId = approvalId;
         this.approvalLV = approvalLV;
-        this.result = result;
+        this.setResult(result);
         this.comment = comment;
         this.auditor = auditor;
         this.applicationId = applicationId;

@@ -58,6 +58,9 @@ public class Message {
     public final static String STU_FAIL_MESSAGE = "获取学生信息失败";
     public final static String STU_SUCCESS_MESSAGE = "获取学生信息成功";
 
+    public final static String CLUB_APP__SUCCESS_MESSAGE = "返回请求表";
+    public final static String CLUB_APP_NOT_FOUND = "活动申请表不存在";
+
 
 
 

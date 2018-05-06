@@ -9,6 +9,7 @@ import dangod.themis.model.po.club.ClubRole;
 import dangod.themis.model.vo.club.ApplicationVo;
 import dangod.themis.model.vo.club.StatusVo;
 import dangod.themis.service.club.ApplicationService;
+import dangod.themis.service.club.ApproveService;
 import dangod.themis.service.club.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,8 @@ public class ApplicationServiceImpl implements ApplicationService{
     private RoleService roleService;
     @Autowired
     private ApplicationRepo applicationRepo;
+    @Autowired
+    private ApproveService approveService;
 
     @Override
     public ApplicationVo apply(long userId, String activityName, String activityPlace, String activityStart, String activityEnd, String activitypeople, Integer isFine, String introduce, MultipartFile file) {
@@ -45,11 +48,12 @@ public class ApplicationServiceImpl implements ApplicationService{
             String fileName = String.format("[%s](%s)%s", sdf.format(now), club.getClubName(), activityName);
             if(BaseFile.upload(file, CLUB_PATH+club.getClubName(), fileName, true) == 0)
                 hasFile = 1;
-            //存信息数据库
+            //存文件信息进数据库
         }
         ApplicationVo applicationVo = null;
         try {
             Application application = new Application(club, activityName, activityPlace, activityStart, activityEnd, activitypeople, isFine, introduce, hasFile);
+            applicationRepo.save(application);
             applicationVo = new ApplicationVo(application);
         }catch (Exception e){
             return null;
@@ -62,8 +66,9 @@ public class ApplicationServiceImpl implements ApplicationService{
         ApplicationVo applicationVo = null;
         try {
             Application application = applicationRepo.findOne(applicationId);
-            applicationVo = new ApplicationVo(application);
+            applicationVo = new ApplicationVo(application, approveService.getApprovalVoListById(applicationId));
         }catch (Exception e){
+            e.printStackTrace();
             return null;
         }
         return applicationVo;
