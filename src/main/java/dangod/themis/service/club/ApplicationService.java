@@ -1,5 +1,7 @@
 package dangod.themis.service.club;
 
+import dangod.themis.model.po.club.Club;
+import dangod.themis.model.po.club.ClubRole;
 import dangod.themis.model.vo.club.ApplicationVo;
 import dangod.themis.model.vo.club.StatusVo;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,8 +11,8 @@ import java.util.List;
 
 public interface ApplicationService {
 
-    ApplicationVo apply(long userId, String activityName, String activityPlace, String activityStart, String activityEnd,
-                        String activitypeople, Integer isFine, String introduce, MultipartFile file);
+    Integer apply(Club club, String name, String place, String start, String end,
+                        String people, Integer isFine, String introduce, MultipartFile file);
 
     /**
      * 查看申请表(按照需求，未做身份验证，直接可以访问)
@@ -40,22 +42,48 @@ public interface ApplicationService {
 
     /**
      * 获取审批等级高于等于自己的申请(自己需要审批和自己审批过的)
-     * @param userId
+     * @param clubRole
      * @param page
      * @param size
      * @return
      */
-    List<StatusVo> getAllPageStatus(long userId, Integer page, Integer size);//获取该等级下可以看到的所有可见申请
+    List<StatusVo> getAllCanSeePageStatus(ClubRole clubRole, Integer page, Integer size);//获取该等级下可以看到的所有可见申请
 
     /**
      * 获取审批等级高于等于自己的申请(自己需要审批和自己审批过的)
-     * @param userId
+     * @param clubRole
      * @param status 指定搜索状态 -1:未通过 0:通过 1:审核中
      * @param page
      * @param size
      * @return
      */
-    List<StatusVo> getAllPageStatus(long userId, Integer status, Integer page, Integer size);//获取该等级下可以看到的所有可见申请
+    List<StatusVo> getAllCanSeePageStatus(ClubRole clubRole, Integer status, Integer page, Integer size);//获取该等级下可以看到的所有可见申请
+
+    /**
+     * 获得需要当前用户审批的表单
+     * @param clubRole
+     * @param page
+     * @param size
+     * @return
+     */
+    List<StatusVo> getNeedApprovePage(ClubRole clubRole, Integer page, Integer size);//获取该等级下可以看到的所有可见申请
+
+    /**
+     *
+     * @param page
+     * @param size
+     * @return
+     */
+    List<StatusVo> getAllPageStatus(Integer page, Integer size);//获取该等级下可以看到的所有可见申请
+
+    /**
+     *
+     * @param status
+     * @param page
+     * @param size
+     * @return
+     */
+    List<StatusVo> getAllPageStatus(Integer status, Integer page, Integer size);//获取该等级下可以看到的所有可见申请
 
 
 

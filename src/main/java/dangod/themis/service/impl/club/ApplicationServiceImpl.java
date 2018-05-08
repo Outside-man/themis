@@ -38,27 +38,25 @@ public class ApplicationServiceImpl implements ApplicationService{
     private ApproveService approveService;
 
     @Override
-    public ApplicationVo apply(long userId, String activityName, String activityPlace, String activityStart, String activityEnd, String activitypeople, Integer isFine, String introduce, MultipartFile file) {
-        Club club = roleService.getClubByUserId(userId);
-        if(club == null)return null;
+    public Integer apply(Club club, String name, String place, String start, String end,
+                               String people, Integer isFine, String introduce, MultipartFile file) {
         int hasFile = 0;
         if(file!=null){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
             long now = Calendar.getInstance().getTime().getTime();
-            String fileName = String.format("[%s](%s)%s", sdf.format(now), club.getClubName(), activityName);
+            String fileName = String.format("[%s](%s)%s", sdf.format(now), club.getClubName(), name);
             if(BaseFile.upload(file, CLUB_PATH+club.getClubName(), fileName, true) == 0)
                 hasFile = 1;
             //存文件信息进数据库
         }
-        ApplicationVo applicationVo = null;
         try {
-            Application application = new Application(club, activityName, activityPlace, activityStart, activityEnd, activitypeople, isFine, introduce, hasFile);
+            Application application = new Application(club, name, place, start, end, people, isFine, introduce, hasFile);
             applicationRepo.save(application);
-            applicationVo = new ApplicationVo(application);
         }catch (Exception e){
-            return null;
+            e.printStackTrace();
+            return -1;
         }
-        return applicationVo;
+        return 0;
     }
 
     @Override
@@ -76,7 +74,7 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     @Override
     public List<StatusVo> getPageStatus(long clubId, Integer page, Integer size) {
-        List<Application> applicationList = applicationRepo.findById(clubId, new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
+        List<Application> applicationList = applicationRepo.findAllByClub_Id(clubId, new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
         List<StatusVo> statusVoList = new ArrayList<>();
         for(Application a : applicationList){
             statusVoList.add(new StatusVo(a));
@@ -86,7 +84,7 @@ public class ApplicationServiceImpl implements ApplicationService{
 
     @Override
     public List<StatusVo> getPageStatus(long clubId, Integer status, Integer page, Integer size) {
-        List<Application> applicationList = applicationRepo.findByIdAndStatus(clubId, status, new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
+        List<Application> applicationList = applicationRepo.findAllByClub_IdAndStatus(clubId, status, new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
         List<StatusVo> statusVoList = new ArrayList<>();
         for(Application a : applicationList){
             statusVoList.add(new StatusVo(a));
@@ -95,11 +93,10 @@ public class ApplicationServiceImpl implements ApplicationService{
     }
 
     @Override
-    public List<StatusVo> getAllPageStatus(long userId, Integer page, Integer size) {
+    public List<StatusVo> getAllCanSeePageStatus(ClubRole clubRole, Integer page, Integer size) {
         List<StatusVo> statusVoList= new ArrayList<>();
-        ClubRole role = roleService.getRole(userId);
-        if (role.getLv() >= 2) {
-            List<Application> applicationList = applicationRepo.findByLvGreaterThanEqual(role.getLv(), new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
+        if (clubRole.getLv() >= 2) {
+            List<Application> applicationList = applicationRepo.findByLvGreaterThanEqual(clubRole.getLv(), new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
             for(Application a : applicationList){
                 statusVoList.add(new StatusVo(a));
             }
@@ -108,14 +105,45 @@ public class ApplicationServiceImpl implements ApplicationService{
     }
 
     @Override
-    public List<StatusVo> getAllPageStatus(long userId, Integer status, Integer page, Integer size) {
+    public List<StatusVo> getAllCanSeePageStatus(ClubRole clubRole, Integer status, Integer page, Integer size) {
         List<StatusVo> statusVoList= new ArrayList<>();
-        ClubRole role = roleService.getRole(userId);
-        if (role.getLv() >= 2) {
-            List<Application> applicationList = applicationRepo.findByLvGreaterThanEqualAndStatus(role.getLv(), status, new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
+        if (clubRole.getLv() >= 2) {
+            List<Application> applicationList = applicationRepo.findByLvGreaterThanEqualAndStatus(clubRole.getLv(), status, new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
             for(Application a : applicationList){
                 statusVoList.add(new StatusVo(a));
             }
+        }
+        return statusVoList;
+    }
+
+    @Override
+    public List<StatusVo> getNeedApprovePage(ClubRole clubRole, Integer page, Integer size) {
+        List<StatusVo> statusVoList= new ArrayList<>();
+        if (clubRole.getLv() >= 2) {
+            List<Application> applicationList = applicationRepo.findAllByLvEquals(clubRole.getLv(), new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
+            for(Application a : applicationList){
+                statusVoList.add(new StatusVo(a));
+            }
+        }
+        return statusVoList;
+    }
+
+    @Override
+    public List<StatusVo> getAllPageStatus(Integer page, Integer size) {
+        List<StatusVo> statusVoList= new ArrayList<>();
+        Page<Application> applicationList = applicationRepo.findAll(new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
+        for(Application a : applicationList){
+            statusVoList.add(new StatusVo(a));
+        }
+        return statusVoList;
+    }
+
+    @Override
+    public List<StatusVo> getAllPageStatus(Integer status, Integer page, Integer size) {
+        List<StatusVo> statusVoList= new ArrayList<>();
+        Page<Application> applicationList = applicationRepo.findAllByStatus(status, new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id")));
+        for(Application a : applicationList){
+            statusVoList.add(new StatusVo(a));
         }
         return statusVoList;
     }

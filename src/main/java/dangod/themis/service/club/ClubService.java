@@ -7,5 +7,7 @@ import java.util.List;
 public interface ClubService {
     ClubVo getClubById(Integer id);
 
+    ClubVo getClubByuserId(long userId);
+
     List<ClubVo> getPageClub(Integer page, Integer size);
 }

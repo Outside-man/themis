@@ -24,7 +24,7 @@ public class Application {
     private String introduce;
     private Integer hasFile;// 0无 1有
     private Integer status;//-1,<0:未通过    =0:审核通过       1:审核中
-    private Integer lv;//1,2,3,4
+    private Integer lv;//1,2,3,4,100
 
     public long getId() {
         return id;

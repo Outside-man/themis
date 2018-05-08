@@ -32,8 +32,8 @@ public class TypeTable {
         TYPE_TABLE.put(17L, new AuthorityType(17L, "学生技能加分", null, MENU_TABLE.get(20L)));
         TYPE_TABLE.put(18L, new AuthorityType(18L, "学生其他加分", null, MENU_TABLE.get(21L)));
         //club
-        TYPE_TABLE.put(18L, new AuthorityType(19L, "活动申请", null, MENU_TABLE.get(23L)));
-        TYPE_TABLE.put(18L, new AuthorityType(20L, "申请查看", null, MENU_TABLE.get(24L)));
-        TYPE_TABLE.put(18L, new AuthorityType(21L, "申请审批", null, MENU_TABLE.get(25L)));
+        TYPE_TABLE.put(19L, new AuthorityType(19L, "活动申请", null, MENU_TABLE.get(23L)));
+        TYPE_TABLE.put(20L, new AuthorityType(20L, "申请查看", null, MENU_TABLE.get(24L)));
+        TYPE_TABLE.put(21L, new AuthorityType(21L, "申请审批", null, MENU_TABLE.get(25L)));
     }
 }

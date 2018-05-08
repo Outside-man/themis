@@ -58,8 +58,19 @@ public class Message {
     public final static String STU_FAIL_MESSAGE = "获取学生信息失败";
     public final static String STU_SUCCESS_MESSAGE = "获取学生信息成功";
 
-    public final static String CLUB_APP__SUCCESS_MESSAGE = "返回请求表";
+    public final static String CLUB_APP_MESSAGE = "返回请求表";
     public final static String CLUB_APP_NOT_FOUND = "活动申请表不存在";
+    public final static String NOT_MANAGE_CLUB = "没有管理的社团";
+
+    public final static String CLUB_APP_SUCCESS_MESSAGE = "申请成功";
+    public final static String CLUB_APP_FAIL_MESSAGE = "申请失败";
+
+
+    public final static String CLUB_APPROVE_SUCCESS_MESSAGE = "审批成功";
+    public final static String CLUB_APPROVE_FAIL_MESSAGE = "审批失败";
+
+    public final static String CLUB_STATUS_SUCCESS_MESSAGE = "获取状态表成功";
+
 
 
 

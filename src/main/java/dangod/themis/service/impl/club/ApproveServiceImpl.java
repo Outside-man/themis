@@ -52,8 +52,10 @@ public class ApproveServiceImpl implements ApproveService {
             Approval approval = new Approval(role.getLv(), result, comment, userBaseInfoRepo.findByUser_Id(userId), app);
             approvalRepo.save(approval);
             app.setLv(role.getLv());
-            if(result == 0)//0：不同意
+            if(result == 0) {//0：不同意
                 app.setStatus(-1);
+                app.setLv(100);
+            }
             if(result == 1&&app.getLv() == 4) {//指导老师审批且同意 审批通过
                 app.setStatus(0);
             }
