@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepo.findByUsername(username);
         if (user == null) return -1L;
         if (!user.getPassword().equals(MD5Util.MD5(password + user.getSalt())))
-            return null;
+            return -1L;
         return user.getId();
     }
 

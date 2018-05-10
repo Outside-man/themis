@@ -71,6 +71,11 @@ public class Message {
 
     public final static String CLUB_STATUS_SUCCESS_MESSAGE = "获取状态表成功";
 
+    public final static String CLUB_FILE_SUCCESS_MESSAGE = "获取附件成功";
+    public final static String CLUB_FILE_NOT_EXIST_MESSAGE = "附件不存在";
+    public final static String CLUB_FILE_FAIL_MESSAGE = "获取附件失败";
+
+
 
 
 

@@ -2,11 +2,14 @@ package dangod.themis.service.impl.club;
 
 import dangod.themis.core.util.BaseFile;
 import dangod.themis.dao.club.ApplicationRepo;
+import dangod.themis.dao.club.ClubFileRepo;
 import dangod.themis.dao.club.ClubRepo;
 import dangod.themis.model.po.club.Application;
 import dangod.themis.model.po.club.Club;
+import dangod.themis.model.po.club.ClubFile;
 import dangod.themis.model.po.club.ClubRole;
 import dangod.themis.model.vo.club.ApplicationVo;
+import dangod.themis.model.vo.club.ClubFileVo;
 import dangod.themis.model.vo.club.StatusVo;
 import dangod.themis.service.club.ApplicationService;
 import dangod.themis.service.club.ApproveService;
@@ -17,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -35,28 +39,46 @@ public class ApplicationServiceImpl implements ApplicationService{
     @Autowired
     private ApplicationRepo applicationRepo;
     @Autowired
+    private ClubFileRepo clubFileRepo;
+    @Autowired
     private ApproveService approveService;
-
+    private final static String CLUB_FILE_PATH = "club"+File.separator;
+    @Transactional
     @Override
     public Integer apply(Club club, String name, String place, String start, String end,
-                               String people, Integer isFine, String introduce, MultipartFile file) {
+                         String people, Double selfMoney, Double reserveMoney,
+                         Integer isFine, String introduce, MultipartFile file) {
         int hasFile = 0;
+        String fileName = "";
+        String originName = file.getOriginalFilename();
+        String[] arr = file.getOriginalFilename().split("[.]");
         if(file!=null){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
             long now = Calendar.getInstance().getTime().getTime();
-            String fileName = String.format("[%s](%s)%s", sdf.format(now), club.getClubName(), name);
+
+            fileName = String.format("[%s](%s)%s", sdf.format(now), club.getClubName(), name);
             if(BaseFile.upload(file, CLUB_PATH+club.getClubName(), fileName, true) == 0)
                 hasFile = 1;
             //存文件信息进数据库
         }
         try {
-            Application application = new Application(club, name, place, start, end, people, isFine, introduce, hasFile);
-            applicationRepo.save(application);
+            Application application = new Application(club, name, place, start, end, people, selfMoney, reserveMoney, isFine, introduce, hasFile);
+            applicationRepo.saveAndFlush(application);
+            if(application.getHasFile() == 1){
+                clubFileRepo.saveAndFlush(new ClubFile(fileName+"." + arr[arr.length - 1], originName, CLUB_FILE_PATH+club.getClubName()+File.separator, application));
+            }
         }catch (Exception e){
             e.printStackTrace();
             return -1;
         }
         return 0;
+    }
+
+    @Override
+    public ClubFileVo getFile(long applicationId) {
+        if(applicationRepo.findOne(applicationId).getHasFile()!=1)
+            return null;
+        else return new ClubFileVo(clubFileRepo.findByApplication_Id(applicationId));
     }
 
     @Override

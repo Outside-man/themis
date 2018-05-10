@@ -3,6 +3,7 @@ package dangod.themis.service.club;
 import dangod.themis.model.po.club.Club;
 import dangod.themis.model.po.club.ClubRole;
 import dangod.themis.model.vo.club.ApplicationVo;
+import dangod.themis.model.vo.club.ClubFileVo;
 import dangod.themis.model.vo.club.StatusVo;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +13,8 @@ import java.util.List;
 public interface ApplicationService {
 
     Integer apply(Club club, String name, String place, String start, String end,
-                        String people, Integer isFine, String introduce, MultipartFile file);
+                        String people, Double selfMoney, Double reserveMoney, Integer isFine, String introduce, MultipartFile file);
+    ClubFileVo getFile(long applicationId);
 
     /**
      * 查看申请表(按照需求，未做身份验证，直接可以访问)

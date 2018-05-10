@@ -1,5 +1,6 @@
 package dangod.themis.model.vo.club;
 
+import com.sun.javafx.binding.StringFormatter;
 import dangod.themis.model.po.club.Application;
 import dangod.themis.model.po.club.Approval;
 import dangod.themis.model.po.club.Club;
@@ -20,6 +21,8 @@ public class ApplicationVo {
     private String activityStart;
     private String activityEnd;
     private String activitypeople;
+    private String selfMoney;
+    private String reserveMoney;
     private Integer isFine;
     private String introduce;
     private Integer hasFile;
@@ -114,6 +117,22 @@ public class ApplicationVo {
         this.activitypeople = activitypeople;
     }
 
+    public String getSelfMoney() {
+        return selfMoney;
+    }
+
+    public void setSelfMoney(Double selfMoney) {
+        this.selfMoney = String.format("%.2f", selfMoney);
+    }
+
+    public String getReserveMoney() {
+        return reserveMoney;
+    }
+
+    public void setReserveMoney(Double reserveMoney) {
+        this.reserveMoney = String.format("%.2f", reserveMoney);;
+    }
+
     public Integer getIsFine() {
         return isFine;
     }
@@ -176,6 +195,8 @@ public class ApplicationVo {
         this.activityStart = application.getActivityStart();
         this.activityEnd = application.getActivityEnd();
         this.activitypeople = application.getActivitypeople();
+        this.selfMoney = String.format("%.2f", application.getSelfMoney());
+        this.reserveMoney = String.format("%.2f", application.getReserveMoney());
         this.isFine = application.getIsFine();
         this.introduce = application.getIntroduce();
         this.hasFile = application.getHasFile();
@@ -201,6 +222,8 @@ public class ApplicationVo {
         this.activityStart = application.getActivityStart();
         this.activityEnd = application.getActivityEnd();
         this.activitypeople = application.getActivitypeople();
+        this.selfMoney = String.format("%.2f", application.getSelfMoney());
+        this.reserveMoney = String.format("%.2f", application.getReserveMoney());
         this.isFine = application.getIsFine();
         this.introduce = application.getIntroduce();
         this.hasFile = application.getHasFile();
@@ -215,7 +238,7 @@ public class ApplicationVo {
         this.results = results;
     }
 
-    public ApplicationVo(long applicationId, String applyDate, String clubName, long chiefId, String chiefName, String chiefPhone, String activityName, String activityPlace, String activityStart, String activityEnd, String activitypeople, Integer isFine, String introduce, Integer hasFile, String status) {
+    public ApplicationVo(long applicationId, String applyDate, String clubName, long chiefId, String chiefName, String chiefPhone, String activityName, String activityPlace, String activityStart, String activityEnd, String activitypeople, Double selfMoney, Double reserveMoney, Integer isFine, String introduce, Integer hasFile, String status) {
         this.applicationId = applicationId;
         this.applyDate = applyDate;
         this.clubName = clubName;
@@ -227,6 +250,8 @@ public class ApplicationVo {
         this.activityStart = activityStart;
         this.activityEnd = activityEnd;
         this.activitypeople = activitypeople;
+        this.selfMoney = String.format("%.2f", selfMoney);
+        this.reserveMoney = String.format("%.2f", reserveMoney);
         this.isFine = isFine;
         this.introduce = introduce;
         this.hasFile = hasFile;

@@ -19,12 +19,14 @@ public class Application {
     private String activityStart;
     private String activityEnd;
     private String activitypeople;
+    private Double selfMoney;
+    private Double reserveMoney;
     private Integer isFine;
     @Column(length = 1500)
     private String introduce;
     private Integer hasFile;// 0无 1有
     private Integer status;//-1,<0:未通过    =0:审核通过       1:审核中
-    private Integer lv;//1,2,3,4,100
+    private Integer lv;//2(刚刚提交等待财务审批),3(财务审批通过等主席审批),4(主席审批结束等老师审批),5(老师审核完毕),100(拒绝)
 
     public long getId() {
         return id;
@@ -90,6 +92,22 @@ public class Application {
         this.activitypeople = activitypeople;
     }
 
+    public Double getSelfMoney() {
+        return selfMoney;
+    }
+
+    public void setSelfMoney(Double selfMoney) {
+        this.selfMoney = selfMoney;
+    }
+
+    public Double getReserveMoney() {
+        return reserveMoney;
+    }
+
+    public void setReserveMoney(Double reserveMoney) {
+        this.reserveMoney = reserveMoney;
+    }
+
     public Integer getIsFine() {
         return isFine;
     }
@@ -134,10 +152,10 @@ public class Application {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 E ");
         this.applyDate = sdf.format(Calendar.getInstance().getTime());
         this.status = 1;
-        this.lv=1;
+        this.lv=2;
     }
 
-    public Application(Club club, String activityName, String activityPlace, String activityStart, String activityEnd, String activitypeople, Integer isFine, String introduce, Integer hasFile) {
+    public Application(Club club, String activityName, String activityPlace, String activityStart, String activityEnd, String activitypeople, Double selfMoney, Double reserveMoney,Integer isFine, String introduce, Integer hasFile) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒 E ");
         this.applyDate = sdf.format(Calendar.getInstance().getTime());
         this.club = club;
@@ -146,10 +164,12 @@ public class Application {
         this.activityStart = activityStart;
         this.activityEnd = activityEnd;
         this.activitypeople = activitypeople;
+        this.selfMoney = selfMoney;
+        this.reserveMoney = reserveMoney;
         this.isFine = isFine;
         this.introduce = introduce;
         this.status = 1;
         this.hasFile = hasFile;
-        this.lv=1;
+        this.lv=2;
     }
 }

@@ -1,14 +1,13 @@
 package dangod.themis.controller.club;
 
-import com.alibaba.fastjson.JSON;
 import dangod.themis.controller.base.BaseController;
 import dangod.themis.controller.base.annotation.Authorization;
 import dangod.themis.controller.base.annotation.ContainAuthority;
 import dangod.themis.controller.base.annotation.club.Club;
-import dangod.themis.controller.base.annotation.club.ClubAdmin;
 import dangod.themis.core.result.Result;
+import dangod.themis.core.util.BaseFile;
 import dangod.themis.model.vo.club.ApplicationVo;
-import dangod.themis.model.vo.club.StatusVo;
+import dangod.themis.model.vo.club.ClubFileVo;
 import dangod.themis.service.club.ApplicationService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.util.List;
-
 import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
 import static dangod.themis.controller.base.constant.Message.*;
 import static dangod.themis.controller.base.constant.Status.FAIL;
 import static dangod.themis.controller.base.constant.Status.NOT_FIND;
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
+import static dangod.themis.core.util.BaseFile.FOLDER;
 import static dangod.themis.model.po.authority.constant.TypeContant.CLUB_ACTIVITY_APPLY;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -46,6 +44,18 @@ public class ClubAppController extends BaseController{
         return Result.send(SUCCESS, applicationVo, CLUB_APP_MESSAGE);
     }
 
+    @RequestMapping(value = "/file", method = GET)
+    @ApiOperation(value = "获取申请表附件")
+    public String getApplicationFile(HttpServletRequest request, HttpServletResponse response,
+                                 @RequestParam("id")Long id){
+        ClubFileVo fileVo = applicationService.getFile(id);
+        if(fileVo == null)Result.send(NOT_FIND, null, CLUB_FILE_NOT_EXIST_MESSAGE);
+        int status = BaseFile.download(response, FOLDER+fileVo.getPath() , fileVo.getFileName(), fileVo.getOriginName());
+        if(status == -1)
+            return Result.send(FAIL, null, CLUB_FILE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, CLUB_FILE_SUCCESS_MESSAGE);
+    }
+
     @RequestMapping(method = POST)
     @ApiOperation(value = "社团申请活动")
     @Authorization
@@ -58,10 +68,12 @@ public class ClubAppController extends BaseController{
                         @RequestParam("start")String start,
                         @RequestParam("end")String end,
                         @RequestParam("people")String people,
-                        @RequestParam("isFile")Integer isFile,
+                        @RequestParam("selfMoney")Double selfMoney,
+                        @RequestParam("reserveMoney")Double reserveMoney,
+                        @RequestParam("isFine")Integer isFine,
                         @RequestParam("introduce")String introduce,
                         @RequestParam("file") MultipartFile file){
-        int status = applicationService.apply(getClub(request), name, place, start, end, people, isFile, introduce, file);
+        int status = applicationService.apply(getClub(request), name, place, start, end, people, selfMoney, reserveMoney, isFine, introduce, file);
         if(status != 0) return Result.send(FAIL, null, CLUB_APP_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, CLUB_APP_SUCCESS_MESSAGE);
     }

@@ -48,10 +48,11 @@ public class ApproveServiceImpl implements ApproveService {
             ClubRole role = roleService.getRole(userId);
             if (role.getLv() < 2) throw new Exception("没有权限");
             Application app = applicationRepo.findOne(applicationId);
-            if (app.getLv() >= role.getLv() && app.getStatus() == 1) throw new Exception("当前等级已经审批过或者审批流程结束");
+            //如果条件 为 app.getLv() != role.getLv() 就是不允许跨级审批
+            if (app.getLv() > role.getLv() || app.getStatus() != 1) throw new Exception("当前等级已经审批过或者审批流程结束");
             Approval approval = new Approval(role.getLv(), result, comment, userBaseInfoRepo.findByUser_Id(userId), app);
             approvalRepo.save(approval);
-            app.setLv(role.getLv());
+            app.setLv(role.getLv() + 1);
             if(result == 0) {//0：不同意
                 app.setStatus(-1);
                 app.setLv(100);
