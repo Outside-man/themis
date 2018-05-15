@@ -474,7 +474,6 @@ public class StudentRecordServiceImpl implements StudentRecordService{
             activity.setActivityName(activityName);
             activity.setActivityDate(activityDate);
             activity.setCommon(common);
-            activity.setTerm(TermUtil.get());
             activityRepo.save(activity);
         }catch (Exception e){
             e.printStackTrace();
@@ -561,20 +560,20 @@ public class StudentRecordServiceImpl implements StudentRecordService{
         return 0;
     }
 
-//    @Override
-//    public Integer updateHonor(long recordId, String honorName, int honorLv, double honorScore, String common) {
-//        try {
-//            Activity activity = activityRepo.findOne(recordId);
-//            activity.setActivityName(activityName);
-//            activity.setActivityDate(activityDate);
-//            activity.setCommon(common);
-//            activity.setTerm(TermUtil.get());
-//            activityRepo.save(activity);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            return -1;
-//        }
-//        return 0;
-//    }
+    @Override
+    public Integer updateHonor(long recordId, String honorName, int honorLv, double honorScore, String common) {
+        try {
+            Honor honor = honorRepo.findOne(recordId);
+            honor.setHonorName(honorName);
+            honor.setHonorLv(honorLv);
+            honor.setHonorScore(honorScore);
+            honor.setCommon(common);
+            honorRepo.save(honor);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
+        }
+        return 0;
+    }
 
 }

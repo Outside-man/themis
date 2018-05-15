@@ -53,6 +53,7 @@ public class TokenController {
     @Authorization
     public String logout(HttpServletRequest request, HttpServletResponse response,
                         @RequestHeader(AUTHORIZATION)String token){
+        tokenService.deleteToken(token);
         return Result.send(SUCCESS, null, LOGOUT_SUCCESS_MESSAGE);
     }
 

@@ -10,7 +10,9 @@ public class Inform {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(length = 100)
     private String title;
+    @Column(length = 6000)
     private String content;
     private Timestamp date;
     private Timestamp modified;

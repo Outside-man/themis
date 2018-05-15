@@ -63,9 +63,15 @@ public interface StudentRecordService {
 
     Integer deleteVolunteer (long recordId);
 
+    //单体修改
+    //activity
     Integer addActivity(String stuId, String activityName, String activityDate, String common);
 
     Integer updateActivity(long recordId, String activityName, String activityDate, String common);
 
+    //honor
     Integer addHonor(String stuId, String honorName, int honorLv, double honorScore, String common);
+
+    Integer updateHonor(long recordId, String honorName, int honorLv, double honorScore, String common);
+
 }

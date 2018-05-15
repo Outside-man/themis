@@ -25,8 +25,7 @@ import static dangod.themis.controller.base.constant.Status.FAIL;
 import static dangod.themis.controller.base.constant.Status.PERMISSIN_DENIED;
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
 import static dangod.themis.model.po.authority.constant.TypeContant.*;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 
 @CrossOrigin
@@ -84,6 +83,39 @@ public class StuHonorController extends BaseController{
         if(status == -1)
             return Result.send(FAIL, null, STU_DELETE_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, STU_DELETE_SUCCESS_MESSAGE);
+    }
+    @RequestMapping(value = "/school", method = POST)
+    @ApiOperation(value = "校级管理员添加学生Honor信息")
+    @ContainAuthority(SCHOOL_STUDENT_MANAGE)
+    @Authorization
+    public String schoolAdminAddStudentHonorByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                      @RequestHeader(AUTHORIZATION)String token,
+                                                      @RequestParam("stuId")String stuId,
+                                                      @RequestParam("honorName")String activityName,
+                                                      @RequestParam("honorLv")Integer honorLv,
+                                                      @RequestParam("honorScore")Double honorScore,
+                                                      @RequestParam("common")String common){
+        Integer status = recordService.addHonor(stuId,activityName, honorLv, honorScore, common);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_UPDATE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_UPDATE_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/school", method = PUT)
+    @ApiOperation(value = "校级管理员修改学生Honor信息")
+    @ContainAuthority(SCHOOL_STUDENT_MANAGE)
+    @Authorization
+    public String schoolAdminUpdateStudentHonorByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                         @RequestHeader(AUTHORIZATION)String token,
+                                                         @RequestParam("recordId")Long recordId,
+                                                         @RequestParam("honorName")String activityName,
+                                                         @RequestParam("honorLv")Integer honorLv,
+                                                         @RequestParam("honorScore")Double honorScore,
+                                                         @RequestParam("common")String common){
+        Integer status = recordService.updateHonor(recordId,activityName, honorLv, honorScore, common);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_UPDATE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_UPDATE_SUCCESS_MESSAGE);
     }
 
     @RequestMapping(value = "/class", method = GET)
@@ -157,5 +189,76 @@ public class StuHonorController extends BaseController{
         if(status == -1)
             return Result.send(FAIL, null, STU_DELETE_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, STU_DELETE_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/major", method = POST)
+    @ApiOperation(value = "专业管理员添加学生Honor信息")
+    @ContainAuthority(MAJOR_STUDENT_MANAGE)
+    @Major
+    @Authorization
+    public String majorAdminAddStudentHonorByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                   @RequestHeader(AUTHORIZATION)String token,
+                                                   @RequestParam("stuId")String stuId,
+                                                   @RequestParam("honorName")String activityName,
+                                                   @RequestParam("honorLv")Integer honorLv,
+                                                   @RequestParam("honorScore")Double honorScore,
+                                                   @RequestParam("common")String common){
+        Integer status = recordService.addHonor(stuId,activityName, honorLv, honorScore, common);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_UPDATE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_UPDATE_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/major", method = PUT)
+    @ApiOperation(value = "专业管理员修改学生Honor信息")
+    @ContainAuthority(MAJOR_STUDENT_MANAGE)
+    @Major
+    @Authorization
+    public String majorAdminUpdateStudentHonorByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                      @RequestHeader(AUTHORIZATION)String token,
+                                                      @RequestParam("recordId")Long recordId,
+                                                      @RequestParam("honorName")String activityName,
+                                                      @RequestParam("honorLv")Integer honorLv,
+                                                      @RequestParam("honorScore")Double honorScore,
+                                                      @RequestParam("common")String common){
+        Integer status = recordService.updateHonor(recordId,activityName, honorLv, honorScore, common);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_UPDATE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_UPDATE_SUCCESS_MESSAGE);
+    }
+    @RequestMapping(value = "/class", method = POST)
+    @ApiOperation(value = "班级管理员添加学生Honor信息")
+    @ContainAuthority(CLASS_STUDENT_MANAGE)
+    @Class
+    @Authorization
+    public String classAdminAddStudentHonorByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                  @RequestHeader(AUTHORIZATION)String token,
+                                                  @RequestParam("stuId")String stuId,
+                                                  @RequestParam("honorName")String activityName,
+                                                  @RequestParam("honorLv")Integer honorLv,
+                                                  @RequestParam("honorScore")Double honorScore,
+                                                  @RequestParam("common")String common){
+        Integer status = recordService.addHonor(stuId,activityName, honorLv, honorScore, common);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_UPDATE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_UPDATE_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/class", method = PUT)
+    @ApiOperation(value = "班级管理员修改学生Honor信息")
+    @ContainAuthority(CLASS_STUDENT_MANAGE)
+    @Class
+    @Authorization
+    public String classAdminUpdateStudentHonorByTerm(HttpServletRequest request, HttpServletResponse response,
+                                                     @RequestHeader(AUTHORIZATION)String token,
+                                                     @RequestParam("recordId")Long recordId,
+                                                     @RequestParam("honorName")String activityName,
+                                                     @RequestParam("honorLv")Integer honorLv,
+                                                     @RequestParam("honorScore")Double honorScore,
+                                                     @RequestParam("common")String common){
+        Integer status = recordService.updateHonor(recordId,activityName, honorLv, honorScore, common);
+        if(status == -1)
+            return Result.send(FAIL, null, STU_UPDATE_FAIL_MESSAGE);
+        return Result.send(SUCCESS, null, STU_UPDATE_SUCCESS_MESSAGE);
     }
 }

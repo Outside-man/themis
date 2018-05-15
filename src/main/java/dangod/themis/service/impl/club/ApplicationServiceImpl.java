@@ -50,9 +50,11 @@ public class ApplicationServiceImpl implements ApplicationService{
                          Integer isFine, String introduce, MultipartFile file) {
         int hasFile = 0;
         String fileName = "";
-        String originName = file.getOriginalFilename();
-        String[] arr = file.getOriginalFilename().split("[.]");
+        String originName = "";
+        String[] arr = new String[1];
         if(file!=null){
+            originName = file.getOriginalFilename();
+            arr = file.getOriginalFilename().split("[.]");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日-HH时mm分ss秒");
             long now = Calendar.getInstance().getTime().getTime();
 

@@ -72,7 +72,7 @@ public class ClubAppController extends BaseController{
                         @RequestParam("reserveMoney")Double reserveMoney,
                         @RequestParam("isFine")Integer isFine,
                         @RequestParam("introduce")String introduce,
-                        @RequestParam("file") MultipartFile file){
+                        @RequestParam(value = "file", required = false) MultipartFile file){
         int status = applicationService.apply(getClub(request), name, place, start, end, people, selfMoney, reserveMoney, isFine, introduce, file);
         if(status != 0) return Result.send(FAIL, null, CLUB_APP_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, CLUB_APP_SUCCESS_MESSAGE);
