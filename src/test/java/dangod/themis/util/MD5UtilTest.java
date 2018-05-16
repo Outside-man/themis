@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ClassUtils;
 
 import java.io.File;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.concurrent.*;
 
@@ -51,26 +52,14 @@ public class MD5UtilTest {
 //
 //    }
 //
-//    @Test
-//    public void RecordControllerGen() throws Exception {
-//        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
-//        String targetPath = "src/main/java/dangod/themis/controller/score/record/";
-//        for(String str : list){
-//            Map<String, Object> map = new HashMap<>();
-//            map.put("entity", str);
-//            CodeGenerate.generate("RecordController.ftl", targetPath+"Stu"+str+"Controller.java", map);
-//        }
-//    }
-//
     @Test
     public void RecordControllerGen() throws Exception {
-//        String[] list = {"Activity", "Honor", "Office", "Practice", "Reserve", "Skill", "Volunteer"};
-//        String targetPath = "src/main/java/dangod/themis/service/";
-//        Map<String, Object> map = new HashMap<>();
-//
-//        List<String> entityList = Arrays.asList(list);
-//        map.put("entityList", entityList);
-//
-//        CodeGenerate.generate("test.ftl", targetPath + "test.java", map);
+        String s = "club/\\\\as\\sss";
+        String[] ss = s.split("[/&\\\\]");
+        for(String str : ss)
+            if(str!="\n"&&str!=null&&str!=""&&str!="\r\n")
+            System.out.println(str);
+
     }
+//
 }

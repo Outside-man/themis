@@ -6,6 +6,7 @@ import dangod.themis.controller.base.annotation.ContainAuthority;
 import dangod.themis.core.result.Result;
 import dangod.themis.model.vo.club.ApprovalVo;
 import dangod.themis.service.club.ApproveService;
+import dangod.themis.service.club.MailService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +14,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static dangod.themis.config.ClubConstant.*;
 import static dangod.themis.controller.base.constant.AnnotationConstant.AUTHORIZATION;
-import static dangod.themis.controller.base.constant.Message.CLUB_APPROVE_FAIL_MESSAGE;
-import static dangod.themis.controller.base.constant.Message.CLUB_APPROVE_SUCCESS_MESSAGE;
+import static dangod.themis.controller.base.constant.Message.*;
 import static dangod.themis.controller.base.constant.Status.FAIL;
+import static dangod.themis.controller.base.constant.Status.PERMISSIN_DENIED;
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
 import static dangod.themis.model.po.authority.constant.TypeContant.CLUB_ACTIVITY_APPROVE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @CrossOrigin
@@ -31,7 +34,7 @@ public class ClubApproveController extends BaseController{
     @ApiOperation(value = "审核表单")
     @Authorization
     @ContainAuthority(CLUB_ACTIVITY_APPROVE)
-    public String getSelfStatuses(HttpServletRequest request, HttpServletResponse response,
+    public String approve(HttpServletRequest request, HttpServletResponse response,
                                   @RequestHeader(AUTHORIZATION)String token,
                                   @RequestParam("appId") long appId,
                                   @RequestParam("result") Integer result,
@@ -39,5 +42,16 @@ public class ClubApproveController extends BaseController{
         ApprovalVo approvalVo = approveService.approve(appId, getUserId(request), result,comment);
         if(approvalVo == null)return Result.send(FAIL, approvalVo, CLUB_APPROVE_FAIL_MESSAGE);
         return Result.send(SUCCESS, approvalVo, CLUB_APPROVE_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/lv", method = GET)
+    @ApiOperation(value = "获取审批等级")
+    @Authorization
+    @ContainAuthority(CLUB_ACTIVITY_APPROVE)
+    public String getlv(HttpServletRequest request, HttpServletResponse response,
+                                  @RequestHeader(AUTHORIZATION)String token){
+        int lv = approveService.getApprovalLv(getUserId(request));
+        if(lv == -1)return Result.send(PERMISSIN_DENIED, lv, CLUB_APPROVE_NO_AUTHORITY_MESSAGE);
+        return Result.send(SUCCESS, lv, CLUB_APPROVE_HAVE_AUTHORITY_MESSAGE);
     }
 }

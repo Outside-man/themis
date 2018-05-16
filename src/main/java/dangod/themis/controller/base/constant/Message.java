@@ -75,6 +75,8 @@ public class Message {
     public final static String CLUB_FILE_NOT_EXIST_MESSAGE = "附件不存在";
     public final static String CLUB_FILE_FAIL_MESSAGE = "获取附件失败";
 
+    public final static String CLUB_APPROVE_NO_AUTHORITY_MESSAGE = "没有审批权限";
+    public final static String CLUB_APPROVE_HAVE_AUTHORITY_MESSAGE = "有审批权限";
 
 
 

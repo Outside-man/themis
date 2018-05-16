@@ -9,6 +9,7 @@ import dangod.themis.model.po.club.ClubRole;
 import dangod.themis.model.vo.club.ApprovalVo;
 import dangod.themis.service.club.ApplicationService;
 import dangod.themis.service.club.ApproveService;
+import dangod.themis.service.club.MailService;
 import dangod.themis.service.club.RoleService;
 import dangod.themis.service.common.UserInfoService;
 import dangod.themis.service.common.UserService;
@@ -20,6 +21,9 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static dangod.themis.config.ClubConstant.*;
+
 @Service
 public class ApproveServiceImpl implements ApproveService {
     @Autowired
@@ -30,6 +34,8 @@ public class ApproveServiceImpl implements ApproveService {
     private RoleService roleService;
     @Autowired
     private UserBaseInfoRepo userBaseInfoRepo;
+    @Autowired
+    private MailService mailService;
     @Override
     public List<ApprovalVo> getApprovalVoListById(long applicationId) {
         List<ApprovalVo> approvalVoList = new ArrayList<>();
@@ -63,16 +69,42 @@ public class ApproveServiceImpl implements ApproveService {
             approvalVo = new ApprovalVo(approval);
             applicationRepo.save(app);
             //TODO 邮件发送 考虑邮件error 数据库回滚问题
-//            if(app.getStatus() == 0){//审核通过
-//
-//            }else if(app.getStatus() == -1){//审核不通过
-//
-//            }
+            String toMail = app.getClub().getBaseInfo().getEmail();
+            if(toMail != null) {
+                try {
+                    if (app.getStatus() == 0) {//审核通过
+                        String subject = String.format(MAIL_SUCCESS_SUBJECT_FORMAT, app.getClub().getClubName(), app.getActivityName());
+                        String content = String.format(MAIL_SUCCESS_CONTENT_FORMAT, app.getClub().getClubName(), app.getActivityName());
+                        mailService.sendMessage(toMail, subject, content);
+                    } else if (app.getStatus() == -1) {//审核不通过
+                        String subject = String.format(MAIL_FAIL_SUBJECT_FORMAT, app.getClub().getClubName(), app.getActivityName());
+                        String content = String.format(MAIL_FAIL_CONTENT_FORMAT, app.getClub().getClubName(), app.getActivityName());
+                        mailService.sendMessage(toMail, subject, content);
+                    } else {
+                        String subject = String.format(MAIL_APPROVE_SUBJECT_FORMAT, app.getClub().getClubName(), app.getActivityName());
+                        String content = String.format(MAIL_APPROVE_CONTENT_FORMAT, app.getClub().getClubName(), app.getActivityStart(), app.getActivityEnd(), app.getActivityPlace(),app.getActivityName(), app.getId());
+                        mailService.sendMessage(toMail, subject, content);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }catch (Exception e){
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             e.printStackTrace();
             return null;
         }
         return approvalVo;
+    }
+
+    @Override
+    public Integer getApprovalLv(long userId) {
+        int lv = -1;
+        try{
+            lv = roleService.getRole(userId).getLv();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return lv;
     }
 }
