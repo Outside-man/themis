@@ -27,6 +27,7 @@ public class ApplicationVo {
     private String introduce;
     private Integer hasFile;
     private String status;
+    private Integer lv;
     private List<ApprovalVo> results;
 
     public long getApplicationId() {
@@ -133,6 +134,14 @@ public class ApplicationVo {
         this.reserveMoney = String.format("%.2f", reserveMoney);;
     }
 
+    public Integer getLv() {
+        return lv;
+    }
+
+    public void setLv(Integer lv) {
+        this.lv = lv;
+    }
+
     public Integer getIsFine() {
         return isFine;
     }
@@ -200,6 +209,7 @@ public class ApplicationVo {
         this.isFine = application.getIsFine();
         this.introduce = application.getIntroduce();
         this.hasFile = application.getHasFile();
+        this.lv = application.getLv();
         switch (application.getStatus()){
             case -1:
                 this.status = "审核未通过";break;
@@ -227,6 +237,7 @@ public class ApplicationVo {
         this.isFine = application.getIsFine();
         this.introduce = application.getIntroduce();
         this.hasFile = application.getHasFile();
+        this.lv = application.getLv();
         switch (application.getStatus()){
             case -1:
                 this.status = "审核未通过";break;
@@ -257,5 +268,6 @@ public class ApplicationVo {
         this.hasFile = hasFile;
         this.status = status;
         this.results = new ArrayList<>();
+        this.lv = 1;
     }
 }

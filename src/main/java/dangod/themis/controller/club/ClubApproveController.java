@@ -9,6 +9,7 @@ import dangod.themis.service.club.ApproveService;
 import dangod.themis.service.club.MailService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
