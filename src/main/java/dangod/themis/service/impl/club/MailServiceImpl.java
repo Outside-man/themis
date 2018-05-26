@@ -1,6 +1,9 @@
 package dangod.themis.service.impl.club;
 
+import com.alibaba.fastjson.JSON;
 import dangod.themis.service.club.MailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,6 +16,8 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 public class MailServiceImpl implements MailService{
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private JavaMailSender mailSender;
 
@@ -35,8 +40,10 @@ public class MailServiceImpl implements MailService{
             message.setSubject(subject);
             message.setText(content,true);
             this.mailSender.send(mimeMessage);
+            System.out.println("发送成功");
         }
         catch(Exception e) {
+            logger.warn("邮件发送失败");
             e.printStackTrace();
             status = -1;
         }

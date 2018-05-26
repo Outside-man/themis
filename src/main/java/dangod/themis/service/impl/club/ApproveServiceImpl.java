@@ -55,7 +55,8 @@ public class ApproveServiceImpl implements ApproveService {
             if (role.getLv() < 2) throw new Exception("没有权限");
             Application app = applicationRepo.findOne(applicationId);
             //如果条件 为 app.getLv() != role.getLv() 就是不允许跨级审批
-            if (app.getLv() > role.getLv() || app.getStatus() != 1) throw new Exception("当前等级已经审批过或者审批流程结束");
+            Approval approvalDO = approvalRepo.findByApplication_IdAndAndApprovalLV(app.getId(), role.getLv());
+            if (app.getLv() > role.getLv() || app.getStatus() != 1 || approvalDO != null) throw new Exception("当前等级已经审批过或者审批流程结束");
             Approval approval = new Approval(role.getLv(), result, comment, userBaseInfoRepo.findByUser_Id(userId), app);
             approvalRepo.save(approval);
             app.setLv(role.getLv() + 1);
@@ -63,7 +64,7 @@ public class ApproveServiceImpl implements ApproveService {
                 app.setStatus(-1);
                 app.setLv(100);
             }
-            if(result == 1&&app.getLv() == 4) {//指导老师审批且同意 审批通过
+            if(result == 1&&app.getLv() == 5) {//指导老师审批且同意 审批通过
                 app.setStatus(0);
             }
             approvalVo = new ApprovalVo(approval);
