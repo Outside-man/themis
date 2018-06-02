@@ -11,7 +11,7 @@ public class ClubFile {
     private String fileName;
     private String originName;
     private String path;
-    @OneToOne(fetch= FetchType.LAZY, cascade= CascadeType.ALL)
+    @OneToOne(fetch= FetchType.LAZY, cascade= CascadeType.DETACH)
     @JoinColumn(name="application_id",nullable=true)
     private Application application;
 

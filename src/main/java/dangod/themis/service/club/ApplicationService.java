@@ -88,5 +88,8 @@ public interface ApplicationService {
     List<StatusVo> getAllPageStatus(Integer status, Integer page, Integer size);//获取该等级下可以看到的所有可见申请
 
 
+    Integer deleteApplication(Club club, long applicationId);
+
+    Integer deleteApplication(long applicationId);
 
 }

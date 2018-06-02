@@ -62,6 +62,9 @@ public class Message {
     public final static String CLUB_APP_NOT_FOUND = "活动申请表不存在";
     public final static String NOT_MANAGE_CLUB = "没有管理的社团";
 
+    public final static String CLUB_APP_DELETE_FAIL = "申请表删除失败";
+    public final static String CLUB_APP_DELETE_SUCCESS = "申请表删除成功";
+
     public final static String CLUB_APP_SUCCESS_MESSAGE = "申请成功";
     public final static String CLUB_APP_FAIL_MESSAGE = "申请失败";
 

@@ -5,9 +5,9 @@ import dangod.themis.model.vo.club.ClubVo;
 import java.util.List;
 
 public interface ClubService {
-    ClubVo getClubById(Integer id);
+    ClubVo getClubVoById(Integer id);
 
-    ClubVo getClubByuserId(long userId);
+    ClubVo getClubVoByuserId(long userId);
 
     List<ClubVo> getPageClub(Integer page, Integer size);
 }

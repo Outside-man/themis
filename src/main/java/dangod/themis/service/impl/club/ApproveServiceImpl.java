@@ -84,6 +84,14 @@ public class ApproveServiceImpl implements ApproveService {
                     } else {
                         String subject = String.format(MAIL_APPROVE_SUBJECT_FORMAT, app.getClub().getClubName(), app.getActivityName());
                         String content = String.format(MAIL_APPROVE_CONTENT_FORMAT, app.getClub().getClubName(), app.getActivityStart(), app.getActivityEnd(), app.getActivityPlace(),app.getActivityName(), app.getId());
+                        switch (app.getLv()){
+                            case 3:
+                                toMail = ZX_EMAIL;
+                                break;
+                            case 4:
+                                toMail = ZD_EMAIL;
+                                break;
+                        }
                         mailService.sendMessage(toMail, subject, content);
                     }
                 }catch (Exception e){
@@ -107,5 +115,19 @@ public class ApproveServiceImpl implements ApproveService {
             e.printStackTrace();
         }
         return lv;
+    }
+
+    @Override
+    public Integer deleteApprovalByAppId(long appId) {
+        int status = 0;
+        try {
+            approvalRepo.deleteApprovalByApplication_Id(appId);
+            approvalRepo.flush();
+        }catch (Exception e){
+            status = -1;
+            e.printStackTrace();
+        }
+        return status;
+
     }
 }

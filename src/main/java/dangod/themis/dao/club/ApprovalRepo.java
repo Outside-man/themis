@@ -11,4 +11,5 @@ import java.util.List;
 public interface ApprovalRepo extends JpaRepository<Approval, Long>{
     List<Approval> findByApplication_Id(long id, Sort sort);
     Approval findByApplication_IdAndAndApprovalLV(long appId, int lv);
+    void deleteApprovalByApplication_Id(long appId);
 }

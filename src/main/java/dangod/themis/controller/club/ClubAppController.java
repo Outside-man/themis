@@ -24,6 +24,8 @@ import static dangod.themis.controller.base.constant.Status.NOT_FIND;
 import static dangod.themis.controller.base.constant.Status.SUCCESS;
 import static dangod.themis.core.util.BaseFile.FOLDER;
 import static dangod.themis.model.po.authority.constant.TypeContant.CLUB_ACTIVITY_APPLY;
+import static dangod.themis.model.po.authority.constant.TypeContant.CLUB_ACTIVITY_APPROVE;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -76,5 +78,28 @@ public class ClubAppController extends BaseController{
         int status = applicationService.apply(getClub(request), name, place, start, end, people, selfMoney, reserveMoney, isFine, introduce, file);
         if(status != 0) return Result.send(FAIL, null, CLUB_APP_FAIL_MESSAGE);
         return Result.send(SUCCESS, null, CLUB_APP_SUCCESS_MESSAGE);
+    }
+
+    @RequestMapping(value = "/self", method = DELETE)
+    @ApiOperation(value = "社团自己删除表单")
+    @Authorization
+    @ContainAuthority(CLUB_ACTIVITY_APPLY)
+    @Club
+    public String deleteApplication(HttpServletRequest request, HttpServletResponse response,
+                                 @RequestParam("id")Long id){
+        int status = applicationService.deleteApplication(getClub(request), id);
+        if(status != 0) return Result.send(FAIL, null, CLUB_APP_DELETE_FAIL);
+        return Result.send(SUCCESS, null, CLUB_APP_DELETE_SUCCESS);
+    }
+
+    @RequestMapping(value = "/admin", method = DELETE)
+    @ApiOperation(value = "管理员删除表单")
+    @Authorization
+    @ContainAuthority(CLUB_ACTIVITY_APPROVE)
+    public String deleteApplicationByAdmin(HttpServletRequest request, HttpServletResponse response,
+                                    @RequestParam("id")Long id){
+        int status = applicationService.deleteApplication(id);
+        if(status != 0) return Result.send(FAIL, null, CLUB_APP_DELETE_FAIL);
+        return Result.send(SUCCESS, null, CLUB_APP_DELETE_SUCCESS);
     }
 }

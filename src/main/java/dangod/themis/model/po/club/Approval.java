@@ -15,10 +15,10 @@ public class Approval {
     private Integer result;// 同意1 不同意0
     @Column(length = 1000)
     private String comment;
-    @OneToOne(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
+    @OneToOne(fetch= FetchType.EAGER, cascade= CascadeType.DETACH)
     @JoinColumn(name="auditor_id",nullable=true)
     private UserBaseInfo baseInfo;
-    @OneToOne(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
+    @OneToOne(fetch= FetchType.EAGER, cascade= CascadeType.DETACH)
     @JoinColumn(name="application_id",nullable=true)
     private Application application;
 

@@ -1,20 +1,24 @@
 package dangod.themis.service.impl.club;
 
+import dangod.themis.dao.club.ClubRepo;
 import dangod.themis.model.vo.club.ClubVo;
 import dangod.themis.service.club.ClubService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ClubServiceImpl implements ClubService{
+    @Autowired
+    private ClubRepo clubRepo;
     @Override
-    public ClubVo getClubById(Integer id) {
+    public ClubVo getClubVoById(Integer id) {
         return null;
     }
 
     @Override
-    public ClubVo getClubByuserId(long userId) {
+    public ClubVo getClubVoByuserId(long userId) {
         return null;
     }
 

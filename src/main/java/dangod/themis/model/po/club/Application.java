@@ -11,7 +11,7 @@ public class Application {
     @GeneratedValue
     private long id;
     private String applyDate;
-    @OneToOne(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
+    @OneToOne(fetch= FetchType.EAGER, cascade= CascadeType.DETACH)
     @JoinColumn(name="club_id",nullable=true)
     private Club club;
     private String activityName;

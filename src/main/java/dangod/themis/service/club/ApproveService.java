@@ -23,4 +23,6 @@ public interface ApproveService {
     ApprovalVo approve(long applicationId, long userId, Integer result, String comment);//用role 确定审批等级
 
     Integer getApprovalLv(long userId);
+
+    Integer deleteApprovalByAppId(long appId);
 }
